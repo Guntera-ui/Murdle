@@ -1,19 +1,198 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 30px;
+
+    background: #fbfbf9;
+
+    color: #111;
+
+    font-family: "Special Elite", monospace;
+
+    margin: 0;
+
+    padding: 30px;
+
+    max-width: 1600px;
+
+    margin-left: auto;
+
+    margin-right: auto;
 }
 
-table {
-    border-collapse: collapse;
+
+h1 {
+
+    color: #7b2135;
+
+    font-size: 3rem;
+
+    margin-top: 0;
+
+    margin-bottom: 30px;
+
+    text-transform: uppercase;
 }
 
-th,
-td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
+h2 {
+
+    color: #7b2135;
+
+    text-transform: uppercase;
+
+    letter-spacing: 3px;
 }
 
-th {
-    background-color: #eeeeee;
+.main-layout {
+
+    display: flex;
+
+    gap: 40px;
+
+    align-items: flex-start;
+}
+
+.sidebar {
+
+    width: 40%;
+
+    min-width: 380px;
+}
+
+.grid-area {
+
+    width: 60%;
+}
+
+.case-section {
+
+    background: #f5f1e8;
+
+    border: 4px solid black;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    margin-bottom: 30px;
+}
+
+.case-section ul,
+.case-section ol {
+
+    line-height: 2;
+}
+
+.master-board {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0;
+}
+
+.board-row {
+
+    display: grid;
+
+    grid-template-columns:
+        64px repeat(6, 64px);
+
+    gap: 0;
+}
+
+.location-row {
+
+    display: grid;
+
+    grid-template-columns:
+        64px repeat(3, 64px);
+
+    margin-left: 0;
+
+    margin-top: -2px;
+
+    gap: 0;
+}
+
+.header-spacer {
+
+    width: 64px;
+
+    height: 64px;
+}
+
+.board-divider {
+
+    height: 0;
+}
+
+
+.row-label,
+.grid-cell {
+
+    width: 64px;
+
+    height: 64px;
+
+    border: 2px solid black;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    font-weight: bold;
+}
+
+.header-cell,
+.row-label {
+
+    background: #f5f1e8;
+}
+
+.grid-cell {
+
+    background: white;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    transition: background-color 0.15s ease;
+}
+
+.grid-cell:hover {
+
+    background: #f2efe8;
+}
+
+
+.cell-yes {
+
+    background: #d8ead3;
+}
+
+.cell-no {
+
+    background: #f4cccc;
+}
+
+@media (max-width: 1200px) {
+
+    .main-layout {
+
+        flex-direction: column;
+    }
+
+    .sidebar {
+
+        width: 100%;
+    }
+
+    .grid-area {
+
+        width: 100%;
+    }
 }

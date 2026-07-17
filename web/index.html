@@ -3,30 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+
     <title>Murdle Clone</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<header>
     <h1 id="title">Loading...</h1>
+</header>
 
-    <h2>Suspects</h2>
-    <ul id="suspects"></ul>
+<div class="main-layout">
 
-    <h2>Weapons</h2>
-    <ul id="weapons"></ul>
+    <aside class="sidebar">
 
-    <h2>Locations</h2>
-    <ul id="locations"></ul>
+        <section class="case-section">
+            <h2>Clues</h2>
+            <ol id="clues"></ol>
+        </section>
 
-    <h2>Clues</h2>
-    <ol id="clues"></ol>
+        <section class="case-section">
+            <h2>Suspects</h2>
+            <ul id="suspects"></ul>
+        </section>
 
-    <h2>Deduction Grid</h2>
+        <section class="case-section">
+            <h2>Weapons</h2>
+            <ul id="weapons"></ul>
+        </section>
 
-    <div id="grid-container"></div>
+        <section class="case-section">
+            <h2>Locations</h2>
+            <ul id="locations"></ul>
+        </section>
 
-    <script src="app.js"></script>
+    </aside>
+
+    <main class="grid-area">
+
+        <h2>Deduction Board</h2>
+
+        <div id="master-grid"></div>
+
+    </main>
+
+</div>
+
+<script src="app.js"></script>
 
 </body>
 </html>

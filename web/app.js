@@ -1,10 +1,14 @@
 function renderList(items, elementId) {
 
-    const list = document.getElementById(elementId);
+    const list =
+        document.getElementById(elementId);
+
+    list.innerHTML = "";
 
     items.forEach(item => {
 
-        const li = document.createElement("li");
+        const li =
+            document.createElement("li");
 
         li.textContent = item;
 
@@ -21,88 +25,284 @@ function createGrid(rows, columns) {
         grid[row] = {};
 
         columns.forEach(column => {
-            grid[row][column] = "";
-        });
 
+            grid[row][column] = "";
+
+        });
     });
 
     return grid;
 }
 
-function renderGrid(grid) {
+function getNextState(currentState) {
+
+    if (currentState === "") {
+        return "✓";
+    }
+
+    if (currentState === "✓") {
+        return "✗";
+    }
+
+    return "";
+}
+
+function abbreviation(text) {
+
+    const words = text.split(" ");
+
+    if (words.length === 1) {
+        return text.slice(0, 2).toUpperCase();
+    }
+
+    return words
+        .map(word => word[0])
+        .join("")
+        .toUpperCase();
+}
+
+function createCell(value) {
+
+    const cell =
+        document.createElement("div");
+
+    cell.className =
+        "grid-cell";
+
+    cell.textContent =
+        value;
+
+    if (value === "✓") {
+        cell.classList.add("cell-yes");
+    }
+
+    if (value === "✗") {
+        cell.classList.add("cell-no");
+    }
+
+    return cell;
+}
+
+function renderMasterGrid(
+    suspects,
+    weapons,
+    locations,
+    weaponGrid,
+    locationGrid,
+    weaponLocationGrid
+) {
 
     const container =
-        document.getElementById("grid-container");
+        document.getElementById("master-grid");
 
-    const table =
-        document.createElement("table");
+    container.innerHTML = "";
 
-    const headerRow =
-        document.createElement("tr");
+    const board =
+        document.createElement("div");
 
-    const cornerCell =
-        document.createElement("th");
+    board.className =
+        "master-board";
 
-    headerRow.appendChild(cornerCell);
+    const header =
+        document.createElement("div");
 
-    const columns =
-        Object.keys(
-            Object.values(grid)[0]
-        );
+    header.className =
+        "board-row";
 
-    columns.forEach(column => {
+    const spacer =
+        document.createElement("div");
 
-        const th =
-            document.createElement("th");
+    spacer.className =
+        "header-spacer";
 
-        th.textContent = column;
+    header.appendChild(spacer);
 
-        headerRow.appendChild(th);
+    suspects.forEach(suspect => {
+
+        const cell =
+            document.createElement("div");
+
+        cell.className =
+            "header-cell";
+
+        cell.textContent =
+            abbreviation(suspect);
+
+        header.appendChild(cell);
     });
 
-    table.appendChild(headerRow);
+    locations.forEach(location => {
 
-    Object.entries(grid).forEach(
-        ([rowName, rowData]) => {
+        const cell =
+            document.createElement("div");
 
-            const row =
-                document.createElement("tr");
+        cell.className =
+            "header-cell";
 
-            const rowHeader =
-                document.createElement("th");
+        cell.textContent =
+            abbreviation(location);
 
-            rowHeader.textContent =
-                rowName;
+        header.appendChild(cell);
+    });
 
-            row.appendChild(rowHeader);
+    board.appendChild(header);
 
-            Object.values(rowData)
-                .forEach(value => {
 
-                    const td =
-                        document.createElement("td");
 
-                    td.textContent =
-                        value;
+    weapons.forEach(weapon => {
 
-                    row.appendChild(td);
-                });
+        const row =
+            document.createElement("div");
 
-            table.appendChild(row);
-        }
-    );
+        row.className =
+            "board-row";
 
-    container.appendChild(table);
+        const label =
+            document.createElement("div");
+
+        label.className =
+            "row-label";
+
+        label.textContent =
+            abbreviation(weapon);
+
+        row.appendChild(label);
+
+        suspects.forEach(suspect => {
+
+            const cell =
+                createCell(
+                    weaponGrid[weapon][suspect]
+                );
+
+            cell.addEventListener(
+                "click",
+                () => {
+
+                    weaponGrid[weapon][suspect] =
+                        getNextState(
+                            weaponGrid[weapon][suspect]
+                        );
+
+                    renderMasterGrid(
+                        suspects,
+                        weapons,
+                        locations,
+                        weaponGrid,
+                        locationGrid,
+                        weaponLocationGrid
+                    );
+                }
+            );
+
+            row.appendChild(cell);
+        });
+
+        locations.forEach(location => {
+
+            const cell =
+                createCell(
+                    weaponLocationGrid[weapon][location]
+                );
+
+            cell.addEventListener(
+                "click",
+                () => {
+
+                    weaponLocationGrid[weapon][location] =
+                        getNextState(
+                            weaponLocationGrid[weapon][location]
+                        );
+
+                    renderMasterGrid(
+                        suspects,
+                        weapons,
+                        locations,
+                        weaponGrid,
+                        locationGrid,
+                        weaponLocationGrid
+                    );
+                }
+            );
+
+            row.appendChild(cell);
+        });
+
+        board.appendChild(row);
+    });
+
+
+    const divider =
+        document.createElement("div");
+
+    divider.className =
+        "board-divider";
+
+    board.appendChild(divider);
+
+
+    locations.forEach(location => {
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "location-row";
+
+        const label =
+            document.createElement("div");
+
+        label.className =
+            "row-label";
+
+        label.textContent =
+            abbreviation(location);
+
+        row.appendChild(label);
+
+        suspects.forEach(suspect => {
+
+            const cell =
+                createCell(
+                    locationGrid[location][suspect]
+                );
+
+            cell.addEventListener(
+                "click",
+                () => {
+
+                    locationGrid[location][suspect] =
+                        getNextState(
+                            locationGrid[location][suspect]
+                        );
+
+                    renderMasterGrid(
+                        suspects,
+                        weapons,
+                        locations,
+                        weaponGrid,
+                        locationGrid,
+                        weaponLocationGrid
+                    );
+                }
+            );
+
+            row.appendChild(cell);
+        });
+
+        board.appendChild(row);
+    });
+
+    container.appendChild(board);
 }
 
 fetch("/api/puzzle/tutorial")
     .then(response => response.json())
     .then(puzzle => {
 
-        console.log("Puzzle:");
-        console.log(puzzle);
-
-        document.getElementById("title").textContent =
+        document.getElementById(
+            "title"
+        ).textContent =
             puzzle.title;
 
         renderList(
@@ -125,18 +325,36 @@ fetch("/api/puzzle/tutorial")
             "clues"
         );
 
-        const grid = createGrid(
+        const weaponGrid =
+            createGrid(
+                puzzle.weapons,
+                puzzle.suspects
+            );
+
+        const locationGrid =
+            createGrid(
+                puzzle.locations,
+                puzzle.suspects
+            );
+
+        const weaponLocationGrid =
+            createGrid(
+                puzzle.weapons,
+                puzzle.locations
+            );
+
+        renderMasterGrid(
+            puzzle.suspects,
             puzzle.weapons,
-            puzzle.suspects
+            puzzle.locations,
+            weaponGrid,
+            locationGrid,
+            weaponLocationGrid
         );
-
-        console.log("Grid:");
-        console.log(grid);
-
-        renderGrid(grid);
 
     })
     .catch(error => {
-        console.error("Error loading puzzle:");
+
         console.error(error);
+
     });
