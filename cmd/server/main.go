@@ -13,8 +13,8 @@ func main() {
 	http.Handle("/", fs)
 
 	http.HandleFunc(
-		"/api/puzzle/tutorial",
-		handlers.GetTutorialPuzzle,
+		"/api/puzzle/",
+		handlers.GetPuzzle,
 	)
 
 	fmt.Println("Server running on :8080")

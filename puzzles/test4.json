@@ -1,0 +1,30 @@
+{
+    "id": 2,
+  "title": "4x4 Test",
+
+  "suspects": [
+    "Alice",
+    "Bob",
+    "Charlie",
+    "Diana"
+  ],
+
+  "weapons": [
+    "Knife",
+    "Rope",
+    "Poison",
+    "Pistol"
+  ],
+
+  "locations": [
+    "Library",
+    "Garden",
+    "Kitchen",
+    "Basement"
+  ],
+
+  "clues": [
+    "Test clue 1",
+    "Test clue 2"
+  ]
+}
