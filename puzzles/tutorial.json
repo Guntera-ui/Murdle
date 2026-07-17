@@ -1,0 +1,22 @@
+{
+  "id": 1,
+  "title": "Tutorial",
+  "suspects": [
+    "Mayor Honey",
+    "Dean Glaucous",
+    "Chancellor Tuscany"
+  ],
+  "weapons": [
+    "Sharp Pencil",
+    "Heavy Backpack",
+    "Graduation Cord"
+  ],
+  "locations": [
+    "Stadium",
+    "Bookstore",
+    "Old Main"
+  ],
+  "clues": [
+    "Tutorial clue"
+  ]
+}
