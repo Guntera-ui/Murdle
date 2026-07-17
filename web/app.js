@@ -1,3 +1,17 @@
+function renderList(items, elementId) {
+
+    const list = document.getElementById(elementId);
+
+    items.forEach(item => {
+
+        const li = document.createElement("li");
+
+        li.textContent = item;
+
+        list.appendChild(li);
+    });
+}
+
 fetch("/api/puzzle/tutorial")
     .then(response => response.json())
     .then(puzzle => {
@@ -7,44 +21,25 @@ fetch("/api/puzzle/tutorial")
         document.getElementById("title").textContent =
             puzzle.title;
 
-        const suspectsList =
-            document.getElementById("suspects");
+        renderList(
+            puzzle.suspects,
+            "suspects"
+        );
 
-        puzzle.suspects.forEach(suspect => {
+        renderList(
+            puzzle.weapons,
+            "weapons"
+        );
 
-            const li =
-                document.createElement("li");
+        renderList(
+            puzzle.locations,
+            "locations"
+        );
 
-            li.textContent = suspect;
-
-            suspectsList.appendChild(li);
-        });
-
-        const weaponsList =
-            document.getElementById("weapons");
-
-        puzzle.weapons.forEach(weapon => {
-
-            const li =
-                document.createElement("li");
-
-            li.textContent = weapon;
-
-            weaponsList.appendChild(li);
-        });
-
-        const locationsList =
-            document.getElementById("locations");
-
-        puzzle.locations.forEach(location => {
-
-            const li =
-                document.createElement("li");
-
-            li.textContent = location;
-
-            locationsList.appendChild(li);
-        });
+        renderList(
+            puzzle.clues,
+            "clues"
+        );
 
     })
     .catch(error => {
