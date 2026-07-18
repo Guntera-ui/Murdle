@@ -1,29 +1,34 @@
 function updateBoard(
     puzzle,
-    board,
-    matrixName,
+    playerBoard,
+    matrixId,
     row,
     column
 ) {
 
     markCell(
-        board,
-        matrixName,
+        playerBoard,
+        matrixId,
         row,
         column
     );
 
     renderMasterGrid(
         puzzle,
-        getWorkingBoard(board)
+        playerBoard
     );
 
 }
 
 function renderMasterGrid(
     puzzle,
-    board
+    playerBoard
 ) {
+
+    const board =
+        getWorkingBoard(
+            playerBoard
+        );
 
     const container =
         document.getElementById(
@@ -84,14 +89,13 @@ function renderMasterGrid(
                     matrix,
 
                     (row, column) => {
-
-                        updateBoard(
-                            puzzle,
-                            board,
-                            matrixId,
-                            row,
-                            column
-                        );
+                            updateBoard(
+                                puzzle,
+                                playerBoard,
+                                matrixId,
+                                row,
+                                column
+                            );
 
                     },
 

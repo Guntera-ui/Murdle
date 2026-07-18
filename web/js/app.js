@@ -27,7 +27,7 @@ fetchPuzzle("test4")
 
         renderMasterGrid(
             puzzle,
-            getWorkingBoard(board)
+            board
         );
 
     })
