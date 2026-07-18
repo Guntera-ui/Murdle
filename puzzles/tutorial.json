@@ -1,22 +1,38 @@
 {
-  "id": 1,
-  "title": "Tutorial",
+  "id": 5,
+  "title": "Four Categories Test",
   "suspects": [
-    "Mayor Honey",
-    "Dean Glaucous",
-    "Chancellor Tuscany"
+    "Alice",
+    "Bob",
+    "Charlie",
+    "Diana"
   ],
   "weapons": [
-    "Sharp Pencil",
-    "Heavy Backpack",
-    "Graduation Cord"
+    "Knife",
+    "Poison",
+    "Rope",
+    "Pistol"
   ],
   "locations": [
-    "Stadium",
-    "Bookstore",
-    "Old Main"
+    "Library",
+    "Kitchen",
+    "Garden",
+    "Study"
+  ],
+  "motives": [
+    "Revenge",
+    "Greed",
+    "Jealousy",
+    "Blackmail"
   ],
   "clues": [
-    "Tutorial clue"
+    "Alice was not in the Library.",
+    "The Rope was brought to the Kitchen.",
+    "The person seeking Revenge carried the Knife.",
+    "Bob acted out of Greed.",
+    "Charlie did not carry the Pistol.",
+    "The person motivated by Blackmail went to the Study.",
+    "Diana carried Poison.",
+    "The Garden was not visited by Alice."
   ]
 }

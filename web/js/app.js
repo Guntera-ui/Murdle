@@ -1,4 +1,4 @@
-fetchPuzzle("test4")
+fetchPuzzle("tutorial")
     .then(puzzle => {
 
         document.getElementById(

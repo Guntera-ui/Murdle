@@ -1,22 +1,89 @@
 {
-  "id": 1,
-  "title": "Tutorial",
-  "suspects": [
-    "Mayor Honey",
-    "Dean Glaucous",
-    "Chancellor Tuscany"
-  ],
-  "weapons": [
-    "Sharp Pencil",
-    "Heavy Backpack",
-    "Graduation Cord"
-  ],
-  "locations": [
-    "Stadium",
-    "Bookstore",
-    "Old Main"
+  "title": "Test Puzzle 5",
+  "categories": [
+    {
+      "name": "Suspects",
+      "items": [
+        "Alice",
+        "Bob",
+        "Charlie",
+        "Diana"
+      ]
+    },
+    {
+      "name": "Weapons",
+      "items": [
+        "Knife",
+        "Poison",
+        "Rope",
+        "Pistol"
+      ]
+    },
+    {
+      "name": "Locations",
+      "items": [
+        "Library",
+        "Kitchen",
+        "Garden",
+        "Study"
+      ]
+    },
+    {
+      "name": "Motives",
+      "items": [
+        "Revenge",
+        "Greed",
+        "Jealousy",
+        "Blackmail"
+      ]
+    }
   ],
   "clues": [
-    "Tutorial clue"
-  ]
+    "Alice was not in the Library.",
+    "The Rope was found in the Kitchen.",
+    "The person motivated by Revenge carried the Knife.",
+    "Bob was motivated by Greed.",
+    "Charlie did not carry the Pistol.",
+    "The Study was where the person motivated by Blackmail went.",
+    "Diana carried Poison.",
+    "The Garden was not visited by Alice."
+  ],
+  "solution": {
+    "Suspects-Weapons": {
+      "Alice": "Knife",
+      "Bob": "Pistol",
+      "Charlie": "Rope",
+      "Diana": "Poison"
+    },
+    "Suspects-Locations": {
+      "Alice": "Garden",
+      "Bob": "Library",
+      "Charlie": "Kitchen",
+      "Diana": "Study"
+    },
+    "Suspects-Motives": {
+      "Alice": "Revenge",
+      "Bob": "Greed",
+      "Charlie": "Jealousy",
+      "Diana": "Blackmail"
+    },
+    "Weapons-Locations": {
+      "Knife": "Garden",
+      "Pistol": "Library",
+      "Rope": "Kitchen",
+      "Poison": "Study"
+    },
+    "Weapons-Motives": {
+      "Knife": "Revenge",
+      "Pistol": "Greed",
+      "Rope": "Jealousy",
+      "Poison": "Blackmail"
+    },
+    "Locations-Motives": {
+      "Garden": "Revenge",
+      "Library": "Greed",
+      "Kitchen": "Jealousy",
+      "Study": "Blackmail"
+    }
+  }
 }

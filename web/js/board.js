@@ -25,7 +25,7 @@ function renderMasterGrid(
     playerBoard
 ) {
 
-    const board =
+    const workingBoard =
         getWorkingBoard(
             playerBoard
         );
@@ -77,33 +77,40 @@ function renderMasterGrid(
             const matrixId =
                 `${categories[i].id}|${categories[j].id}`;
 
-            const matrix =
-                getMatrix(
-                    board,
-                    matrixId
-                );
+            const playerMatrix =
+    getMatrix(
+        playerBoard,
+        matrixId
+    );
 
-            const matrixElement =
-                renderMatrix(
+        const workingMatrix =
+            getMatrix(
+                workingBoard,
+                matrixId
+            );
 
-                    matrix,
+        const matrixElement =
+            renderMatrix(
 
-                    (row, column) => {
-                            updateBoard(
-                                puzzle,
-                                playerBoard,
-                                matrixId,
-                                row,
-                                column
-                            );
+                playerMatrix,
+                workingMatrix,
 
-                    },
+                (row, column) => {
 
-                    i === 0,
-                    j === i + 1
+                    updateBoard(
+                        puzzle,
+                        playerBoard,
+                        matrixId,
+                        row,
+                        column
+                    );
 
-                );
+                },
 
+                i === 0,
+                j === i + 1
+
+            );
             boardRow.appendChild(
                 matrixElement
             );

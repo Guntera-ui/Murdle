@@ -1,14 +1,18 @@
 function renderMatrix(
-    matrix,
+    playerMatrix,
+    workingMatrix,
     clickHandler,
     showHeader = true,
     showRowLabels = true
-) {
+){
+    const rows =
+        workingMatrix.categoryA.items;
 
-    const rows = matrix.categoryA.items;
-    const columns = matrix.categoryB.items;
-    const state = matrix.grid;
+    const columns =
+        workingMatrix.categoryB.items;
 
+    const state =
+        workingMatrix.grid;
     const matrixElement =
         document.createElement("div");
 
@@ -95,22 +99,39 @@ function renderMatrix(
 
         columns.forEach(columnName => {
 
-            const cell =
-                createCell(
-                    state[rowName][columnName]
-                );
+        const playerValue =
+            playerMatrix.grid[rowName][columnName];
 
-            cell.addEventListener(
-                "click",
-                () => clickHandler(
+        const workingValue =
+            workingMatrix.grid[rowName][columnName];
+                const {
+            element: cell,
+            isSolverMark
+        } = createCell(
+            playerValue,
+            workingValue
+        );
+
+        cell.addEventListener(
+            "click",
+            () => {
+
+                if (isSolverMark) {
+                    return;
+                }
+
+                clickHandler(
                     rowName,
                     columnName
-                )
-            );
+                );
 
-            row.appendChild(
-                cell
-            );
+            }
+        );
+
+        row.appendChild(
+            cell
+        );
+
 
         });
 

@@ -11,8 +11,10 @@ function abbreviation(text) {
         .join("")
         .toUpperCase();
 }
-
-function createCell(value) {
+function createCell(
+    playerValue,
+    workingValue
+) {
 
     const cell =
         document.createElement("div");
@@ -21,19 +23,32 @@ function createCell(value) {
         "grid-cell";
 
     cell.textContent =
-        value;
+        workingValue;
 
-    if (value === "✓") {
+    if (workingValue === "✓") {
         cell.classList.add("cell-yes");
     }
 
-    if (value === "✗") {
+    if (workingValue === "✗") {
         cell.classList.add("cell-no");
     }
 
-    return cell;
-}
+    const isSolverMark =
+        playerValue === "" &&
+        workingValue !== "";
 
+    if (isSolverMark) {
+        cell.classList.add("cell-solver");
+    } else if (workingValue !== "") {
+        cell.classList.add("cell-player");
+    }
+
+    return {
+        element: cell,
+        isSolverMark
+    };
+
+}
 function createCategories(puzzle) {
 
     const list = [];
