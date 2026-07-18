@@ -33,3 +33,55 @@ function createCell(value) {
 
     return cell;
 }
+
+function createCategories(puzzle) {
+
+    const list = [];
+
+    const addCategory = (id, label) => {
+
+        if (puzzle[id]) {
+
+            list.push({
+
+                id,
+                label,
+                items: puzzle[id]
+
+            });
+
+        }
+
+    };
+
+    addCategory("suspects", "Suspects");
+    addCategory("weapons", "Weapons");
+    addCategory("motives", "Motives");
+    addCategory("locations", "Locations");
+
+    return {
+
+        list,
+
+        byId: Object.fromEntries(
+
+            list.map(category => [
+
+                category.id,
+                category
+
+            ])
+
+        )
+
+    };
+
+}
+
+function getMatrix(board, matrixId) {
+
+    return board.matrices.find(
+        matrix => matrix.id === matrixId
+    );
+
+}

@@ -42,107 +42,77 @@ function renderMasterGrid(
 
 
 
-    const weaponSuspectMatrix =
-        renderMatrix(
-            puzzle.weapons,
-            puzzle.suspects,
-            board.weaponGrid,
-            (weapon, suspect) => {
+    const categories =
+        createCategories(
+            puzzle
+        ).list;
 
-                updateBoard(
-                    puzzle,
+
+
+    for (
+        let i = 0;
+        i < categories.length - 1;
+        i++
+    ) {
+
+        const boardRow =
+            document.createElement("div");
+
+        boardRow.className =
+            "board-row";
+
+
+
+        for (
+            let j = i + 1;
+            j < categories.length;
+            j++
+        ) {
+
+            const matrixId =
+                `${categories[i].id}|${categories[j].id}`;
+
+            const matrix =
+                getMatrix(
                     board,
-                    "weaponGrid",
-                    weapon,
-                    suspect
+                    matrixId
                 );
 
-            },
-            true,
-            true
-        );
+            const matrixElement =
+                renderMatrix(
 
+                    matrix,
 
+                    (row, column) => {
 
-    const weaponLocationMatrix =
-        renderMatrix(
-            puzzle.weapons,
-            puzzle.locations,
-            board.weaponLocationGrid,
-            (weapon, location) => {
+                        updateBoard(
+                            puzzle,
+                            board,
+                            matrixId,
+                            row,
+                            column
+                        );
 
-                updateBoard(
-                    puzzle,
-                    board,
-                    "weaponLocationGrid",
-                    weapon,
-                    location
+                    },
+
+                    i === 0,
+                    j === i + 1
+
                 );
 
-            },
-            true,
-            false
+            boardRow.appendChild(
+                matrixElement
+            );
+
+        }
+
+
+
+        boardElement.appendChild(
+            boardRow
         );
 
-
-
-    const locationSuspectMatrix =
-        renderMatrix(
-            puzzle.locations,
-            puzzle.suspects,
-            board.locationGrid,
-            (location, suspect) => {
-
-                updateBoard(
-                    puzzle,
-                    board,
-                    "locationGrid",
-                    location,
-                    suspect
-                );
-
-            },
-            false,
-            true
-        );
-
-
-
-    const topRow =
-        document.createElement("div");
-
-    topRow.className =
-        "board-top";
-
-    topRow.appendChild(
-        weaponSuspectMatrix
-    );
-
-    topRow.appendChild(
-        weaponLocationMatrix
-    );
-
-
-
-    const bottomRow =
-        document.createElement("div");
-
-    bottomRow.className =
-        "board-bottom";
-
-    bottomRow.appendChild(
-        locationSuspectMatrix
-    );
-
-
-
-    boardElement.appendChild(
-        topRow
-    );
-
-    boardElement.appendChild(
-        bottomRow
-    );
+    }
 
 
 

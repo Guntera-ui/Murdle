@@ -1,30 +1,22 @@
 {
-    "id": 2,
-  "title": "4x4 Test",
-
+  "id": 1,
+  "title": "Tutorial",
   "suspects": [
-    "Alice",
-    "Bob",
-    "Charlie",
-    "Diana"
+    "Mayor Honey",
+    "Dean Glaucous",
+    "Chancellor Tuscany"
   ],
-
   "weapons": [
-    "Knife",
-    "Rope",
-    "Poison",
-    "Pistol"
+    "Sharp Pencil",
+    "Heavy Backpack",
+    "Graduation Cord"
   ],
-
   "locations": [
-    "Library",
-    "Garden",
-    "Kitchen",
-    "Basement"
+    "Stadium",
+    "Bookstore",
+    "Old Main"
   ],
-
   "clues": [
-    "Test clue 1",
-    "Test clue 2"
+    "Tutorial clue"
   ]
 }

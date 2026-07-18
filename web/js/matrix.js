@@ -1,16 +1,18 @@
 function renderMatrix(
-    rows,
-    columns,
-    state,
+    matrix,
     clickHandler,
     showHeader = true,
     showRowLabels = true
 ) {
 
-    const matrix =
+    const rows = matrix.categoryA.items;
+    const columns = matrix.categoryB.items;
+    const state = matrix.grid;
+
+    const matrixElement =
         document.createElement("div");
 
-    matrix.className =
+    matrixElement.className =
         "matrix";
 
 
@@ -34,6 +36,7 @@ function renderMatrix(
             header.appendChild(
                 spacer
             );
+
         }
 
         columns.forEach(column => {
@@ -50,11 +53,13 @@ function renderMatrix(
             header.appendChild(
                 cell
             );
+
         });
 
-        matrix.appendChild(
+        matrixElement.appendChild(
             header
         );
+
     }
 
 
@@ -83,6 +88,7 @@ function renderMatrix(
             row.appendChild(
                 label
             );
+
         }
 
 
@@ -105,13 +111,15 @@ function renderMatrix(
             row.appendChild(
                 cell
             );
+
         });
 
-        matrix.appendChild(
+        matrixElement.appendChild(
             row
         );
+
     });
 
-    return matrix;
-}
+    return matrixElement;
 
+}

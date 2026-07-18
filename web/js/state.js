@@ -19,24 +19,41 @@ function createGrid(rows, columns) {
 
 function createBoard(puzzle) {
 
-    return {
+    const categories = createCategories(puzzle);
 
-        weaponGrid: createGrid(
-            puzzle.weapons,
-            puzzle.suspects
-        ),
+    const board = {
 
-        locationGrid: createGrid(
-            puzzle.locations,
-            puzzle.suspects
-        ),
-
-        weaponLocationGrid: createGrid(
-            puzzle.weapons,
-            puzzle.locations
-        )
+        matrices: []
 
     };
+
+    for (let i = 0; i < categories.list.length; i++) {
+
+        for (let j = i + 1; j < categories.list.length; j++) {
+
+            const categoryA = categories.list[i];
+            const categoryB = categories.list[j];
+
+            board.matrices.push({
+
+                id: `${categoryA.id}|${categoryB.id}`,
+
+                categoryA,
+
+                categoryB,
+
+                grid: createGrid(
+                    categoryA.items,
+                    categoryB.items
+                )
+
+            });
+
+        }
+
+    }
+
+    return board;
 
 }
 
@@ -57,24 +74,31 @@ function copyGrid(grid) {
     });
 
     return copy;
+
 }
+
 
 function copyBoard(board) {
 
     return {
 
-        weaponGrid:
-            copyGrid(board.weaponGrid),
+        matrices: board.matrices.map(matrix => ({
 
-        locationGrid:
-            copyGrid(board.locationGrid),
+            id: matrix.id,
 
-        weaponLocationGrid:
-            copyGrid(board.weaponLocationGrid)
+            categoryA: matrix.categoryA,
+
+            categoryB: matrix.categoryB,
+
+            grid: copyGrid(matrix.grid)
+
+        }))
 
     };
 
 }
+
+
 
 function getNextState(currentState) {
 
@@ -90,23 +114,32 @@ function getNextState(currentState) {
 
 }
 
-function setCell(board, matrixName, row, column, value) {
+function setCell(board, matrixId, row, column, value) {
 
-    board[matrixName][row][column] = value;
+    const matrix = getMatrix(
+        board,
+        matrixId
+    );
+
+    matrix.grid[row][column] = value;
 
 }
 
 function crossOutRow(
     board,
-    matrixName,
+    matrixId,
     row,
     selectedColumn
 ) {
 
     let changed = false;
 
-    const grid =
-        board[matrixName];
+    const matrix = getMatrix(
+        board,
+        matrixId
+    );
+
+    const grid = matrix.grid;
 
     Object.keys(grid[row]).forEach(column => {
 
@@ -120,7 +153,7 @@ function crossOutRow(
 
         setCell(
             board,
-            matrixName,
+            matrixId,
             row,
             column,
             "✗"
@@ -133,18 +166,21 @@ function crossOutRow(
     return changed;
 
 }
-
 function crossOutColumn(
     board,
-    matrixName,
+    matrixId,
     selectedRow,
     column
 ) {
 
     let changed = false;
 
-    const grid =
-        board[matrixName];
+    const matrix = getMatrix(
+        board,
+        matrixId
+    );
+
+    const grid = matrix.grid;
 
     Object.keys(grid).forEach(row => {
 
@@ -158,7 +194,7 @@ function crossOutColumn(
 
         setCell(
             board,
-            matrixName,
+            matrixId,
             row,
             column,
             "✗"
@@ -176,18 +212,9 @@ function propagateCheckmarks(board) {
 
     let changed = false;
 
-    const matrices = [
+    board.matrices.forEach(matrix => {
 
-        "weaponGrid",
-        "locationGrid",
-        "weaponLocationGrid"
-
-    ];
-
-    matrices.forEach(matrixName => {
-
-        const grid =
-            board[matrixName];
+        const grid = matrix.grid;
 
         Object.keys(grid).forEach(row => {
 
@@ -200,7 +227,7 @@ function propagateCheckmarks(board) {
                 changed =
                     crossOutRow(
                         board,
-                        matrixName,
+                        matrix.id,
                         row,
                         column
                     ) || changed;
@@ -208,7 +235,7 @@ function propagateCheckmarks(board) {
                 changed =
                     crossOutColumn(
                         board,
-                        matrixName,
+                        matrix.id,
                         row,
                         column
                     ) || changed;
@@ -227,17 +254,9 @@ function applySingleRemainingRows(board) {
 
     let changed = false;
 
-    const matrices = [
+    board.matrices.forEach(matrix => {
 
-        "weaponGrid",
-        "locationGrid",
-        "weaponLocationGrid"
-
-    ];
-
-    matrices.forEach(matrixName => {
-
-        const grid = board[matrixName];
+        const grid = matrix.grid;
 
         Object.keys(grid).forEach(row => {
 
@@ -269,7 +288,7 @@ function applySingleRemainingRows(board) {
 
                 markYes(
                     board,
-                    matrixName,
+                    matrix.id,
                     row,
                     blankColumn
                 );
@@ -290,17 +309,9 @@ function applySingleRemainingColumns(board) {
 
     let changed = false;
 
-    const matrices = [
+    board.matrices.forEach(matrix => {
 
-        "weaponGrid",
-        "locationGrid",
-        "weaponLocationGrid"
-
-    ];
-
-    matrices.forEach(matrixName => {
-
-        const grid = board[matrixName];
+        const grid = matrix.grid;
 
         const rows = Object.keys(grid);
         const columns = Object.keys(grid[rows[0]]);
@@ -335,7 +346,7 @@ function applySingleRemainingColumns(board) {
 
                 markYes(
                     board,
-                    matrixName,
+                    matrix.id,
                     blankRow,
                     column
                 );
@@ -354,14 +365,14 @@ function applySingleRemainingColumns(board) {
 
 function markYes(
     board,
-    matrixName,
+    matrixId,
     row,
     column
 ) {
 
     setCell(
         board,
-        matrixName,
+        matrixId,
         row,
         column,
         "✓"
@@ -371,14 +382,14 @@ function markYes(
 
 function markNo(
     board,
-    matrixName,
+    matrixId,
     row,
     column
 ) {
 
     setCell(
         board,
-        matrixName,
+        matrixId,
         row,
         column,
         "✗"
@@ -388,14 +399,14 @@ function markNo(
 
 function clearCell(
     board,
-    matrixName,
+    matrixId,
     row,
     column
 ) {
 
     setCell(
         board,
-        matrixName,
+        matrixId,
         row,
         column,
         ""
@@ -405,19 +416,24 @@ function clearCell(
 
 function markCell(
     board,
-    matrixName,
+    matrixId,
     row,
     column
 ) {
 
+    const matrix = getMatrix(
+        board,
+        matrixId
+    );
+
     const currentValue =
-        board[matrixName][row][column];
+        matrix.grid[row][column];
 
     if (currentValue === "") {
 
         markYes(
             board,
-            matrixName,
+            matrixId,
             row,
             column
         );
@@ -430,7 +446,7 @@ function markCell(
 
         markNo(
             board,
-            matrixName,
+            matrixId,
             row,
             column
         );
@@ -441,13 +457,12 @@ function markCell(
 
     clearCell(
         board,
-        matrixName,
+        matrixId,
         row,
         column
     );
 
 }
-
 function applyRules(board) {
 
     let changed;

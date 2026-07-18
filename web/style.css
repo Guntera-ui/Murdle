@@ -15,6 +15,7 @@ body {
     margin-left: auto;
 
     margin-right: auto;
+
 }
 
 h1 {
@@ -28,6 +29,7 @@ h1 {
     margin-bottom: 30px;
 
     text-transform: uppercase;
+
 }
 
 h2 {
@@ -37,6 +39,7 @@ h2 {
     text-transform: uppercase;
 
     letter-spacing: 3px;
+
 }
 
 .main-layout {
@@ -46,6 +49,7 @@ h2 {
     gap: 40px;
 
     align-items: flex-start;
+
 }
 
 .sidebar {
@@ -53,11 +57,13 @@ h2 {
     width: 40%;
 
     min-width: 380px;
+
 }
 
 .grid-area {
 
     width: 60%;
+
 }
 
 .case-section {
@@ -71,12 +77,14 @@ h2 {
     padding: 20px;
 
     margin-bottom: 30px;
+
 }
 
 .case-section ul,
 .case-section ol {
 
     line-height: 2;
+
 }
 
 .master-board {
@@ -86,21 +94,17 @@ h2 {
     flex-direction: column;
 
     gap: 0;
+
 }
 
-.board-top {
+.board-row {
 
     display: flex;
 
     align-items: flex-start;
 
     gap: 0;
-}
-.board-bottom {
 
-    display: flex;
-
-    margin-top: -1px;
 }
 
 .matrix {
@@ -109,12 +113,12 @@ h2 {
 
     flex-direction: column;
 
-    /* border: 4px solid black;*/
-} 
+}
 
 .matrix-row {
 
     display: flex;
+
 }
 
 .header-spacer,
@@ -141,6 +145,7 @@ h2 {
     text-align: center;
 
     overflow: hidden;
+
 }
 
 .header-spacer,
@@ -148,6 +153,7 @@ h2 {
 .row-label {
 
     background: #f5f1e8;
+
 }
 
 .grid-cell {
@@ -159,21 +165,25 @@ h2 {
     user-select: none;
 
     transition: background-color 0.15s ease;
+
 }
 
 .grid-cell:hover {
 
     background: #f2efe8;
+
 }
 
 .cell-yes {
 
     background: #d8ead3;
+
 }
 
 .cell-no {
 
     background: #f4cccc;
+
 }
 
 @media (max-width: 1200px) {
@@ -181,6 +191,7 @@ h2 {
     .main-layout {
 
         flex-direction: column;
+
     }
 
     .sidebar {
@@ -188,10 +199,13 @@ h2 {
         width: 100%;
 
         min-width: auto;
+
     }
 
     .grid-area {
 
         width: 100%;
+
     }
+
 }

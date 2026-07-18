@@ -6,19 +6,13 @@ fetchPuzzle("test4")
         ).textContent =
             puzzle.title;
 
-        renderList(
-            puzzle.suspects,
-            "suspects"
-        );
+        const categories =
+            createCategories(
+                puzzle
+            ).list;
 
-        renderList(
-            puzzle.weapons,
-            "weapons"
-        );
-
-        renderList(
-            puzzle.locations,
-            "locations"
+        renderCategories(
+            categories
         );
 
         renderList(
@@ -26,8 +20,10 @@ fetchPuzzle("test4")
             "clues"
         );
 
-    const board =
-        createBoard(puzzle);
+        const board =
+            createBoard(
+                puzzle
+            );
 
         renderMasterGrid(
             puzzle,
