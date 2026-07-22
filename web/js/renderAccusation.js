@@ -114,26 +114,76 @@ function renderAccusation(
             }
 
             if (
-                checkAccusation(
-                    puzzle,
-                    accusation
-                )
-            ) {
+    checkAccusation(
+        puzzle,
+        accusation
+    )
+) {
 
-                showMessage(
-                    "Case Solved!",
-                    "success"
-                );
+    showEndScreen(
 
-            }
-            else {
+        "CASE CLOSED",
 
-                showMessage(
-                    "That accusation is incorrect.",
-                    "error"
-                );
+        "The investigation has concluded.",
 
-            }
+        `
+        <strong>Suspect:</strong> ${puzzle.solution.suspect}<br>
+        <strong>Weapon:</strong> ${puzzle.solution.weapon}<br>
+        <strong>Location:</strong> ${puzzle.solution.location}<br>
+
+        ${
+            puzzle.solution.motive
+                ? `<strong>Motive:</strong> ${puzzle.solution.motive}`
+                : ""
+        }
+        `,
+
+        "NEXT CASE"
+
+    );
+
+}
+else {
+
+    showEndScreen(
+
+        "INVESTIGATION FAILED",
+
+        "The wrong suspect was accused.",
+
+        `
+        <h3>Your Accusation</h3>
+
+        <strong>Suspect:</strong> ${accusation.suspect}<br>
+        <strong>Weapon:</strong> ${accusation.weapon}<br>
+        <strong>Location:</strong> ${accusation.location}<br>
+
+        ${
+            accusation.motive
+                ? `<strong>Motive:</strong> ${accusation.motive}<br>`
+                : ""
+        }
+
+        <hr>
+
+        <h3>Correct Solution</h3>
+
+        <strong>Suspect:</strong> ${puzzle.solution.suspect}<br>
+        <strong>Weapon:</strong> ${puzzle.solution.weapon}<br>
+        <strong>Location:</strong> ${puzzle.solution.location}<br>
+
+        ${
+            puzzle.solution.motive
+                ? `<strong>Motive:</strong> ${puzzle.solution.motive}`
+                : ""
+        }
+        `,
+
+        "TRY AGAIN"
+
+    );
+
+}
 
         }
     );
