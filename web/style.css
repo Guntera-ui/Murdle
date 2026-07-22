@@ -218,3 +218,321 @@ h2 {
     }
 
 }
+
+
+#accusation {
+
+    width: fit-content;
+
+    margin: 45px auto 0;
+
+    padding: 24px;
+
+    background: #f7f3eb;
+
+    border: 5px solid black;
+
+    border-radius: 22px;
+
+}
+
+
+.accusation-panel {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    width: 430px;
+
+    max-width: 100%;
+
+    margin: 0 auto;
+
+}
+
+
+.dropdown {
+
+    position: relative;
+
+    width: 100%;
+
+}
+
+
+
+.dropdown-button {
+
+    width: 100%;
+
+    padding: 18px 22px;
+
+    border: 3px solid black;
+
+    border-radius: 12px;
+
+    background: #f7f3eb;
+
+    color: #222;
+
+    font: inherit;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    cursor: pointer;
+
+    transition:
+        background .15s,
+        transform .15s;
+
+}
+
+.dropdown-button:hover {
+
+    background: #eee7d8;
+
+}
+
+.dropdown-button.open .dropdown-arrow {
+
+    transform: rotate(180deg);
+
+}
+
+
+
+.dropdown-text {
+
+    flex: 1;
+
+    text-align: left;
+
+    font-weight: bold;
+
+}
+
+
+
+.dropdown-arrow {
+
+    margin-left: 16px;
+
+    font-size: .9rem;
+
+    transition: transform .2s;
+
+}
+
+
+.dropdown-menu {
+
+    display: none;
+
+    position: absolute;
+
+    top: calc(100% + 6px);
+
+    left: 0;
+
+    right: 0;
+
+    background: #f7f3eb;
+
+    border: 3px solid black;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    z-index: 100;
+
+}
+
+.dropdown-menu.open {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+
+.dropdown-item {
+
+    padding: 14px 18px;
+
+    border: none;
+
+    border-top: 1px solid #d8d2c7;
+
+    background: transparent;
+
+    color: #222;
+
+    font: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition: background .15s;
+
+}
+
+.dropdown-item:first-child {
+
+    border-top: none;
+
+}
+
+.dropdown-item:hover {
+
+    background: #e8dfcf;
+
+}
+
+
+
+.accusation-panel > button {
+
+    width: 100%;
+
+    margin-top: 6px;
+
+    padding: 18px;
+
+    border: 3px solid black;
+
+    border-radius: 12px;
+
+    background: #7b2135;
+
+    color: white;
+
+    font: inherit;
+
+    font-size: 1.15rem;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: background .15s;
+
+}
+
+.accusation-panel > button:hover {
+
+    background: #63192a;
+
+}
+
+#accusation-message {
+
+    min-height: 1.5rem;
+
+    margin-top: 1rem;
+
+    text-align: center;
+
+    font-weight: bold;
+
+    opacity: 1;
+
+}
+
+
+
+.success {
+
+    color: #1b6e3c;
+
+    animation:
+        successPop .35s ease;
+
+}
+
+@keyframes successPop {
+
+    0% {
+
+        transform: scale(.9);
+
+    }
+
+    60% {
+
+        transform: scale(1.08);
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+    }
+
+}
+
+.error {
+
+    color: #8b1d1d;
+
+    animation:
+        errorShake .3s ease;
+
+}
+
+@keyframes errorShake {
+
+    0%   { transform: translateX(0); }
+
+    25%  { transform: translateX(-4px); }
+
+    50%  { transform: translateX(4px); }
+
+    75%  { transform: translateX(-4px); }
+
+    100% { transform: translateX(0); }
+
+}
+
+
+.warning {
+
+    color: #c88b00;
+
+    animation:
+        warningPulse .35s ease;
+
+}
+
+@keyframes warningPulse {
+
+    0% {
+
+        transform: scale(.96);
+
+    }
+
+    50% {
+
+        transform: scale(1.04);
+
+    }
+
+    100% {
+
+        transform: scale(1);
+
+    }
+
+}

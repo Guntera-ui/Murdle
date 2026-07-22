@@ -30,5 +30,9 @@ fetchPuzzle("tutorial")
             board
         );
 
+        renderAccusation(
+            puzzle
+        );
+
     })
     .catch(console.error);

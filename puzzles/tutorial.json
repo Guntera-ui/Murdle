@@ -1,30 +1,29 @@
 {
   "id": 5,
   "title": "Four Categories Test",
+
   "suspects": [
     "Alice",
     "Bob",
     "Charlie",
     "Diana"
   ],
+
   "weapons": [
     "Knife",
     "Poison",
     "Rope",
     "Pistol"
   ],
+
   "locations": [
     "Library",
     "Kitchen",
     "Garden",
     "Study"
   ],
-  "motives": [
-    "Revenge",
-    "Greed",
-    "Jealousy",
-    "Blackmail"
-  ],
+
+
   "clues": [
     "Alice was not in the Library.",
     "The Rope was brought to the Kitchen.",
@@ -34,5 +33,13 @@
     "The person motivated by Blackmail went to the Study.",
     "Diana carried Poison.",
     "The Garden was not visited by Alice."
-  ]
+  ],
+
+  "solution": {
+    "suspect": "Alice",
+    "weapon": "Knife",
+    "location": "Library"
+}
+
+
 }
