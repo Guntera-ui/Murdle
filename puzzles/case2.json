@@ -1,0 +1,68 @@
+{
+  "id": 2,
+  "caseNumber": "002",
+  "title": "THE BLACKWOOD KAKO",
+  "status": "OPEN",
+
+  "incidentReport": "Officers arrived shortly after sunset to find the victim inside the library. Four individuals remained at the estate, each offering a different account of the evening's events. Their testimonies, together with the collected evidence, should be enough to identify the culprit.",
+
+  "victim": {
+    "name": "Lord Henry Blackwood",
+    "occupation": "Estate Owner",
+    "causeOfDeath": "Stab Wound"
+  },
+
+  "interviews": [
+    {
+      "speaker": "Alice",
+      "statement": "I spent most of the evening reading. I never entered the library."
+    },
+    {
+      "speaker": "Bob",
+      "statement": "Charlie looked nervous after dinner, but I don't know why."
+    },
+    {
+      "speaker": "Charlie",
+      "statement": "I've never touched the pistol."
+    },
+    {
+      "speaker": "Diana",
+      "statement": "The kitchen was empty when I walked through it."
+    }
+  ],
+
+  "suspects": [
+    "Alice",
+    "Bob",
+    "Charlie",
+    "Diana"
+  ],
+
+  "weapons": [
+    "Knife",
+    "Poison",
+    "Rope",
+    "Pistol"
+  ],
+
+  "locations": [
+    "Library",
+    "Kitchen",
+    "Garden",
+    "Study"
+  ],
+
+  "clues": [
+    "Alice was not in the Library.",
+    "The Rope was brought to the Kitchen.",
+    "Charlie did not carry the Pistol.",
+    "Diana carried Poison.",
+    "The Garden was not visited by Alice."
+  ],
+
+  "solution": {
+    "suspect": "Alice",
+    "weapon": "Knife",
+    "location": "Library"
+  }
+}

@@ -1,40 +1,60 @@
 function showEndScreen(
-    title,
-    message,
-    details,
-    buttonText
+    {
+        title,
+        message,
+        details,
+        buttonText,
+        onButtonClick
+    }
 ) {
 
-    document
-        .getElementById(
-            "end-title"
-        ).textContent =
+    document.getElementById(
+        "end-title"
+    ).textContent =
         title;
 
-    document
-        .getElementById(
-            "end-message"
-        ).textContent =
+    document.getElementById(
+        "end-message"
+    ).textContent =
         message;
 
-    document
-        .getElementById(
-            "end-details"
-        ).innerHTML =
+    document.getElementById(
+        "end-details"
+    ).innerHTML =
         details;
 
-    document
-        .getElementById(
+    const button =
+        document.getElementById(
             "end-button"
-        ).textContent =
+        );
+
+    button.textContent =
         buttonText;
+
+    button.onclick = () => {
+
+        document
+            .getElementById(
+                "end-screen"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+        if (onButtonClick) {
+
+            onButtonClick();
+
+        }
+
+    };
 
     document
         .getElementById(
             "end-screen"
-        ).classList.remove(
+        )
+        .classList.remove(
             "hidden"
         );
 
 }
-

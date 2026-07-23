@@ -15,7 +15,6 @@ function renderList(items, elementId) {
         list.appendChild(li);
     });
 }
-
 function renderCategories(categories) {
 
     const container =
@@ -27,14 +26,11 @@ function renderCategories(categories) {
 
     categories.forEach(category => {
 
-        const section =
-            document.createElement("section");
-
-        section.className =
-            "case-section";
-
         const heading =
             document.createElement("h2");
+
+        heading.className =
+            "case-heading";
 
         heading.textContent =
             category.label;
@@ -45,21 +41,116 @@ function renderCategories(categories) {
         list.id =
             category.id;
 
-        section.appendChild(
+        container.appendChild(
             heading
         );
 
-        section.appendChild(
-            list
-        );
-
         container.appendChild(
-            section
+            list
         );
 
         renderList(
             category.items,
             category.id
+        );
+
+    });
+
+}
+
+function renderVictim(victim) {
+
+    const section =
+        document.getElementById(
+            "victim-section"
+        );
+
+    section.innerHTML = "";
+
+    if (!victim) {
+        return;
+    }
+
+    section.innerHTML = `
+        <h2 class="case-heading">VICTIM</h2>
+
+        <strong>${victim.name}</strong><br>
+
+        ${victim.occupation}<br>
+
+        Cause of death:
+        ${victim.causeOfDeath}
+    `;
+}
+
+function renderIncident(report) {
+
+    const section =
+        document.getElementById(
+            "incident-section"
+        );
+
+    section.innerHTML = "";
+
+    if (!report) {
+        return;
+    }
+
+    section.innerHTML = `
+        <h2 class="case-heading">
+            INCIDENT REPORT
+        </h2>
+
+        <p>${report}</p>
+    `;
+}
+
+function renderInterviews(interviews) {
+
+    const section =
+        document.getElementById(
+            "interviews-section"
+        );
+
+    section.innerHTML = "";
+
+    if (!interviews?.length) {
+        return;
+    }
+
+    const heading =
+        document.createElement("h2");
+
+    heading.className =
+        "case-heading";
+
+    heading.textContent =
+        "WITNESS INTERVIEWS";
+
+    section.appendChild(
+        heading
+    );
+
+    interviews.forEach(interview => {
+
+        const speaker =
+            document.createElement("strong");
+
+        speaker.textContent =
+            interview.speaker;
+
+        const statement =
+            document.createElement("p");
+
+        statement.textContent =
+            `"${interview.statement}"`;
+
+        section.appendChild(
+            speaker
+        );
+
+        section.appendChild(
+            statement
         );
 
     });

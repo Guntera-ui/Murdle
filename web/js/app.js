@@ -1,38 +1,131 @@
-fetchPuzzle("tutorial")
-    .then(puzzle => {
+const puzzleOrder = [
 
-        document.getElementById(
-            "title"
-        ).textContent =
-            puzzle.title;
+    "case1",
 
-        const categories =
-            createCategories(
-                puzzle
-            ).list;
+    "case2",
 
-        renderCategories(
-            categories
-        );
+    "case3"
 
-        renderList(
-            puzzle.clues,
-            "clues"
-        );
+];
 
-        const board =
-            createBoard(
-                puzzle
-            );
+let currentPuzzleIndex = 0;
 
-        renderMasterGrid(
-            puzzle,
-            board
-        );
 
-        renderAccusation(
+function renderPuzzle(
+    puzzle
+) {
+
+    document.getElementById(
+        "case-file-number"
+    ).textContent =
+        `№${String(
+            puzzle.caseNumber ?? puzzle.id
+        ).padStart(3, "0")}`;
+
+    document.getElementById(
+        "case-title"
+    ).textContent =
+        puzzle.title;
+
+    document.getElementById(
+        "case-victim"
+    ).innerHTML =
+        `
+        <strong>Victim</strong><br>
+        ${puzzle.victim?.name ?? "Unknown"}
+        `;
+
+    document.getElementById(
+        "case-status-line"
+    ).innerHTML =
+        `
+        <strong>Status</strong><br>
+        ${puzzle.status ?? "OPEN"}
+        `;
+
+    renderIncident(
+        puzzle.incidentReport
+    );
+
+    renderInterviews(
+        puzzle.interviews
+    );
+
+    const categories =
+        createCategories(
+            puzzle
+        ).list;
+
+    renderList(
+        puzzle.clues,
+        "clues"
+    );
+
+    renderCategories(
+        categories
+    );
+
+    const board =
+        createBoard(
             puzzle
         );
 
-    })
-    .catch(console.error);
+    renderMasterGrid(
+        puzzle,
+        board
+    );
+
+    renderAccusation(
+        puzzle,
+        loadNextPuzzle
+    );
+
+}
+
+
+function loadPuzzle(
+    id
+) {
+
+    fetchPuzzle(id)
+        .then(
+            renderPuzzle
+        )
+        .catch(
+            console.error
+        );
+
+}
+
+
+function loadNextPuzzle() {
+
+    if (
+        currentPuzzleIndex >=
+        puzzleOrder.length - 1
+    ) {
+
+        alert(
+            "You have completed every available case."
+        );
+
+        return;
+
+    }
+
+    currentPuzzleIndex++;
+
+    loadPuzzle(
+        puzzleOrder[
+            currentPuzzleIndex
+        ]
+    );
+
+}
+
+
+loadPuzzle(
+    puzzleOrder[
+        currentPuzzleIndex
+    ]
+);

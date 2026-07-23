@@ -1,0 +1,60 @@
+{
+  "id": 1,
+  "caseNumber": "001",
+  "title": "THE ENAGETI INCIDENT",
+  "status": "OPEN",
+
+  "incidentReport": "Ginger was found beneath the Walnut Tree shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+
+  "victim": {
+    "name": "Ginger",
+    "occupation": "Village Guardian",
+    "causeOfDeath": "Head Injury"
+  },
+
+  "interviews": [
+    {
+      "speaker": "Marki",
+      "statement": "I never went anywhere near the Barn."
+    },
+    {
+      "speaker": "Bego",
+      "statement": "The Shovel was lying beside the Orchard."
+    },
+    {
+      "speaker": "Baxi",
+      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Stick."
+    }
+  ],
+
+  "suspects": [
+    "Marki",
+    "Bego",
+    "Baxi"
+  ],
+
+  "weapons": [
+    "Stick",
+    "Rock",
+    "Shovel"
+  ],
+
+  "locations": [
+    "Barn",
+    "Orchard",
+    "Walnut Tree"
+  ],
+
+  "clues": [
+    "Bego was seen near the Walnut Tree.",
+    "Marki never carried the Rock.",
+    "The Stick was not taken to the Barn.",
+    "Baxi was not in the Orchard."
+  ],
+
+  "solution": {
+    "suspect": "Bego",
+    "weapon": "Rock",
+    "location": "Walnut Tree"
+  }
+}

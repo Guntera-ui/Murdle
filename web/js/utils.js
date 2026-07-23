@@ -69,10 +69,25 @@ function createCategories(puzzle) {
 
     };
 
-    addCategory("suspects", "Suspects");
-    addCategory("weapons", "Weapons");
-    addCategory("motives", "Motives");
-    addCategory("locations", "Locations");
+    addCategory(
+        "suspects",
+        "Persons of Interest"
+    );
+
+    addCategory(
+        "weapons",
+        "Known Weapons"
+    );
+
+    addCategory(
+        "motives",
+        "Possible Motives"
+    );
+
+    addCategory(
+        "locations",
+        "Crime Scenes"
+    );
 
     return {
 

@@ -15,38 +15,68 @@
 </head>
 <body>
 
-<header>
-    <h1 id="title">Loading...</h1>
-</header>
-
 <div class="main-layout">
 
     <aside class="sidebar">
 
         <section class="case-section">
-            <h2>Clues</h2>
-            <ol id="clues"></ol>
-        </section>
 
-        <div id="categories"></div>
+            <div id="case-file-header">
+
+                <h2>CASE FILE</h2>
+
+                <div id="case-file-number"></div>
+
+                <h3 id="case-title"></h3>
+
+                <div id="case-meta">
+
+                    <div id="case-victim"></div>
+
+                    <div id="case-status-line"></div>
+
+                </div>
+
+            </div>
+
+            <div id="case-file-content">
+
+                <section id="incident-section"></section>
+
+                <section id="interviews-section"></section>
+
+                <section class="case-subsection">
+
+                    <h2 class="case-heading">
+                        CLUES & EVIDENCE
+                    </h2>
+
+                    <ol id="clues"></ol>
+
+                </section>
+
+                <div id="categories"></div>
+
+            </div>
+
+        </section>
 
     </aside>
 
     <main class="grid-area">
 
-    <h2>Deduction Board</h2>
+        <h2>Deduction Board</h2>
 
-    <div id="master-grid"></div>
+        <div id="master-grid"></div>
 
-    <section
-        id="accusation"
-        class="case-section">
-    </section>
+        <section
+            id="accusation"
+            class="case-section">
+        </section>
 
-</main>
+    </main>
 
 </div>
-
 
 <div id="end-screen" class="hidden">
 
