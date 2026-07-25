@@ -4,7 +4,7 @@
   "title": "THE ENAGETI INCIDENT",
   "status": "OPEN",
 
-  "incidentReport": "Ginger was found beneath the Walnut Tree shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+  "incidentReport": "Ginger was found beneath the Garden shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
 
   "victim": {
     "name": "Ginger",
@@ -15,15 +15,15 @@
   "interviews": [
     {
       "speaker": "Marki",
-      "statement": "I never went anywhere near the Barn."
+      "statement": "I never went anywhere near the Warehouse."
     },
     {
       "speaker": "Bego",
-      "statement": "The Shovel was lying beside the Orchard."
+      "statement": "The Crowbar was lying beside the Garden."
     },
     {
       "speaker": "Baxi",
-      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Stick."
+      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Rock."
     }
   ],
 
@@ -34,27 +34,27 @@
   ],
 
   "weapons": [
-    "Stick",
+    "Crowbar",
     "Rock",
-    "Shovel"
+    "Brick"
   ],
 
   "locations": [
-    "Barn",
-    "Orchard",
-    "Walnut Tree"
+    "Warehouse",
+    "Garden",
+    "House"
   ],
 
   "clues": [
-    "Bego was seen near the Walnut Tree.",
+    "Bego was seen near the House.",
     "Marki never carried the Rock.",
-    "The Stick was not taken to the Barn.",
-    "Baxi was not in the Orchard."
+    "The Crowbar was not taken to the Warehouse.",
+    "Baxi was not in the Garden."
   ],
 
   "solution": {
     "suspect": "Bego",
     "weapon": "Rock",
-    "location": "Walnut Tree"
+    "location": "House"
   }
 }

@@ -2,17 +2,34 @@ function renderMatrix(
     playerMatrix,
     workingMatrix,
     clickHandler,
+    verticalCategoryId,
+    horizontalCategoryId,
     showHeader = true,
     showRowLabels = true
-){
+) {
+
+    const vertical =
+        workingMatrix.categoryA.id ===
+        verticalCategoryId
+            ? workingMatrix.categoryA
+            : workingMatrix.categoryB;
+
+    const horizontal =
+        workingMatrix.categoryA.id ===
+        horizontalCategoryId
+            ? workingMatrix.categoryA
+            : workingMatrix.categoryB;
+
     const rows =
-        workingMatrix.categoryA.items;
+        vertical.items;
 
     const columns =
-        workingMatrix.categoryB.items;
+        horizontal.items;
 
-    const state =
-        workingMatrix.grid;
+    const flipped =
+        workingMatrix.categoryA.id !==
+        vertical.id;
+
     const matrixElement =
         document.createElement("div");
 
@@ -51,8 +68,24 @@ function renderMatrix(
             cell.className =
                 "header-cell";
 
-            cell.textContent =
-                abbreviation(column);
+            const img =
+                document.createElement("img");
+
+            img.src =
+                column.icon;
+
+            img.alt =
+                column.name;
+
+            img.className =
+                "matrix-icon";
+
+            cell.appendChild(
+                img
+            );
+
+            cell.title =
+                column.name;
 
             header.appendChild(
                 cell
@@ -68,7 +101,7 @@ function renderMatrix(
 
 
 
-    rows.forEach(rowName => {
+    rows.forEach(rowItem => {
 
         const row =
             document.createElement("div");
@@ -86,8 +119,24 @@ function renderMatrix(
             label.className =
                 "row-label";
 
-            label.textContent =
-                abbreviation(rowName);
+            const img =
+                document.createElement("img");
+
+            img.src =
+                rowItem.icon;
+
+            img.alt =
+                rowItem.name;
+
+            img.className =
+                "matrix-icon";
+
+            label.appendChild(
+                img
+            );
+
+            label.title =
+                rowItem.name;
 
             row.appendChild(
                 label
@@ -97,41 +146,49 @@ function renderMatrix(
 
 
 
-        columns.forEach(columnName => {
+        columns.forEach(column => {
 
-        const playerValue =
-            playerMatrix.grid[rowName][columnName];
+            const playerValue =
+                flipped
+                    ? playerMatrix.grid[column.name][rowItem.name]
+                    : playerMatrix.grid[rowItem.name][column.name];
 
-        const workingValue =
-            workingMatrix.grid[rowName][columnName];
-                const {
-            element: cell,
-            isSolverMark
-        } = createCell(
-            playerValue,
-            workingValue
-        );
+            const workingValue =
+                flipped
+                    ? workingMatrix.grid[column.name][rowItem.name]
+                    : workingMatrix.grid[rowItem.name][column.name];
 
-        cell.addEventListener(
-            "click",
-            () => {
+            const {
+                element: cell,
+                isSolverMark
+            } = createCell(
+                playerValue,
+                workingValue
+            );
 
-                if (isSolverMark) {
-                    return;
+            cell.addEventListener(
+                "click",
+                () => {
+
+                    if (isSolverMark) {
+                        return;
+                    }
+
+                    clickHandler(
+                        flipped
+                            ? column.name
+                            : rowItem.name,
+                        flipped
+                            ? rowItem.name
+                            : column.name
+                    );
+
                 }
+            );
 
-                clickHandler(
-                    rowName,
-                    columnName
-                );
-
-            }
-        );
-
-        row.appendChild(
-            cell
-        );
-
+            row.appendChild(
+                cell
+            );
 
         });
 

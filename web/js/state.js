@@ -4,19 +4,29 @@ function createGrid(rows, columns) {
 
     rows.forEach(row => {
 
-        grid[row] = {};
+        const rowName =
+            typeof row === "object"
+                ? row.name
+                : row;
+
+        grid[rowName] = {};
 
         columns.forEach(column => {
 
-            grid[row][column] = "";
+            const columnName =
+                typeof column === "object"
+                    ? column.name
+                    : column;
+
+            grid[rowName][columnName] = "";
 
         });
 
     });
 
     return grid;
-}
 
+}
 function createBoard(puzzle) {
 
     const categories = createCategories(puzzle);

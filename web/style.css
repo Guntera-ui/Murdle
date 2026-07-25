@@ -93,14 +93,55 @@ h2 {
 
 .master-board {
 
-    display: flex;
-
-    flex-direction: column;
+    display: grid;
 
     gap: 0;
 
+    width: fit-content;
+
 }
 
+.board-label {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    color: #7b2135;
+
+    padding: 8px;
+
+}
+.board-label.top {
+
+    height: 64px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+
+    text-align: center;
+
+}
+.board-label.left {
+
+    writing-mode: vertical-rl;
+
+    transform: rotate(180deg);
+
+    min-width: 64px;
+
+}
 .board-row {
 
     display: flex;
@@ -151,7 +192,15 @@ h2 {
     overflow: hidden;
 
 }
+.header-spacer {
 
+    width: 64px;
+    height: 64px;
+
+    visibility: hidden;
+    border: none;
+
+}
 .header-spacer,
 .header-cell,
 .row-label {
@@ -1004,3 +1053,28 @@ h2 {
     font-size: 1.05rem;
 
 }
+
+#categories li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.list-icon {
+
+    width: 36px;
+    height: 36px;
+
+    margin-right: 12px;
+
+}
+
+.matrix-icon {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+}
+
+

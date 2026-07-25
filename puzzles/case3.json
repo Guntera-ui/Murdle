@@ -1,0 +1,59 @@
+{
+  "id": 1,
+  "caseNumber": "001",
+  "title": "THE ENAGETI INCIDENT",
+  "status": "OPEN",
+
+  "incidentReport": "Ginger was found beneath the Garden shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+
+  "victim": {
+    "name": "Ginger",
+    "occupation": "Village Guardian",
+    "causeOfDeath": "Head Injury"
+  },
+
+  "interviews": [
+    {
+      "speaker": "Marki",
+      "statement": "I never went anywhere near the Warehouse."
+    },
+    {
+      "speaker": "Bego",
+      "statement": "The Crowbar was lying beside the Garden."
+    },
+    {
+      "speaker": "Baxi",
+      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Rock."
+    }
+  ],
+
+  "suspects": [
+    "Marki",
+    "Bego",
+    "Baxi"
+  ],
+
+  "weapons": [
+    "Crowbar",
+    "Rock",
+    "Brick"
+  ],
+
+  "locations": [
+    "Warehouse",
+    "Garden",
+    "House"
+  ],
+
+"clues": [
+  { "text": "Bego was seen near the House." },
+  { "text": "Marki never carried the Rock." },
+  { "text": "The Crowbar was not taken to the Warehouse." },
+  { "text": "Baxi was not in the Garden." }
+],
+  "solution": {
+    "suspect": "Bego",
+    "weapon": "Rock",
+    "location": "House"
+  }
+}

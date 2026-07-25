@@ -56,11 +56,9 @@ function renderPuzzle(
             puzzle
         ).list;
 
-    renderList(
-        puzzle.clues,
-        "clues"
+    renderClues(
+        puzzle.clues
     );
-
     renderCategories(
         categories
     );

@@ -55,17 +55,58 @@ function createCategories(puzzle) {
 
     const addCategory = (id, label) => {
 
-        if (puzzle[id]) {
-
-            list.push({
-
-                id,
-                label,
-                items: puzzle[id]
-
-            });
-
+        if (!puzzle[id]) {
+            return;
         }
+
+        const items = puzzle[id].map((name, index) => {
+
+            let icon;
+
+            switch (id) {
+
+                case "suspects":
+                    icon = getIconPath(
+                        "suspects",
+                        Icons.suspects[index]
+                    );
+                    break;
+
+                case "weapons":
+                    icon = getIconPath(
+                        "weapons",
+                        Icons.weapons[name]
+                    );
+                    break;
+
+                case "locations":
+                    icon = getIconPath(
+                        "locations",
+                        Icons.locations[name]
+                    );
+                    break;
+
+                case "motives":
+                    icon = getIconPath(
+                        "motives",
+                        Icons.motives[name]
+                    );
+                    break;
+
+            }
+
+            return {
+                name,
+                icon
+            };
+
+        });
+
+        list.push({
+            id,
+            label,
+            items
+        });
 
     };
 
@@ -107,7 +148,21 @@ function createCategories(puzzle) {
     };
 
 }
+function getMatrixByCategories(board, first, second) {
 
+    return board.matrices.find(matrix =>
+
+        (matrix.categoryA.id === first &&
+         matrix.categoryB.id === second)
+
+        ||
+
+        (matrix.categoryA.id === second &&
+         matrix.categoryB.id === first)
+
+    );
+
+}
 function getMatrix(board, matrixId) {
 
     return board.matrices.find(

@@ -20,6 +20,7 @@ function updateBoard(
 
 }
 
+
 function renderMasterGrid(
     puzzle,
     playerBoard
@@ -37,28 +38,90 @@ function renderMasterGrid(
 
     container.innerHTML = "";
 
-
-
     const boardElement =
         document.createElement("div");
 
     boardElement.className =
         "master-board";
 
-
-
     const categories =
         createCategories(
             puzzle
         ).list;
 
+    const topAxis =
+        categories.length === 3
+
+            ? [
+                "suspects",
+                "locations"
+            ]
+
+            : [
+                "suspects",
+                "motives",
+                "locations"
+            ];
+
+    const leftAxis =
+        categories.length === 3
+
+            ? [
+                "weapons",
+                "locations"
+            ]
+
+            : [
+                "weapons",
+                "locations",
+                "motives"
+            ];
 
 
-    for (
-        let i = 0;
-        i < categories.length - 1;
-        i++
-    ) {
+
+    const topRow =
+        document.createElement("div");
+
+    topRow.className =
+        "board-row";
+
+    const spacer =
+        document.createElement("div");
+
+    spacer.className =
+        "board-label left";
+
+    topRow.appendChild(
+        spacer
+    );
+
+    topAxis.forEach(topId => {
+
+        const label =
+            document.createElement("div");
+
+        label.className =
+            "board-label top";
+
+        label.textContent =
+            getCategoryLabel(topId);
+
+        topRow.appendChild(
+            label
+        );
+
+    });
+
+    boardElement.appendChild(
+        topRow
+    );
+
+
+
+    const renderedPairs =
+        new Set();
+
+    leftAxis.forEach((leftId, rowIndex) => {
 
         const boardRow =
             document.createElement("div");
@@ -67,68 +130,124 @@ function renderMasterGrid(
             "board-row";
 
 
+   
+        const leftLabel =
+            document.createElement("div");
 
-        for (
-            let j = i + 1;
-            j < categories.length;
-            j++
-        ) {
+        leftLabel.className =
+            "board-label left";
 
-            const matrixId =
-                `${categories[i].id}|${categories[j].id}`;
+        leftLabel.textContent =
+            getCategoryLabel(leftId);
+
+        boardRow.appendChild(
+            leftLabel
+        );
+
+
+        topAxis.forEach((topId, columnIndex) => {
+
+            if (leftId === topId) {
+                return;
+            }
+
+            const pairKey =
+                [leftId, topId]
+                    .sort()
+                    .join("|");
+
+            if (renderedPairs.has(pairKey)) {
+                return;
+            }
+
+            renderedPairs.add(pairKey);
 
             const playerMatrix =
-    getMatrix(
-        playerBoard,
-        matrixId
-    );
+                getMatrixByCategories(
+                    playerBoard,
+                    leftId,
+                    topId
+                );
 
-        const workingMatrix =
-            getMatrix(
-                workingBoard,
-                matrixId
-            );
+            if (!playerMatrix) {
+                return;
+            }
 
-        const matrixElement =
-            renderMatrix(
+            const workingMatrix =
+                getMatrixByCategories(
+                    workingBoard,
+                    leftId,
+                    topId
+                );
 
-                playerMatrix,
-                workingMatrix,
+            const matrixElement =
+                renderMatrix(
 
-                (row, column) => {
+                    playerMatrix,
+                    workingMatrix,
 
-                    updateBoard(
-                        puzzle,
-                        playerBoard,
-                        matrixId,
-                        row,
-                        column
-                    );
+                    (row, column) => {
 
-                },
+                        updateBoard(
+                            puzzle,
+                            playerBoard,
+                            playerMatrix.id,
+                            row,
+                            column
+                        );
 
-                i === 0,
-                j === i + 1
+                    },
 
-            );
+                    leftId,
+                    topId,
+
+                    rowIndex === 0,
+                    columnIndex === 0
+
+                );
+
             boardRow.appendChild(
                 matrixElement
             );
 
+        });
+
+        if (boardRow.children.length > 1) {
+
+            boardElement.appendChild(
+                boardRow
+            );
+
         }
 
-
-
-        boardElement.appendChild(
-            boardRow
-        );
-
-    }
-
-
+    });
 
     container.appendChild(
         boardElement
     );
+
+}
+
+
+function getCategoryLabel(id) {
+
+    switch (id) {
+
+        case "suspects":
+            return "PERSONS OF INTEREST";
+
+        case "weapons":
+            return "KNOWN WEAPONS";
+
+        case "locations":
+            return "CRIME SCENES";
+
+        case "motives":
+            return "POSSIBLE MOTIVES";
+
+        default:
+            return id;
+
+    }
 
 }

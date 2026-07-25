@@ -1,68 +1,71 @@
 {
   "id": 2,
   "caseNumber": "002",
-  "title": "THE BLACKWOOD KAKO",
+  "title": "THE TOLL OF EMBERFALL",
   "status": "OPEN",
 
-  "incidentReport": "Officers arrived shortly after sunset to find the victim inside the library. Four individuals remained at the estate, each offering a different account of the evening's events. Their testimonies, together with the collected evidence, should be enough to identify the culprit.",
+  "incidentReport": "Corvin, the village toll collector, was found dead beneath the old stone Bridge just after first light, the river still lapping at his boots. He had collected the night tolls for twenty years and made no shortage of enemies among those who resented paying them. The murder weapon was left at the scene, half-submerged in the shallows. Four animals were seen abroad in Emberfall that night: Fennick, Orla, Petra, and Dashel.",
 
   "victim": {
-    "name": "Lord Henry Blackwood",
-    "occupation": "Estate Owner",
-    "causeOfDeath": "Stab Wound"
+    "name": "Corvin",
+    "occupation": "Toll Collector",
+    "causeOfDeath": "Strangulation"
   },
 
   "interviews": [
     {
-      "speaker": "Alice",
-      "statement": "I spent most of the evening reading. I never entered the library."
+      "speaker": "Fennick",
+      "statement": "I stayed in the Chapel all night, praying beside the old Poison cabinet they keep locked in the vestry."
     },
     {
-      "speaker": "Bob",
-      "statement": "Charlie looked nervous after dinner, but I don't know why."
+      "speaker": "Petra",
+      "statement": "I was counting coins at the Mill until dawn. The Cleaver never left its rack, and neither did I."
     },
     {
-      "speaker": "Charlie",
-      "statement": "I've never touched the pistol."
+      "speaker": "Dashel",
+      "statement": "I spent the whole night in the Stable with the Lantern for company. I never so much as touched the Chain."
     },
     {
-      "speaker": "Diana",
-      "statement": "The kitchen was empty when I walked through it."
+      "speaker": "Orla",
+      "statement": "Believe what you like, but I never crossed the old Bridge that night."
     }
   ],
 
   "suspects": [
-    "Alice",
-    "Bob",
-    "Charlie",
-    "Diana"
+    "Fennick",
+    "Orla",
+    "Petra",
+    "Dashel"
   ],
 
   "weapons": [
-    "Knife",
     "Poison",
-    "Rope",
-    "Pistol"
+    "Cleaver",
+    "Lantern",
+    "Chain"
   ],
 
   "locations": [
-    "Library",
-    "Kitchen",
-    "Garden",
-    "Study"
+    "Chapel",
+    "Mill",
+    "Stable",
+    "Bridge"
   ],
 
   "clues": [
-    "Alice was not in the Library.",
-    "The Rope was brought to the Kitchen.",
-    "Charlie did not carry the Pistol.",
-    "Diana carried Poison.",
-    "The Garden was not visited by Alice."
+    "The vestry's Poison cabinet was found sealed and undisturbed, exactly as the sexton had locked it the evening before.",
+    "The Mill's Cleaver was hanging clean on its rack at dawn, uncounted among the missing tools.",
+    "The Stable's Lantern had burned steadily all night, still hanging on its usual hook.",
+    "A length of Chain, slick with river water, was found coiled at the foot of the Bridge.",
+    "Fennick was seen kneeling in the Chapel when the midnight bell tolled.",
+    "Petra was watched counting coins at the Mill by the miller himself, who never saw her leave.",
+    "Dashel was heard mucking out the Stable stalls long after moonrise, never once crossing the millpond.",
+    "Fresh riverbank mud was found on only one set of boots left drying by the Bridge that morning."
   ],
 
   "solution": {
-    "suspect": "Alice",
-    "weapon": "Knife",
-    "location": "Library"
+    "suspect": "Orla",
+    "weapon": "Chain",
+    "location": "Bridge"
   }
 }

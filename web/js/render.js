@@ -10,10 +10,31 @@ function renderList(items, elementId) {
         const li =
             document.createElement("li");
 
-        li.textContent = item;
+        const img =
+            document.createElement("img");
+
+        img.src =
+            item.icon;
+
+        img.alt =
+            item.name;
+
+        img.className =
+            "list-icon";
+
+        const span =
+            document.createElement("span");
+
+        span.textContent =
+            item.name;
+
+        li.appendChild(img);
+        li.appendChild(span);
 
         list.appendChild(li);
+
     });
+
 }
 function renderCategories(categories) {
 
@@ -152,6 +173,28 @@ function renderInterviews(interviews) {
         section.appendChild(
             statement
         );
+
+    });
+
+}
+
+
+function renderClues(clues) {
+
+    const list =
+        document.getElementById("clues");
+
+    list.innerHTML = "";
+
+    clues.forEach((clue, index) => {
+
+        const li =
+            document.createElement("li");
+
+        li.textContent =
+            clue;
+
+        list.appendChild(li);
 
     });
 
