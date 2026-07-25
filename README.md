@@ -25,7 +25,7 @@ cd Murdle
 Start the server.
 
 ```bash
-go run ./cmd/server
+go run ./cmd/server/main.go
 ```
 
 Open:
