@@ -8,7 +8,8 @@ const puzzleOrder = [
 
 ];
 
-let currentPuzzleIndex = 0;
+let currentPuzzleIndex =
+    getCurrentCaseId() - 1;
 
 
 function renderPuzzle(
@@ -59,6 +60,7 @@ function renderPuzzle(
     renderClues(
         puzzle.clues
     );
+
     renderCategories(
         categories
     );
@@ -103,9 +105,8 @@ function loadNextPuzzle() {
         puzzleOrder.length - 1
     ) {
 
-        alert(
-            "You have completed every available case."
-        );
+        window.location.href =
+            "index.html";
 
         return;
 

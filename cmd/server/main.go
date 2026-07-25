@@ -16,6 +16,10 @@ func main() {
 		"/api/puzzle/",
 		handlers.GetPuzzle,
 	)
+	http.HandleFunc(
+		"/api/cases",
+		handlers.GetCases,
+	)
 
 	fmt.Println("Server running on :8080")
 

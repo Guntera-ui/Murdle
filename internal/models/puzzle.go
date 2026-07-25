@@ -19,10 +19,12 @@ type Interview struct {
 }
 
 type Puzzle struct {
-	ID         int    `json:"id"`
-	CaseNumber string `json:"caseNumber"`
-	Title      string `json:"title"`
-	Status     string `json:"status"`
+	ID          int    `json:"id"`
+	CaseNumber  string `json:"caseNumber"`
+	Title       string `json:"title"`
+	Status      string `json:"status"`
+	Description string `json:"description"`
+	Difficulty  string `json:"difficulty"`
 
 	Victim         Victim      `json:"victim"`
 	IncidentReport string      `json:"incidentReport"`

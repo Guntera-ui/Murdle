@@ -170,3 +170,16 @@ function getMatrix(board, matrixId) {
     );
 
 }
+
+function getCurrentCaseId() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return Number(
+        params.get("id") ?? 1
+    );
+
+}
