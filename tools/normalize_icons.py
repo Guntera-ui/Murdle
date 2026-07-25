@@ -1,202 +1,53 @@
-#!/usr/bin/env python3
-
 from pathlib import Path
 import re
-import argparse
 
-ROOT = Path("web/assets/icons")
+SOURCE = Path("web/assets/icons")
+DEST = Path("web/assets/icons_generated")
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    "--dry-run",
-    action="store_true",
-    help="Show what would change without modifying files."
+BACKGROUND = "#f6f2e8"
+ICON = "#222222"
+
+COLOR_MAP = {
+    "#000000": BACKGROUND,
+    "#000": BACKGROUND,
+
+    "#ffffff": ICON,
+    "#fff": ICON,
+
+    "#f7efd6": ICON,
+    "#f5f1e8": ICON,
+    "#faf4e8": ICON,
+}
+
+BACKGROUND_RE = re.compile(
+    r'<path\b[^>]*d=["\']M0 0h512v512H0z["\'][^>]*>\s*</path>',
+    re.IGNORECASE | re.DOTALL,
 )
 
-args = parser.parse_args()
-
 processed = 0
-modified = 0
-backups = 0
-backgrounds_removed = 0
-fills_changed = 0
-strokes_changed = 0
-warnings = []
 
+for svg in SOURCE.rglob("*.svg"):
 
-def remove_background(text):
-    global backgrounds_removed
+    relative = svg.relative_to(SOURCE)
+    output = DEST / relative
 
-    patterns = [
+    output.parent.mkdir(parents=True, exist_ok=True)
 
-        r'<rect[^>]*fill="#(?:000|000000)"[^>]*/?>',
+    text = svg.read_text(encoding="utf-8")
 
-        r'<path[^>]*d="M0 0h512v512H0z"[^>]*fill="#(?:000|000000)"[^>]*>\s*</path>',
+    # Remove full-page background
+    text = BACKGROUND_RE.sub("", text)
 
-        r'<path[^>]*d="M0 0h512v512H0z"[^>]*fill="#(?:000|000000)"[^>]*/?>',
-
-    ]
-
-    original = text
-
-    for pattern in patterns:
+    # Swap colors
+    for old, new in COLOR_MAP.items():
         text = re.sub(
-            pattern,
-            "",
+            re.escape(old),
+            new,
             text,
-            flags=re.IGNORECASE
+            flags=re.IGNORECASE,
         )
 
-    if text != original:
-        backgrounds_removed += 1
-
-    return text
-
-
-def replace_colors(text):
-
-    global fills_changed
-    global strokes_changed
-
-    fill_patterns = [
-        r'fill="#000000"',
-        r'fill="#000"',
-        r"fill='#000000'",
-        r"fill='#000'",
-    ]
-
-    stroke_patterns = [
-        r'stroke="#000000"',
-        r'stroke="#000"',
-        r"stroke='#000000'",
-        r"stroke='#000'",
-    ]
-
-    for pattern in fill_patterns:
-
-        matches = len(
-            re.findall(
-                pattern,
-                text,
-                flags=re.IGNORECASE
-            )
-        )
-
-        if matches:
-
-            fills_changed += matches
-
-            text = re.sub(
-                pattern,
-                'fill="currentColor"',
-                text,
-                flags=re.IGNORECASE
-            )
-
-    for pattern in stroke_patterns:
-
-        matches = len(
-            re.findall(
-                pattern,
-                text,
-                flags=re.IGNORECASE
-            )
-        )
-
-        if matches:
-
-            strokes_changed += matches
-
-            text = re.sub(
-                pattern,
-                'stroke="currentColor"',
-                text,
-                flags=re.IGNORECASE
-            )
-
-    return text
-
-
-def remove_size(text):
-
-    text = re.sub(
-        r'\swidth="\d+"',
-        "",
-        text,
-        flags=re.IGNORECASE
-    )
-
-    text = re.sub(
-        r'\sheight="\d+"',
-        "",
-        text,
-        flags=re.IGNORECASE
-    )
-
-    text = re.sub(
-        r'\sstyle="[^"]*(width|height)[^"]*"',
-        "",
-        text,
-        flags=re.IGNORECASE
-    )
-
-    return text
-
-
-for svg in ROOT.rglob("*.svg"):
-
+    output.write_text(text, encoding="utf-8")
     processed += 1
 
-    original = svg.read_text(
-        encoding="utf-8"
-    )
-
-    cleaned = original
-
-    cleaned = remove_background(cleaned)
-    cleaned = replace_colors(cleaned)
-    cleaned = remove_size(cleaned)
-
-    if "#fff" in cleaned.lower() or "#ffffff" in cleaned.lower():
-        warnings.append(svg)
-
-    if cleaned != original:
-
-        modified += 1
-
-        if not args.dry_run:
-
-            backup = svg.with_suffix(".svg.bak")
-
-            if not backup.exists():
-
-                backup.write_text(
-                    original,
-                    encoding="utf-8"
-                )
-
-                backups += 1
-
-            svg.write_text(
-                cleaned,
-                encoding="utf-8"
-            )
-
-
-print()
-print("========== SVG NORMALIZER ==========")
-print(f"Processed            : {processed}")
-print(f"Modified             : {modified}")
-print(f"Backups created      : {backups}")
-print(f"Backgrounds removed  : {backgrounds_removed}")
-print(f"Fill changes         : {fills_changed}")
-print(f"Stroke changes       : {strokes_changed}")
-print(f"Needs manual review  : {len(warnings)}")
-
-if warnings:
-
-    print()
-    print("SVGs containing white fills:")
-
-    for file in warnings:
-        print(" -", file)
+print(f"Generated {processed} SVGs in '{DEST}'")
