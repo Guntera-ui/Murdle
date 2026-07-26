@@ -1,52 +1,60 @@
 {
-  "id": 3,
-  "caseNumber": "003",
-  "title": "THE PHARAOH'S SIDE-EYE",
-  "description": "A masquerade gala ends with the host dead and everyone's alibi a little too perfect.",
-  "difficulty": "Easy",
-  "status": "OPEN",
-
-  "incidentReport": "Percival, host of the annual masquerade gala, was found dead shortly before midnight. The murder weapon was left at the scene. Cleopatra, Wolf, and Kenku were the only guests unaccounted for at the final toast.",
-
-  "victim": {
-    "name": "Percival",
-    "occupation": "Gala Host",
-    "causeOfDeath": "Blunt Force Trauma"
-  },
-
-  "interviews": [
-    {
-      "speaker": "Cleopatra",
-      "statement": "I never left the Bedroom — my admirers can vouch for every second."
+    "id": 3,
+    "caseNumber": "003",
+    "title": "THE PHARAOH'S SIDE-EYE",
+    "status": "OPEN",
+    "description": "A masquerade gala ends with the host dead and everyone's alibi a little too perfect.",
+    "difficulty": "Easy",
+    "victim": {
+        "name": "Percival",
+        "occupation": "Gala Host",
+        "causeOfDeath": "Blunt Force Trauma"
     },
-    {
-      "speaker": "Kenku",
-      "statement": "I spent the whole night grumbling in the Office. Loudly."
+    "incidentReport": "Percival, host of the annual masquerade gala, was found dead shortly before midnight. The murder weapon was left at the scene. Cleopatra, Wolf, and Kenku were the only guests unaccounted for at the final toast.",
+    "interviews": [
+        {
+            "speaker": "Cleopatra",
+            "statement": "I never left the Bedroom — my admirers can vouch for every second."
+        },
+        {
+            "speaker": "Kenku",
+            "statement": "I spent the whole night grumbling in the Office. Loudly."
+        },
+        {
+            "speaker": "Wolf",
+            "statement": "I wasn't anywhere near the Dining Room, I swear on my tail."
+        }
+    ],
+    "suspects": [
+        "Cleopatra",
+        "Wolf",
+        "Kenku"
+    ],
+    "suspectIcons": {
+        "Cleopatra": "alien-stare",
+        "Kenku": "cleopatra",
+        "Wolf": "mustache"
     },
-    {
-      "speaker": "Wolf",
-      "statement": "I wasn't anywhere near the Dining Room, I swear on my tail."
+    "weapons": [
+        "Poison",
+        "Trophy",
+        "Baseball Bat"
+    ],
+    "locations": [
+        "Bedroom",
+        "Office",
+        "Dining Room"
+    ],
+    "clues": [
+        "The Poison vial was found sealed, its wax stamp unbroken, in the Bedroom nightstand.",
+        "The Trophy still gleamed, untouched, on the Office shelf.",
+        "The Baseball Bat, splintered, was found dropped in the Dining Room.",
+        "Cleopatra was holding court in the Bedroom, entertaining a queue of admirers all night.",
+        "Kenku was spotted squawking complaints in the Office about the noise."
+    ],
+    "solution": {
+        "suspect": "Wolf",
+        "weapon": "Baseball Bat",
+        "location": "Dining Room"
     }
-  ],
-
-  "suspects": ["Cleopatra", "Wolf", "Kenku"],
-
-
-  "weapons": ["Poison", "Trophy", "Baseball Bat"],
-
-  "locations": ["Bedroom", "Office", "Dining Room"],
-
-  "clues": [
-    "The Poison vial was found sealed, its wax stamp unbroken, in the Bedroom nightstand.",
-    "The Trophy still gleamed, untouched, on the Office shelf.",
-    "The Baseball Bat, splintered, was found dropped in the Dining Room.",
-    "Cleopatra was holding court in the Bedroom, entertaining a queue of admirers all night.",
-    "Kenku was spotted squawking complaints in the Office about the noise."
-  ],
-
-  "solution": {
-    "suspect": "Wolf",
-    "weapon": "Baseball Bat",
-    "location": "Dining Room"
-  }
 }

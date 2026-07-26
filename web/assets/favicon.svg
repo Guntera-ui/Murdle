@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- badge background -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#7a2438" stroke="#2a1a12" stroke-width="2"/>
+
+  <!-- penguin body -->
+  <ellipse cx="26" cy="46" rx="14" ry="13" fill="#1c1712"/>
+  <circle cx="26" cy="27" r="11" fill="#1c1712"/>
+
+  <!-- deerstalker cap -->
+  <path d="M15 20 C15 8 37 8 37 20 C32 15 20 15 15 20 Z" fill="#f7f3e9" stroke="#1c1712" stroke-width="1.4"/>
+  <circle cx="26" cy="10.5" r="2.3" fill="#7a2438" stroke="#1c1712" stroke-width="1"/>
+  <rect x="11" y="26" width="6" height="14" rx="3" fill="#f7f3e9" stroke="#1c1712" stroke-width="1.2" transform="rotate(-14 14 33)"/>
+  <rect x="35" y="26" width="6" height="14" rx="3" fill="#f7f3e9" stroke="#1c1712" stroke-width="1.2" transform="rotate(14 38 33)"/>
+
+  <!-- belly -->
+  <ellipse cx="27" cy="48" rx="8" ry="8" fill="#f7f3e9"/>
+
+  <!-- eye -->
+  <circle cx="31" cy="26" r="4.4" fill="#f7f3e9"/>
+  <circle cx="32" cy="26" r="2" fill="#1c1712"/>
+
+  <!-- beak -->
+  <path d="M37 29 L45 31 L37 34 Z" fill="#7a2438"/>
+
+  <!-- magnifying glass -->
+  <circle cx="48" cy="45" r="8" fill="rgba(28,23,18,.18)" stroke="#f7f3e9" stroke-width="3"/>
+  <line x1="53.5" y1="50.5" x2="58.5" y2="55.5" stroke="#f7f3e9" stroke-width="4.2" stroke-linecap="round"/>
+</svg>

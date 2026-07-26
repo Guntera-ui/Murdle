@@ -1,52 +1,60 @@
 {
-  "id": 2,
-  "caseNumber": "002",
-  "title": "THE CLOCK TOWER CAPER",
-  "description": "The town's beloved clock keeper is found dead among his own gears, and someone's alibi doesn't tick right.",
-  "difficulty": "Easy",
-  "status": "OPEN",
-
-  "incidentReport": "Tobias, keeper of the Old Clock Tower, was found sprawled beside his shattered gearwork shortly after sunrise. The murder weapon was left at the scene. Wanda, Drac, and Mustachio were the only figures seen wandering the town that night.",
-
-  "victim": {
-    "name": "Tobias",
-    "occupation": "Clock Tower Keeper",
-    "causeOfDeath": "Head Injury"
-  },
-
-  "interviews": [
-    {
-      "speaker": "Wanda",
-      "statement": "I never left my cauldron in the Library, ask the fumes."
+    "id": 2,
+    "caseNumber": "002",
+    "title": "THE CLOCK TOWER CAPER",
+    "status": "OPEN",
+    "description": "The town's beloved clock keeper is found dead among his own gears, and someone's alibi doesn't tick right.",
+    "difficulty": "Easy",
+    "victim": {
+        "name": "Tobias",
+        "occupation": "Clock Tower Keeper",
+        "causeOfDeath": "Head Injury"
     },
-    {
-      "speaker": "Drac",
-      "statement": "I was stuck guarding the Garage. Don't ask about the garlic bread."
+    "incidentReport": "Tobias, keeper of the Old Clock Tower, was found sprawled beside his shattered gearwork shortly after sunrise. The murder weapon was left at the scene. Wanda, Drac, and Mustachio were the only figures seen wandering the town that night.",
+    "interviews": [
+        {
+            "speaker": "Wanda",
+            "statement": "I never left my cauldron in the Library, ask the fumes."
+        },
+        {
+            "speaker": "Drac",
+            "statement": "I was stuck guarding the Garage. Don't ask about the garlic bread."
+        },
+        {
+            "speaker": "Mustachio",
+            "statement": "I never set foot in that Clock Tower."
+        }
+    ],
+    "suspects": [
+        "Wanda",
+        "Drac",
+        "Mustachio"
+    ],
+    "suspectIcons": {
+        "Drac": "mustache",
+        "Mustachio": "vampire-dracula",
+        "Wanda": "cat"
     },
-    {
-      "speaker": "Mustachio",
-      "statement": "I never set foot in that Clock Tower."
+    "weapons": [
+        "Lighter",
+        "Rock",
+        "Scissors"
+    ],
+    "locations": [
+        "Clock Tower",
+        "Library",
+        "Garage"
+    ],
+    "clues": [
+        "The Lighter was found cold and unused in the Garage toolbox.",
+        "The Scissors never left the Library shelf all night.",
+        "The Rock was found lodged in the Clock Tower's shattered gearwork.",
+        "Wanda was seen dusting the Library shelves the entire night.",
+        "Drac was seen guarding the Garage, grumbling about garlic bread deliveries."
+    ],
+    "solution": {
+        "suspect": "Mustachio",
+        "weapon": "Rock",
+        "location": "Clock Tower"
     }
-  ],
-
-  "suspects": ["Wanda", "Drac", "Mustachio"],
-
-
-  "weapons": ["Lighter", "Rock", "Scissors"],
-
-  "locations": ["Clock Tower", "Library", "Garage"],
-
-  "clues": [
-    "The Lighter was found cold and unused in the Garage toolbox.",
-    "The Scissors never left the Library shelf all night.",
-    "The Rock was found lodged in the Clock Tower's shattered gearwork.",
-    "Wanda was seen dusting the Library shelves the entire night.",
-    "Drac was seen guarding the Garage, grumbling about garlic bread deliveries."
-  ],
-
-  "solution": {
-    "suspect": "Mustachio",
-    "weapon": "Rock",
-    "location": "Clock Tower"
-  }
 }

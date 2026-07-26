@@ -68,7 +68,7 @@ function createCategories(puzzle) {
                 case "suspects":
                     icon = getIconPath(
                         "suspects",
-                        Icons.suspects[index]
+                        puzzle.suspectIcons[name]
                     );
                     break;
 

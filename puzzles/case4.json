@@ -1,58 +1,70 @@
 {
-  "id": 4,
-  "caseNumber": "004",
-  "title": "THE OBSERVATORY ECLIPSE",
-  "description": "An astronomer is found dead the night of a rare eclipse — and the one suspect literally named 'Liar' turns out to be telling the truth.",
-  "difficulty": "Medium",
-  "status": "OPEN",
-
-  "incidentReport": "Orin, the observatory's chief astronomer, was found dead beneath the great dome during the eclipse's peak. The murder weapon was left at the scene. Nova, Sylvie, Fibb, and Dr. Wren were the only ones on the grounds that night.",
-
-  "victim": {
-    "name": "Orin",
-    "occupation": "Astronomer",
-    "causeOfDeath": "Puncture Wound"
-  },
-
-  "interviews": [
-    {
-      "speaker": "Nova",
-      "statement": "I was elbow-deep in wiring in the Factory control room, ask anyone."
+    "id": 4,
+    "caseNumber": "004",
+    "title": "THE OBSERVATORY ECLIPSE",
+    "status": "OPEN",
+    "description": "An astronomer is found dead the night of a rare eclipse — and the one suspect literally named 'Liar' turns out to be telling the truth.",
+    "difficulty": "Medium",
+    "victim": {
+        "name": "Orin",
+        "occupation": "Astronomer",
+        "causeOfDeath": "Puncture Wound"
     },
-    {
-      "speaker": "Sylvie",
-      "statement": "I spent the night serenading ferns in the Warehouse greenhouse annex. Don't judge."
+    "incidentReport": "Orin, the observatory's chief astronomer, was found dead beneath the great dome during the eclipse's peak. The murder weapon was left at the scene. Nova, Sylvie, Fibb, and Dr. Wren were the only ones on the grounds that night.",
+    "interviews": [
+        {
+            "speaker": "Nova",
+            "statement": "I was elbow-deep in wiring in the Factory control room, ask anyone."
+        },
+        {
+            "speaker": "Sylvie",
+            "statement": "I spent the night serenading ferns in the Warehouse greenhouse annex. Don't judge."
+        },
+        {
+            "speaker": "Fibb",
+            "statement": "For once, believe me: I was stuck guarding the Garage all night."
+        },
+        {
+            "speaker": "Dr. Wren",
+            "statement": "I never got anywhere near that Observatory dome."
+        }
+    ],
+    "suspects": [
+        "Nova",
+        "Sylvie",
+        "Fibb",
+        "Dr. Wren"
+    ],
+    "suspectIcons": {
+        "Dr. Wren": "alien-stare",
+        "Fibb": "vampire-dracula",
+        "Nova": "cat",
+        "Sylvie": "liar"
     },
-    {
-      "speaker": "Fibb",
-      "statement": "For once, believe me: I was stuck guarding the Garage all night."
-    },
-    {
-      "speaker": "Dr. Wren",
-      "statement": "I never got anywhere near that Observatory dome."
+    "weapons": [
+        "Syringe",
+        "Revolver",
+        "Fire Axe",
+        "Crossbow"
+    ],
+    "locations": [
+        "Factory",
+        "Warehouse",
+        "Garage",
+        "Observatory"
+    ],
+    "clues": [
+        "The Syringe was found still capped, untouched, in the Factory med-kit.",
+        "The Revolver's chamber was empty and cold, forgotten in the Garage safe.",
+        "The Fire Axe hung undisturbed on the Warehouse wall, dust unbroken.",
+        "A single bolt from a Crossbow was found buried in the Observatory dome.",
+        "Nova was seen recalibrating equipment in the Factory control room all night.",
+        "Sylvie was heard singing to the plants in the Warehouse greenhouse annex.",
+        "Fibb was caught on the night-watch log guarding the Garage the entire shift."
+    ],
+    "solution": {
+        "suspect": "Dr. Wren",
+        "weapon": "Crossbow",
+        "location": "Observatory"
     }
-  ],
-
-  "suspects": ["Nova", "Sylvie", "Fibb", "Dr. Wren"],
-
-
-  "weapons": ["Syringe", "Revolver", "Fire Axe", "Crossbow"],
-
-  "locations": ["Factory", "Warehouse", "Garage", "Observatory"],
-
-  "clues": [
-    "The Syringe was found still capped, untouched, in the Factory med-kit.",
-    "The Revolver's chamber was empty and cold, forgotten in the Garage safe.",
-    "The Fire Axe hung undisturbed on the Warehouse wall, dust unbroken.",
-    "A single bolt from a Crossbow was found buried in the Observatory dome.",
-    "Nova was seen recalibrating equipment in the Factory control room all night.",
-    "Sylvie was heard singing to the plants in the Warehouse greenhouse annex.",
-    "Fibb was caught on the night-watch log guarding the Garage the entire shift."
-  ],
-
-  "solution": {
-    "suspect": "Dr. Wren",
-    "weapon": "Crossbow",
-    "location": "Observatory"
-  }
 }

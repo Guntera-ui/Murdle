@@ -1,20 +1,5 @@
 const Icons = {
 
-    suspects: [
-        "alien-stare",
-        "cat",
-        "cleopatra",
-        "doctor-face",
-        "kenku-head",
-        "liar",
-        "mustache",
-        "vampire-dracula",
-        "witch-face",
-        "wizard-face",
-        "wolf-head",
-        "woman-elf-face"
-    ],
-
     weapons: {
         "Baseball Bat": "baseball-bat",
         "Bowie Knife": "bowie-knife",

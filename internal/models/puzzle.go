@@ -30,10 +30,11 @@ type Puzzle struct {
 	IncidentReport string      `json:"incidentReport"`
 	Interviews     []Interview `json:"interviews"`
 
-	Suspects  []string `json:"suspects"`
-	Weapons   []string `json:"weapons"`
-	Locations []string `json:"locations"`
-	Motives   []string `json:"motives,omitempty"`
+	Suspects     []string          `json:"suspects"`
+	SuspectIcons map[string]string `json:"suspectIcons,omitempty"`
+	Weapons      []string          `json:"weapons"`
+	Locations    []string          `json:"locations"`
+	Motives      []string          `json:"motives,omitempty"`
 
 	Clues    []string `json:"clues"`
 	Solution Solution `json:"solution"`

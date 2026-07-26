@@ -1,58 +1,70 @@
 {
-  "id": 5,
-  "caseNumber": "005",
-  "title": "THE THEATER OF SHADOWS",
-  "description": "A diva's final act ends in silence — literally. The whole cast has an alibi, but only one of them is lying.",
-  "difficulty": "Medium",
-  "status": "OPEN",
-
-  "incidentReport": "Mireille, star of the Blackbriar Theater, was found dead center-stage after the curtain fell. The murder weapon was left at the scene. Countess Nocturne, Hazel, Ozwin, and Whiskers were the only ones still in the building.",
-
-  "victim": {
-    "name": "Mireille",
-    "occupation": "Theater Diva",
-    "causeOfDeath": "Strangulation"
-  },
-
-  "interviews": [
-    {
-      "speaker": "Hazel",
-      "statement": "I never left my cauldron in the Library, ask the fumes."
+    "id": 5,
+    "caseNumber": "005",
+    "title": "THE THEATER OF SHADOWS",
+    "status": "OPEN",
+    "description": "A diva's final act ends in silence — literally. The whole cast has an alibi, but only one of them is lying.",
+    "difficulty": "Medium",
+    "victim": {
+        "name": "Mireille",
+        "occupation": "Theater Diva",
+        "causeOfDeath": "Strangulation"
     },
-    {
-      "speaker": "Ozwin",
-      "statement": "I was chained to my ledger in the Office, cursing unpaid invoices."
+    "incidentReport": "Mireille, star of the Blackbriar Theater, was found dead center-stage after the curtain fell. The murder weapon was left at the scene. Countess Nocturne, Hazel, Ozwin, and Whiskers were the only ones still in the building.",
+    "interviews": [
+        {
+            "speaker": "Hazel",
+            "statement": "I never left my cauldron in the Library, ask the fumes."
+        },
+        {
+            "speaker": "Ozwin",
+            "statement": "I was chained to my ledger in the Office, cursing unpaid invoices."
+        },
+        {
+            "speaker": "Whiskers",
+            "statement": "I slept through the whole night in the Bedroom, purr's honor."
+        },
+        {
+            "speaker": "Countess Nocturne",
+            "statement": "I never set foot on that stage."
+        }
+    ],
+    "suspects": [
+        "Countess Nocturne",
+        "Hazel",
+        "Ozwin",
+        "Whiskers"
+    ],
+    "suspectIcons": {
+        "Countess Nocturne": "kenku-head",
+        "Hazel": "liar",
+        "Ozwin": "doctor-face",
+        "Whiskers": "cleopatra"
     },
-    {
-      "speaker": "Whiskers",
-      "statement": "I slept through the whole night in the Bedroom, purr's honor."
-    },
-    {
-      "speaker": "Countess Nocturne",
-      "statement": "I never set foot on that stage."
+    "weapons": [
+        "Bowie Knife",
+        "Poison",
+        "Trophy",
+        "Slipknot"
+    ],
+    "locations": [
+        "Theater",
+        "Library",
+        "Office",
+        "Bedroom"
+    ],
+    "clues": [
+        "The Bowie Knife lay sheathed and pristine in the Office drawer, never drawn.",
+        "The Poison bottle sat corked and full on the Library's top shelf, seal intact.",
+        "The Trophy gleamed, dust-free but untouched, in the Bedroom display case.",
+        "The Slipknot's frayed end dangled from the Theater's rigging above center stage.",
+        "Hazel was brewing potions in the Library, cauldron bubbling till dawn.",
+        "Ozwin was locked in the Office, arguing with his ledger over unpaid spell fees.",
+        "Whiskers was curled up asleep in the Bedroom, snoring loud enough for witnesses to confirm."
+    ],
+    "solution": {
+        "suspect": "Countess Nocturne",
+        "weapon": "Slipknot",
+        "location": "Theater"
     }
-  ],
-
-  "suspects": ["Countess Nocturne", "Hazel", "Ozwin", "Whiskers"],
-
-
-  "weapons": ["Bowie Knife", "Poison", "Trophy", "Slipknot"],
-
-  "locations": ["Theater", "Library", "Office", "Bedroom"],
-
-  "clues": [
-    "The Bowie Knife lay sheathed and pristine in the Office drawer, never drawn.",
-    "The Poison bottle sat corked and full on the Library's top shelf, seal intact.",
-    "The Trophy gleamed, dust-free but untouched, in the Bedroom display case.",
-    "The Slipknot's frayed end dangled from the Theater's rigging above center stage.",
-    "Hazel was brewing potions in the Library, cauldron bubbling till dawn.",
-    "Ozwin was locked in the Office, arguing with his ledger over unpaid spell fees.",
-    "Whiskers was curled up asleep in the Bedroom, snoring loud enough for witnesses to confirm."
-  ],
-
-  "solution": {
-    "suspect": "Countess Nocturne",
-    "weapon": "Slipknot",
-    "location": "Theater"
-  }
 }
