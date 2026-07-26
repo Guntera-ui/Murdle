@@ -7,10 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="archive.css?v=1">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="archive.css?v=2">
     <link rel="stylesheet" href="style.css?v=1">
 </head>
+
 <body>
 
 <header class="hero">
@@ -21,7 +23,7 @@
         alt="Game Logo">
 
     <h1 class="hero-title">
-       GUNTDLE
+        GUNTDLE
     </h1>
 
     <p class="hero-subtitle">
@@ -43,8 +45,45 @@
 
 </main>
 
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+    width="0"
+    height="0"
+    style="position:absolute"
+    aria-hidden="true">
+
+    <defs>
+
+        <filter id="goo">
+
+            <feGaussianBlur
+                in="SourceGraphic"
+                stdDeviation="10"
+                result="blur" />
+
+            <feColorMatrix
+                in="blur"
+                mode="matrix"
+                values="
+                    1 0 0 0 0
+                    0 1 0 0 0
+                    0 0 1 0 0
+                    0 0 0 21 -7"
+                result="goo" />
+
+            <feBlend
+                in="SourceGraphic"
+                in2="goo"
+                result="mix" />
+
+        </filter>
+
+    </defs>
+
+</svg>
+
 <script src="js/archive.js?v=1"></script>
 
 </body>
-
 </html>

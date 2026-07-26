@@ -1,17 +1,3 @@
-const puzzleOrder = [
-
-    "case1",
-
-    "case2",
-
-    "case3"
-
-];
-
-let currentPuzzleIndex =
-    getCurrentCaseId() - 1;
-
-
 function renderPuzzle(
     puzzle
 ) {
@@ -97,34 +83,28 @@ function loadPuzzle(
 
 }
 
-
 function loadNextPuzzle() {
 
-    if (
-        currentPuzzleIndex >=
-        puzzleOrder.length - 1
-    ) {
+    const nextCaseId =
+        getCurrentCaseId() + 1;
 
-        window.location.href =
-            "index.html";
+    fetchPuzzle(
+        `case${nextCaseId}`
+    )
+        .then(() => {
 
-        return;
+            window.location.href =
+                `case.html?id=${nextCaseId}`;
 
-    }
+        })
+        .catch(() => {
 
-    currentPuzzleIndex++;
+            window.location.href =
+                "index.html";
 
-    loadPuzzle(
-        puzzleOrder[
-            currentPuzzleIndex
-        ]
-    );
+        });
 
 }
-
-
 loadPuzzle(
-    puzzleOrder[
-        currentPuzzleIndex
-    ]
+    `case${getCurrentCaseId()}`
 );
