@@ -1,63 +1,58 @@
 {
   "id": 5,
   "caseNumber": "005",
-  "title": "THE ENAGETI INCIDENT",
-  "description": "A village guardian is found dead at dawn.",
-  "difficulty": "Easy",
+  "title": "THE THEATER OF SHADOWS",
+  "description": "A diva's final act ends in silence — literally. The whole cast has an alibi, but only one of them is lying.",
+  "difficulty": "Medium",
   "status": "OPEN",
-  
 
-  "incidentReport": "Ginger was found beneath the Garden shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+  "incidentReport": "Mireille, star of the Blackbriar Theater, was found dead center-stage after the curtain fell. The murder weapon was left at the scene. Countess Nocturne, Hazel, Ozwin, and Whiskers were the only ones still in the building.",
 
   "victim": {
-    "name": "Ginger",
-    "occupation": "Village Guardian",
-    "causeOfDeath": "Head Injury"
+    "name": "Mireille",
+    "occupation": "Theater Diva",
+    "causeOfDeath": "Strangulation"
   },
 
   "interviews": [
     {
-      "speaker": "Marki",
-      "statement": "I never went anywhere near the Warehouse."
+      "speaker": "Hazel",
+      "statement": "I never left my cauldron in the Library, ask the fumes."
     },
     {
-      "speaker": "Bego",
-      "statement": "The Crowbar was lying beside the Garden."
+      "speaker": "Ozwin",
+      "statement": "I was chained to my ledger in the Office, cursing unpaid invoices."
     },
     {
-      "speaker": "Baxi",
-      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Rock."
+      "speaker": "Whiskers",
+      "statement": "I slept through the whole night in the Bedroom, purr's honor."
+    },
+    {
+      "speaker": "Countess Nocturne",
+      "statement": "I never set foot on that stage."
     }
   ],
 
-  "suspects": [
-    "Marki",
-    "Bego",
-    "Baxi"
-  ],
+  "suspects": ["Countess Nocturne", "Hazel", "Ozwin", "Whiskers"],
 
-  "weapons": [
-    "Crowbar",
-    "Rock",
-    "Brick"
-  ],
 
-  "locations": [
-    "Warehouse",
-    "Garden",
-    "House"
-  ],
+  "weapons": ["Bowie Knife", "Poison", "Trophy", "Slipknot"],
+
+  "locations": ["Theater", "Library", "Office", "Bedroom"],
 
   "clues": [
-    "Bego was seen near the House.",
-    "Marki never carried the Rock.",
-    "The Crowbar was not taken to the Warehouse.",
-    "Baxi was not in the Garden."
+    "The Bowie Knife lay sheathed and pristine in the Office drawer, never drawn.",
+    "The Poison bottle sat corked and full on the Library's top shelf, seal intact.",
+    "The Trophy gleamed, dust-free but untouched, in the Bedroom display case.",
+    "The Slipknot's frayed end dangled from the Theater's rigging above center stage.",
+    "Hazel was brewing potions in the Library, cauldron bubbling till dawn.",
+    "Ozwin was locked in the Office, arguing with his ledger over unpaid spell fees.",
+    "Whiskers was curled up asleep in the Bedroom, snoring loud enough for witnesses to confirm."
   ],
 
   "solution": {
-    "suspect": "Bego",
-    "weapon": "Rock",
-    "location": "House"
+    "suspect": "Countess Nocturne",
+    "weapon": "Slipknot",
+    "location": "Theater"
   }
 }

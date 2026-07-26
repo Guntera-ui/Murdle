@@ -1,63 +1,52 @@
 {
   "id": 3,
   "caseNumber": "003",
-  "title": "THE ENAGETI INCIDENT",
-  "description": "A village guardian is found dead at dawn.",
-  "difficulty": "Hard",
+  "title": "THE PHARAOH'S SIDE-EYE",
+  "description": "A masquerade gala ends with the host dead and everyone's alibi a little too perfect.",
+  "difficulty": "Easy",
   "status": "OPEN",
-  
 
-  "incidentReport": "Ginger was found beneath the Garden shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+  "incidentReport": "Percival, host of the annual masquerade gala, was found dead shortly before midnight. The murder weapon was left at the scene. Cleopatra, Wolf, and Kenku were the only guests unaccounted for at the final toast.",
 
   "victim": {
-    "name": "Ginger",
-    "occupation": "Village Guardian",
-    "causeOfDeath": "Head Injury"
+    "name": "Percival",
+    "occupation": "Gala Host",
+    "causeOfDeath": "Blunt Force Trauma"
   },
 
   "interviews": [
     {
-      "speaker": "Marki",
-      "statement": "I never went anywhere near the Warehouse."
+      "speaker": "Cleopatra",
+      "statement": "I never left the Bedroom — my admirers can vouch for every second."
     },
     {
-      "speaker": "Bego",
-      "statement": "The Crowbar was lying beside the Garden."
+      "speaker": "Kenku",
+      "statement": "I spent the whole night grumbling in the Office. Loudly."
     },
     {
-      "speaker": "Baxi",
-      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Rock."
+      "speaker": "Wolf",
+      "statement": "I wasn't anywhere near the Dining Room, I swear on my tail."
     }
   ],
 
-  "suspects": [
-    "Marki",
-    "Bego",
-    "Baxi"
-  ],
+  "suspects": ["Cleopatra", "Wolf", "Kenku"],
 
-  "weapons": [
-    "Crowbar",
-    "Rock",
-    "Brick"
-  ],
 
-  "locations": [
-    "Warehouse",
-    "Garden",
-    "House"
-  ],
+  "weapons": ["Poison", "Trophy", "Baseball Bat"],
+
+  "locations": ["Bedroom", "Office", "Dining Room"],
 
   "clues": [
-    "Bego was seen near the House.",
-    "Marki never carried the Rock.",
-    "The Crowbar was not taken to the Warehouse.",
-    "Baxi was not in the Garden."
+    "The Poison vial was found sealed, its wax stamp unbroken, in the Bedroom nightstand.",
+    "The Trophy still gleamed, untouched, on the Office shelf.",
+    "The Baseball Bat, splintered, was found dropped in the Dining Room.",
+    "Cleopatra was holding court in the Bedroom, entertaining a queue of admirers all night.",
+    "Kenku was spotted squawking complaints in the Office about the noise."
   ],
 
   "solution": {
-    "suspect": "Bego",
-    "weapon": "Rock",
-    "location": "House"
+    "suspect": "Wolf",
+    "weapon": "Baseball Bat",
+    "location": "Dining Room"
   }
 }

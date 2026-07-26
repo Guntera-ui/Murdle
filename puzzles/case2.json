@@ -1,73 +1,52 @@
 {
   "id": 2,
   "caseNumber": "002",
-  "title": "THE TOLL OF EMBERFALL",
+  "title": "THE CLOCK TOWER CAPER",
+  "description": "The town's beloved clock keeper is found dead among his own gears, and someone's alibi doesn't tick right.",
+  "difficulty": "Easy",
   "status": "OPEN",
-  "description": "A deadly ambush leaves the bridge shrouded in suspicion.",
-  "difficulty": "Medium",
 
-  "incidentReport": "Corvin, the village toll collector, was found dead beneath the old stone Bridge just after first light, the river still lapping at his boots. He had collected the night tolls for twenty years and made no shortage of enemies among those who resented paying them. The murder weapon was left at the scene, half-submerged in the shallows. Four animals were seen abroad in Emberfall that night: Fennick, Orla, Petra, and Dashel.",
+  "incidentReport": "Tobias, keeper of the Old Clock Tower, was found sprawled beside his shattered gearwork shortly after sunrise. The murder weapon was left at the scene. Wanda, Drac, and Mustachio were the only figures seen wandering the town that night.",
 
   "victim": {
-    "name": "Corvin",
-    "occupation": "Toll Collector",
-    "causeOfDeath": "Strangulation"
+    "name": "Tobias",
+    "occupation": "Clock Tower Keeper",
+    "causeOfDeath": "Head Injury"
   },
 
   "interviews": [
     {
-      "speaker": "Fennick",
-      "statement": "I stayed in the Chapel all night, praying beside the old Poison cabinet they keep locked in the vestry."
+      "speaker": "Wanda",
+      "statement": "I never left my cauldron in the Library, ask the fumes."
     },
     {
-      "speaker": "Petra",
-      "statement": "I was counting coins at the Mill until dawn. The Cleaver never left its rack, and neither did I."
+      "speaker": "Drac",
+      "statement": "I was stuck guarding the Garage. Don't ask about the garlic bread."
     },
     {
-      "speaker": "Dashel",
-      "statement": "I spent the whole night in the Stable with the Lantern for company. I never so much as touched the Chain."
-    },
-    {
-      "speaker": "Orla",
-      "statement": "Believe what you like, but I never crossed the old Bridge that night."
+      "speaker": "Mustachio",
+      "statement": "I never set foot in that Clock Tower."
     }
   ],
 
-  "suspects": [
-    "Fennick",
-    "Orla",
-    "Petra",
-    "Dashel"
-  ],
+  "suspects": ["Wanda", "Drac", "Mustachio"],
 
-  "weapons": [
-    "Poison",
-    "Cleaver",
-    "Lantern",
-    "Chain"
-  ],
 
-  "locations": [
-    "Chapel",
-    "Mill",
-    "Stable",
-    "Bridge"
-  ],
+  "weapons": ["Lighter", "Rock", "Scissors"],
+
+  "locations": ["Clock Tower", "Library", "Garage"],
 
   "clues": [
-    "The vestry's Poison cabinet was found sealed and undisturbed, exactly as the sexton had locked it the evening before.",
-    "The Mill's Cleaver was hanging clean on its rack at dawn, uncounted among the missing tools.",
-    "The Stable's Lantern had burned steadily all night, still hanging on its usual hook.",
-    "A length of Chain, slick with river water, was found coiled at the foot of the Bridge.",
-    "Fennick was seen kneeling in the Chapel when the midnight bell tolled.",
-    "Petra was watched counting coins at the Mill by the miller himself, who never saw her leave.",
-    "Dashel was heard mucking out the Stable stalls long after moonrise, never once crossing the millpond.",
-    "Fresh riverbank mud was found on only one set of boots left drying by the Bridge that morning."
+    "The Lighter was found cold and unused in the Garage toolbox.",
+    "The Scissors never left the Library shelf all night.",
+    "The Rock was found lodged in the Clock Tower's shattered gearwork.",
+    "Wanda was seen dusting the Library shelves the entire night.",
+    "Drac was seen guarding the Garage, grumbling about garlic bread deliveries."
   ],
 
   "solution": {
-    "suspect": "Orla",
-    "weapon": "Chain",
-    "location": "Bridge"
+    "suspect": "Mustachio",
+    "weapon": "Rock",
+    "location": "Clock Tower"
   }
 }

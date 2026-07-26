@@ -1,63 +1,58 @@
 {
   "id": 4,
   "caseNumber": "004",
-  "title": "THE ENAGETI INCIDENT",
-  "description": "A village guardian is found dead at dawn.",
-  "difficulty": "Easy",
+  "title": "THE OBSERVATORY ECLIPSE",
+  "description": "An astronomer is found dead the night of a rare eclipse — and the one suspect literally named 'Liar' turns out to be telling the truth.",
+  "difficulty": "Medium",
   "status": "OPEN",
-  
 
-  "incidentReport": "Ginger was found beneath the Garden shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+  "incidentReport": "Orin, the observatory's chief astronomer, was found dead beneath the great dome during the eclipse's peak. The murder weapon was left at the scene. Nova, Sylvie, Fibb, and Dr. Wren were the only ones on the grounds that night.",
 
   "victim": {
-    "name": "Ginger",
-    "occupation": "Village Guardian",
-    "causeOfDeath": "Head Injury"
+    "name": "Orin",
+    "occupation": "Astronomer",
+    "causeOfDeath": "Puncture Wound"
   },
 
   "interviews": [
     {
-      "speaker": "Marki",
-      "statement": "I never went anywhere near the Warehouse."
+      "speaker": "Nova",
+      "statement": "I was elbow-deep in wiring in the Factory control room, ask anyone."
     },
     {
-      "speaker": "Bego",
-      "statement": "The Crowbar was lying beside the Garden."
+      "speaker": "Sylvie",
+      "statement": "I spent the night serenading ferns in the Warehouse greenhouse annex. Don't judge."
     },
     {
-      "speaker": "Baxi",
-      "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Rock."
+      "speaker": "Fibb",
+      "statement": "For once, believe me: I was stuck guarding the Garage all night."
+    },
+    {
+      "speaker": "Dr. Wren",
+      "statement": "I never got anywhere near that Observatory dome."
     }
   ],
 
-  "suspects": [
-    "Marki",
-    "Bego",
-    "Baxi"
-  ],
+  "suspects": ["Nova", "Sylvie", "Fibb", "Dr. Wren"],
 
-  "weapons": [
-    "Crowbar",
-    "Rock",
-    "Brick"
-  ],
 
-  "locations": [
-    "Warehouse",
-    "Garden",
-    "House"
-  ],
+  "weapons": ["Syringe", "Revolver", "Fire Axe", "Crossbow"],
+
+  "locations": ["Factory", "Warehouse", "Garage", "Observatory"],
 
   "clues": [
-    "Bego was seen near the House.",
-    "Marki never carried the Rock.",
-    "The Crowbar was not taken to the Warehouse.",
-    "Baxi was not in the Garden."
+    "The Syringe was found still capped, untouched, in the Factory med-kit.",
+    "The Revolver's chamber was empty and cold, forgotten in the Garage safe.",
+    "The Fire Axe hung undisturbed on the Warehouse wall, dust unbroken.",
+    "A single bolt from a Crossbow was found buried in the Observatory dome.",
+    "Nova was seen recalibrating equipment in the Factory control room all night.",
+    "Sylvie was heard singing to the plants in the Warehouse greenhouse annex.",
+    "Fibb was caught on the night-watch log guarding the Garage the entire shift."
   ],
 
   "solution": {
-    "suspect": "Bego",
-    "weapon": "Rock",
-    "location": "House"
+    "suspect": "Dr. Wren",
+    "weapon": "Crossbow",
+    "location": "Observatory"
   }
 }
