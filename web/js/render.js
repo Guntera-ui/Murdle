@@ -43,31 +43,50 @@ function renderCategories(categories) {
             "categories"
         );
 
-    container.innerHTML = "";
+    container.replaceChildren();
 
     categories.forEach(category => {
 
+        const group =
+            document.createElement(
+                "section"
+            );
+
+        group.className =
+            "category-group";
+
         const heading =
-            document.createElement("h2");
+            document.createElement(
+                "h3"
+            );
 
         heading.className =
-            "case-heading";
+            "category-group-title";
 
         heading.textContent =
             category.label;
 
         const list =
-            document.createElement("ul");
+            document.createElement(
+                "ul"
+            );
 
         list.id =
             category.id;
 
-        container.appendChild(
+        list.className =
+            "category-list";
+
+        group.appendChild(
             heading
         );
 
-        container.appendChild(
+        group.appendChild(
             list
+        );
+
+        container.appendChild(
+            group
         );
 
         renderList(
@@ -78,7 +97,6 @@ function renderCategories(categories) {
     });
 
 }
-
 function renderVictim(victim) {
 
     const section =

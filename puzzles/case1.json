@@ -10,7 +10,7 @@
         "occupation": "Village Guardian",
         "causeOfDeath": "Head Injury"
     },
-    "incidentReport": "Ginger was found beneath the Garden shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+    "incidentReport": "Ginger was found beneath the House shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
     "interviews": [
         {
             "speaker": "Marki",
@@ -18,7 +18,7 @@
         },
         {
             "speaker": "Bego",
-            "statement": "The Crowbar was lying beside the Garden."
+            "statement": "I only ever wanted what was owed to me."
         },
         {
             "speaker": "Baxi",
@@ -45,15 +45,23 @@
         "Garden",
         "House"
     ],
+    "motives": [
+        "Greed",
+        "Revenge",
+        "Jealousy"
+    ],
     "clues": [
         "Bego was seen near the House.",
         "Marki never carried the Rock.",
         "The Crowbar was not taken to the Warehouse.",
-        "Baxi was not in the Garden."
+        "Baxi was not in the Garden.",
+        "The killer had long resented Ginger over an unpaid debt.",
+        "Baxi bore no grudge over money — he'd never lent Ginger a coin in his life."
     ],
     "solution": {
         "suspect": "Bego",
         "weapon": "Rock",
-        "location": "House"
+        "location": "House",
+        "motive": "Greed"
     }
 }

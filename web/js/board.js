@@ -36,18 +36,32 @@ function renderMasterGrid(
             "master-grid"
         );
 
-    container.innerHTML = "";
+    container.replaceChildren();
 
     const boardElement =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     boardElement.className =
         "master-board";
+
 
     const categories =
         createCategories(
             puzzle
         ).list;
+
+    const categoryById =
+        new Map(
+            categories.map(
+                category => [
+                    category.id,
+                    category
+                ]
+            )
+        );
+
 
     const topAxis =
         categories.length === 3
@@ -63,6 +77,7 @@ function renderMasterGrid(
                 "locations"
             ];
 
+
     const leftAxis =
         categories.length === 3
 
@@ -77,16 +92,19 @@ function renderMasterGrid(
                 "motives"
             ];
 
-
-
     const topRow =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     topRow.className =
         "board-row";
 
+
     const spacer =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     spacer.className =
         "board-label left";
@@ -95,16 +113,34 @@ function renderMasterGrid(
         spacer
     );
 
+
     topAxis.forEach(topId => {
 
         const label =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         label.className =
             "board-label top";
 
+
+        const topCategorySize =
+            categoryById.get(
+                topId
+            )?.items.length ?? 3;
+
+        label.style.setProperty(
+            "--category-size",
+            topCategorySize
+        );
+
+
         label.textContent =
-            getCategoryLabel(topId);
+            getCategoryLabel(
+                topId
+            );
+
 
         topRow.appendChild(
             label
@@ -112,115 +148,165 @@ function renderMasterGrid(
 
     });
 
+
     boardElement.appendChild(
         topRow
     );
 
-
-
     const renderedPairs =
         new Set();
 
-    leftAxis.forEach((leftId, rowIndex) => {
 
-        const boardRow =
-            document.createElement("div");
+    leftAxis.forEach(
+        (
+            leftId,
+            rowIndex
+        ) => {
 
-        boardRow.className =
-            "board-row";
-
-
-   
-        const leftLabel =
-            document.createElement("div");
-
-        leftLabel.className =
-            "board-label left";
-
-        leftLabel.textContent =
-            getCategoryLabel(leftId);
-
-        boardRow.appendChild(
-            leftLabel
-        );
-
-
-        topAxis.forEach((topId, columnIndex) => {
-
-            if (leftId === topId) {
-                return;
-            }
-
-            const pairKey =
-                [leftId, topId]
-                    .sort()
-                    .join("|");
-
-            if (renderedPairs.has(pairKey)) {
-                return;
-            }
-
-            renderedPairs.add(pairKey);
-
-            const playerMatrix =
-                getMatrixByCategories(
-                    playerBoard,
-                    leftId,
-                    topId
+            const boardRow =
+                document.createElement(
+                    "div"
                 );
 
-            if (!playerMatrix) {
-                return;
-            }
+            boardRow.className =
+                "board-row";
 
-            const workingMatrix =
-                getMatrixByCategories(
-                    workingBoard,
-                    leftId,
-                    topId
+
+            const leftLabel =
+                document.createElement(
+                    "div"
                 );
 
-            const matrixElement =
-                renderMatrix(
+            leftLabel.className =
+                "board-label left";
 
-                    playerMatrix,
-                    workingMatrix,
 
-                    (row, column) => {
+            const leftCategorySize =
+                categoryById.get(
+                    leftId
+                )?.items.length ?? 3;
 
-                        updateBoard(
-                            puzzle,
-                            playerBoard,
-                            playerMatrix.id,
-                            row,
-                            column
-                        );
+            leftLabel.style.setProperty(
+                "--category-size",
+                leftCategorySize
+            );
 
-                    },
 
-                    leftId,
-                    topId,
-
-                    rowIndex === 0,
-                    columnIndex === 0
-
+            leftLabel.textContent =
+                getCategoryLabel(
+                    leftId
                 );
+
 
             boardRow.appendChild(
-                matrixElement
+                leftLabel
             );
 
-        });
 
-        if (boardRow.children.length > 1) {
+            topAxis.forEach(
+                (
+                    topId,
+                    columnIndex
+                ) => {
 
-            boardElement.appendChild(
-                boardRow
+                    if (leftId === topId) {
+                        return;
+                    }
+
+
+                    const pairKey =
+                        [
+                            leftId,
+                            topId
+                        ]
+                            .sort()
+                            .join("|");
+
+                    if (
+                        renderedPairs.has(
+                            pairKey
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    renderedPairs.add(
+                        pairKey
+                    );
+
+
+                    const playerMatrix =
+                        getMatrixByCategories(
+                            playerBoard,
+                            leftId,
+                            topId
+                        );
+
+
+                    if (!playerMatrix) {
+                        return;
+                    }
+
+
+                    const workingMatrix =
+                        getMatrixByCategories(
+                            workingBoard,
+                            leftId,
+                            topId
+                        );
+
+
+                    const matrixElement =
+                        renderMatrix(
+
+                            playerMatrix,
+                            workingMatrix,
+
+                            (
+                                row,
+                                column
+                            ) => {
+
+                                updateBoard(
+                                    puzzle,
+                                    playerBoard,
+                                    playerMatrix.id,
+                                    row,
+                                    column
+                                );
+
+                            },
+
+                            leftId,
+                            topId,
+
+                            rowIndex === 0,
+                            columnIndex === 0
+
+                        );
+
+
+                    boardRow.appendChild(
+                        matrixElement
+                    );
+
+                }
             );
+
+            if (
+                boardRow.children.length > 1
+            ) {
+
+                boardElement.appendChild(
+                    boardRow
+                );
+
+            }
 
         }
+    );
 
-    });
 
     container.appendChild(
         boardElement
