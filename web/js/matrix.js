@@ -1,3 +1,66 @@
+function createMatrixIcon(
+    item,
+    position
+) {
+
+    const wrapper =
+        document.createElement(
+            "span"
+        );
+
+    wrapper.className =
+        `matrix-icon-wrapper matrix-icon-wrapper--${position}`;
+
+    wrapper.tabIndex = 0;
+
+    wrapper.setAttribute(
+        "aria-label",
+        item.name
+    );
+
+    const img =
+        document.createElement(
+            "img"
+        );
+
+    img.src =
+        item.icon;
+
+    /*
+     * The wrapper already has the accessible name,
+     * so the image itself does not need to repeat it.
+     */
+    img.alt = "";
+
+    img.className =
+        "matrix-icon";
+
+    const tooltip =
+        document.createElement(
+            "span"
+        );
+
+    tooltip.className =
+        "matrix-icon-tooltip";
+
+    tooltip.textContent =
+        item.name;
+
+    tooltip.setAttribute(
+        "role",
+        "tooltip"
+    );
+
+    wrapper.append(
+        img,
+        tooltip
+    );
+
+    return wrapper;
+
+}
+
+
 function renderMatrix(
     playerMatrix,
     workingMatrix,
@@ -31,17 +94,20 @@ function renderMatrix(
         vertical.id;
 
     const matrixElement =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
     matrixElement.className =
         "matrix";
 
 
-
     if (showHeader) {
 
         const header =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         header.className =
             "matrix-row";
@@ -49,7 +115,9 @@ function renderMatrix(
         if (showRowLabels) {
 
             const spacer =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             spacer.className =
                 "header-spacer";
@@ -60,38 +128,39 @@ function renderMatrix(
 
         }
 
-        columns.forEach(column => {
+        columns.forEach(
+            column => {
 
-            const cell =
-                document.createElement("div");
+                const cell =
+                    document.createElement(
+                        "div"
+                    );
 
-            cell.className =
-                "header-cell";
+                cell.className =
+                    "header-cell";
 
-            const img =
-                document.createElement("img");
+                const icon =
+                    createMatrixIcon(
+                        column,
+                        "column"
+                    );
 
-            img.src =
-                column.icon;
+                cell.appendChild(
+                    icon
+                );
 
-            img.alt =
-                column.name;
+                /*
+                 * Do not use cell.title here.
+                 * That creates the browser's
+                 * black native tooltip.
+                 */
 
-            img.className =
-                "matrix-icon";
+                header.appendChild(
+                    cell
+                );
 
-            cell.appendChild(
-                img
-            );
-
-            cell.title =
-                column.name;
-
-            header.appendChild(
-                cell
-            );
-
-        });
+            }
+        );
 
         matrixElement.appendChild(
             header
@@ -100,103 +169,116 @@ function renderMatrix(
     }
 
 
+    rows.forEach(
+        rowItem => {
 
-    rows.forEach(rowItem => {
+            const row =
+                document.createElement(
+                    "div"
+                );
 
-        const row =
-            document.createElement("div");
-
-        row.className =
-            "matrix-row";
-
-
-
-        if (showRowLabels) {
-
-            const label =
-                document.createElement("div");
-
-            label.className =
-                "row-label";
-
-            const img =
-                document.createElement("img");
-
-            img.src =
-                rowItem.icon;
-
-            img.alt =
-                rowItem.name;
-
-            img.className =
-                "matrix-icon";
-
-            label.appendChild(
-                img
-            );
-
-            label.title =
-                rowItem.name;
-
-            row.appendChild(
-                label
-            );
-
-        }
+            row.className =
+                "matrix-row";
 
 
+            if (showRowLabels) {
 
-        columns.forEach(column => {
+                const label =
+                    document.createElement(
+                        "div"
+                    );
 
-            const playerValue =
-                flipped
-                    ? playerMatrix.grid[column.name][rowItem.name]
-                    : playerMatrix.grid[rowItem.name][column.name];
+                label.className =
+                    "row-label";
 
-            const workingValue =
-                flipped
-                    ? workingMatrix.grid[column.name][rowItem.name]
-                    : workingMatrix.grid[rowItem.name][column.name];
+                const icon =
+                    createMatrixIcon(
+                        rowItem,
+                        "row"
+                    );
 
-            const {
-                element: cell,
-                isSolverMark
-            } = createCell(
-                playerValue,
-                workingValue
-            );
+                label.appendChild(
+                    icon
+                );
 
-            cell.addEventListener(
-                "click",
-                () => {
+                /*
+                 * Do not use label.title here.
+                 */
 
-                    if (isSolverMark) {
-                        return;
-                    }
+                row.appendChild(
+                    label
+                );
 
-                    clickHandler(
+            }
+
+
+            columns.forEach(
+                column => {
+
+                    const playerValue =
                         flipped
-                            ? column.name
-                            : rowItem.name,
+                            ? playerMatrix
+                                .grid[column.name][
+                                    rowItem.name
+                                ]
+                            : playerMatrix
+                                .grid[rowItem.name][
+                                    column.name
+                                ];
+
+                    const workingValue =
                         flipped
-                            ? rowItem.name
-                            : column.name
+                            ? workingMatrix
+                                .grid[column.name][
+                                    rowItem.name
+                                ]
+                            : workingMatrix
+                                .grid[rowItem.name][
+                                    column.name
+                                ];
+
+                    const {
+                        element: cell,
+                        isSolverMark
+                    } = createCell(
+                        playerValue,
+                        workingValue
+                    );
+
+                    cell.addEventListener(
+                        "click",
+                        () => {
+
+                            if (isSolverMark) {
+                                return;
+                            }
+
+                            clickHandler(
+                                flipped
+                                    ? column.name
+                                    : rowItem.name,
+
+                                flipped
+                                    ? rowItem.name
+                                    : column.name
+                            );
+
+                        }
+                    );
+
+                    row.appendChild(
+                        cell
                     );
 
                 }
             );
 
-            row.appendChild(
-                cell
+            matrixElement.appendChild(
+                row
             );
 
-        });
-
-        matrixElement.appendChild(
-            row
-        );
-
-    });
+        }
+    );
 
     return matrixElement;
 

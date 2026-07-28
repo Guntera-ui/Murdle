@@ -271,15 +271,16 @@ function renderDossierFacts(
     ];
 
     const populatedGroups =
-        groups.filter(group =>
-            group.values?.some(
-                value =>
-                    Object.keys(
-                        group.details?.[
-                            value
-                        ]?.attributes ?? {}
-                    ).length > 0
-            )
+        groups.filter(
+            group =>
+                group.values?.some(
+                    value =>
+                        Object.keys(
+                            group.details?.[
+                                value
+                            ]?.attributes ?? {}
+                        ).length > 0
+                )
         );
 
     if (
@@ -306,21 +307,6 @@ function renderDossierFacts(
         heading
     );
 
-    const note =
-        document.createElement(
-            "p"
-        );
-
-    note.className =
-        "dossier-facts-note";
-
-    note.textContent =
-        "These details may be relevant to the evidence.";
-
-    section.appendChild(
-        note
-    );
-
     populatedGroups.forEach(
         group => {
 
@@ -344,6 +330,9 @@ function renderDossierFacts(
                     "h3"
                 );
 
+            groupTitle.className =
+                "dossier-facts-group-title";
+
             groupTitle.textContent =
                 group.title;
 
@@ -359,7 +348,7 @@ function renderDossierFacts(
             list.className =
                 "dossier-facts-list";
 
-            group.values.forEach(
+            group.values?.forEach(
                 entityName => {
 
                     const attributes =
@@ -405,6 +394,25 @@ function renderDossierFacts(
                         categoryItem?.icon
                     ) {
 
+                        const iconWrapper =
+                            document.createElement(
+                                "div"
+                            );
+
+                        iconWrapper.className =
+                            "dossier-fact-icon-wrapper";
+
+                        /*
+                         * Makes the custom tooltip
+                         * accessible with the keyboard.
+                         */
+                        iconWrapper.tabIndex = 0;
+
+                        iconWrapper.setAttribute(
+                            "aria-label",
+                            entityName
+                        );
+
                         const icon =
                             document.createElement(
                                 "img"
@@ -413,17 +421,57 @@ function renderDossierFacts(
                         icon.src =
                             categoryItem.icon;
 
-                        icon.alt =
-                            entityName;
-
-                        icon.title =
-                            entityName;
+                        icon.alt = "";
 
                         icon.className =
                             "dossier-fact-icon";
 
+                        /*
+                         * Custom tooltip.
+                         * Do not add icon.title because
+                         * that would restore the browser's
+                         * black native tooltip.
+                         */
+                        const tooltip =
+                            document.createElement(
+                                "span"
+                            );
+
+                        tooltip.className =
+                            "dossier-fact-tooltip";
+
+                        tooltip.textContent =
+                            entityName;
+
+                        tooltip.setAttribute(
+                            "role",
+                            "tooltip"
+                        );
+
+                        iconWrapper.append(
+                            icon,
+                            tooltip
+                        );
+
                         identity.appendChild(
-                            icon
+                            iconWrapper
+                        );
+
+                    } else {
+
+                        const fallbackName =
+                            document.createElement(
+                                "span"
+                            );
+
+                        fallbackName.className =
+                            "dossier-fact-name";
+
+                        fallbackName.textContent =
+                            entityName;
+
+                        identity.appendChild(
+                            fallbackName
                         );
 
                     }
