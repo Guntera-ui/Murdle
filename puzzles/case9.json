@@ -18,7 +18,7 @@
         },
         {
             "speaker": "Gveni",
-            "statement": "I did not force master to study Calculus to death. Why would I do that? He gifts us carrots. Sometimes. Eeep."
+            "statement": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep."
         },
         {
             "speaker": "Eggy",
@@ -167,20 +167,20 @@
         {
             "id": "statement-002",
             "speaker": "Gveni",
-            "text": "I did not force master to study Calculus to death. Why would I do that? He gifts us carrots. Sometimes. Eeep.",
+            "text": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep.",
             "claim": {
                 "id": "statement-claim-002",
                 "type": "pair",
                 "left": {
                     "category": "suspect",
-                    "value": "Gveni"
+                    "value": "Eggy"
                 },
                 "right": {
                     "category": "weapon",
                     "value": "Calculus Homework"
                 },
-                "relation": "is_not",
-                "text": "I did not force master to study Calculus to death. Why would I do that? He gifts us carrots. Sometimes. Eeep.",
+                "relation": "is",
+                "text": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep.",
                 "source": {
                     "type": "interview",
                     "speaker": "Gveni"
