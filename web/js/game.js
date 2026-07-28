@@ -9,13 +9,39 @@ const sounds = {
         new Audio(
             "sounds/error.wav?v=2"
         ),
- 
+
     warning:
         new Audio(
             "sounds/warning.wav?v=2"
+        ),
+
+    scribing:
+        new Audio(
+            "sounds/scribing.wav?v=2"
         )
 
 };
+
+sounds.scribing.volume = 0.4;
+
+function playSound(
+    type
+) {
+
+    const sound =
+        sounds[type];
+
+    if (!sound) {
+        return;
+    }
+
+    sound.currentTime = 0;
+
+    sound
+        .play()
+        .catch(() => {});
+
+}
 
 function validateAccusation(
     accusation
@@ -42,7 +68,9 @@ function checkAccusation(
     accusation
 ) {
 
-    for (const key in puzzle.solution) {
+    for (
+        const key in puzzle.solution
+    ) {
 
         if (
             accusation[key] !==
@@ -80,15 +108,8 @@ function showMessage(
         type
     );
 
-    const sound =
-        sounds[type];
-
-    if (sound) {
-
-        sound.currentTime = 0;
-
-        sound.play();
-
-    }
+    playSound(
+        type
+    );
 
 }

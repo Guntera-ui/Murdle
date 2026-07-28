@@ -10,6 +10,9 @@ var SuspectIcons = []string{
 	"mustache",
 	"vampire-dracula",
 	"witch-face",
+	"parrot-head",
+	"bird-twitter",
+	"porcupine",
 }
 var WeaponIcons = map[string]string{
 	"Baseball Bat": "baseball-bat",

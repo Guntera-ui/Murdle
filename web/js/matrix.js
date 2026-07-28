@@ -245,26 +245,29 @@ function renderMatrix(
                         workingValue
                     );
 
-                    cell.addEventListener(
-                        "click",
-                        () => {
+                   cell.addEventListener(
+                            "click",
+                            () => {
 
-                            if (isSolverMark) {
-                                return;
+                                if (isSolverMark) {
+                                    return;
+                                }
+
+                                playSound(
+                                    "scribing"
+                                );
+
+                                clickHandler(
+                                    flipped
+                                        ? column.name
+                                        : rowItem.name,
+                                    flipped
+                                        ? rowItem.name
+                                        : column.name
+                                );
+
                             }
-
-                            clickHandler(
-                                flipped
-                                    ? column.name
-                                    : rowItem.name,
-
-                                flipped
-                                    ? rowItem.name
-                                    : column.name
-                            );
-
-                        }
-                    );
+                        );
 
                     row.appendChild(
                         cell

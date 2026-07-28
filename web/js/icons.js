@@ -14,22 +14,26 @@ const Icons = {
         "Scissors": "scissors",
         "Slipknot": "slipknot",
         "Syringe": "syringe",
-        "Trophy": "trophy"
+        "Trophy": "trophy",
+        "Acer Aspire 5315": "laptop",
+        "Energy Drink": "soda-can",
+        "Calculus Homework": "spell-book"
     },
 
     locations: {
-        "Bedroom": "bed",
+        "Bed": "bed",
         "Library": "bookshelf",
         "Warehouse": "cargo-crate",
         "Clock Tower": "clock-tower",
-        "Office": "desk",
+        "Desk": "desk",
         "Factory": "factory",
         "House": "family-house",
         "Garden": "fruit-tree",
         "Garage": "mechanic-garage",
         "Observatory": "observatory",
         "Theater": "theater-curtains",
-        "Dining Room": "wine-glass"
+        "Dining Room": "wine-glass",
+        "Bird Cage": "bird-cage",
     },
 
     motives: {
