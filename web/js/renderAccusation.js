@@ -8,7 +8,8 @@ function renderAccusation(
             "accusation"
         );
 
-    panel.innerHTML = "";
+    panel.replaceChildren();
+
 
     const container =
         document.createElement(
@@ -22,62 +23,93 @@ function renderAccusation(
         container
     );
 
+
     const fields = [
         {
-            key: "suspect",
-            label: "WHO?",
-            items: puzzle.suspects
+            key:
+                "suspect",
+
+            label:
+                "WHO?",
+
+            items:
+                puzzle.suspects
         },
         {
-            key: "weapon",
-            label: "HOW?",
-            items: puzzle.weapons
+            key:
+                "weapon",
+
+            label:
+                "HOW?",
+
+            items:
+                puzzle.weapons
         },
         {
-            key: "location",
-            label: "WHERE?",
-            items: puzzle.locations
+            key:
+                "location",
+
+            label:
+                "WHERE?",
+
+            items:
+                puzzle.locations
         }
     ];
 
-    if (puzzle.motives) {
+
+    if (
+        Array.isArray(
+            puzzle.motives
+        ) &&
+        puzzle.motives.length > 0
+    ) {
 
         fields.push({
+            key:
+                "motive",
 
-            key: "motive",
+            label:
+                "WHY?",
 
-            label: "WHY?",
-
-            items: puzzle.motives
-
+            items:
+                puzzle.motives
         });
 
     }
 
+
     const dropdowns = [];
 
-    fields.forEach(field => {
 
-        const dropdown =
-            createDropdown(
-                field.label,
-                field.items
+    fields.forEach(
+        field => {
+
+            const dropdown =
+                createDropdown(
+                    field.label,
+                    field.items
+                );
+
+            dropdowns.push(
+                dropdown
             );
 
-        dropdowns.push(
-            dropdown
-        );
+            container.appendChild(
+                dropdown.element
+            );
 
-        container.appendChild(
-            dropdown.element
-        );
+        }
+    );
 
-    });
 
     const button =
         document.createElement(
             "button"
         );
+
+    button.type =
+        "button";
 
     button.textContent =
         "MAKE YOUR ACCUSATION";
@@ -85,6 +117,7 @@ function renderAccusation(
     container.appendChild(
         button
     );
+
 
     const message =
         document.createElement(
@@ -94,60 +127,147 @@ function renderAccusation(
     message.id =
         "accusation-message";
 
+    message.setAttribute(
+        "aria-live",
+        "polite"
+    );
+
     container.appendChild(
         message
     );
 
+
     function lockAccusation() {
 
-        button.disabled = true;
+        button.disabled =
+            true;
 
-        dropdowns.forEach(dropdown => {
 
-            dropdown.element
-                .querySelector(".dropdown-button")
-                .disabled = true;
+        dropdowns.forEach(
+            dropdown => {
 
-        });
+                const dropdownButton =
+                    dropdown.element
+                        .querySelector(
+                            ".dropdown-button"
+                        );
+
+                if (dropdownButton) {
+
+                    dropdownButton.disabled =
+                        true;
+
+                }
+
+            }
+        );
 
     }
 
+
     function unlockAccusation() {
 
-        button.disabled = false;
+        button.disabled =
+            false;
 
         button.textContent =
             "MAKE YOUR ACCUSATION";
 
-        dropdowns.forEach(dropdown => {
 
-            dropdown.element
-                .querySelector(".dropdown-button")
-                .disabled = false;
+        dropdowns.forEach(
+            dropdown => {
 
-        });
+                const dropdownButton =
+                    dropdown.element
+                        .querySelector(
+                            ".dropdown-button"
+                        );
+
+                if (dropdownButton) {
+
+                    dropdownButton.disabled =
+                        false;
+
+                }
+
+            }
+        );
+
+
+        showMessage(
+            "",
+            ""
+        );
 
     }
+
+
+    function getAccusation() {
+
+        const accusation = {};
+
+
+        dropdowns.forEach(
+            (
+                dropdown,
+                index
+            ) => {
+
+                const field =
+                    fields[index];
+
+                accusation[
+                    field.key
+                ] =
+                    dropdown.getValue();
+
+            }
+        );
+
+
+        return accusation;
+
+    }
+
+
+    function createFindings(
+        source
+    ) {
+
+        const findings = {
+
+            suspect:
+                source.suspect,
+
+            weapon:
+                source.weapon,
+
+            location:
+                source.location
+
+        };
+
+
+        if (source.motive) {
+
+            findings.motive =
+                source.motive;
+
+        }
+
+
+        return findings;
+
+    }
+
 
     button.addEventListener(
         "click",
         () => {
 
-            const accusation = {};
+            const accusation =
+                getAccusation();
 
-            dropdowns.forEach(
-                (
-                    dropdown,
-                    index
-                ) => {
-
-                    accusation[
-                        fields[index].key
-                    ] =
-                        dropdown.getValue();
-
-                }
-            );
 
             if (
                 !validateAccusation(
@@ -156,16 +276,14 @@ function renderAccusation(
             ) {
 
                 showMessage(
-
                     "Complete every field before making an accusation.",
-
                     "warning"
-
                 );
 
                 return;
 
             }
+
 
             const solved =
                 checkAccusation(
@@ -173,19 +291,28 @@ function renderAccusation(
                     accusation
                 );
 
+
+            /*
+                Stop and freeze the timer only when
+                the correct solution is submitted.
+            */
+            const solveTime =
+                solved
+                    ? stopCaseTimer()
+                    : null;
+
+
             lockAccusation();
+
 
             if (solved) {
 
                 button.textContent =
-                    "CASE SOLVED";
+                    "CASE CLOSED";
 
                 showMessage(
-
-                    "✓ Correct! The mystery has been solved.",
-
+                    "✓ Accusation confirmed.",
                     "success"
-
                 );
 
             }
@@ -195,15 +322,19 @@ function renderAccusation(
                     "CASE UNSOLVED";
 
                 showMessage(
-
                     "✗ Incorrect accusation.",
-
                     "error"
-
                 );
 
             }
 
+
+            /*
+                Show the end screen once.
+
+                solveTime is captured above and remains
+                available when this delayed callback runs.
+            */
             setTimeout(
                 () => {
 
@@ -217,31 +348,14 @@ function renderAccusation(
                             message:
                                 "Your deductions were correct. The investigation has concluded successfully.",
 
-                            details:
-                                `
-                                <h3>FINAL FINDINGS</h3>
+                            details: {
+                                ...createFindings(
+                                    puzzle.solution
+                                ),
 
-                                <strong>Suspect</strong><br>
-                                ${puzzle.solution.suspect}<br><br>
-
-                                <strong>Weapon</strong><br>
-                                ${puzzle.solution.weapon}<br><br>
-
-                                <strong>Location</strong><br>
-                                ${puzzle.solution.location}
-
-                                ${
-                                    puzzle.solution.motive
-                                    ? `
-                                    <br><br>
-
-                                    <strong>Motive</strong><br>
-
-                                    ${puzzle.solution.motive}
-                                    `
-                                    : ""
-                                }
-                                `,
+                                solveTime:
+                                    solveTime
+                            },
 
                             buttonText:
                                 "OPEN NEXT CASE",
@@ -263,30 +377,9 @@ function renderAccusation(
                                 "Your accusation was not supported by the available evidence. Review the case file and continue your investigation.",
 
                             details:
-                                `
-                                <h3>YOUR ACCUSATION</h3>
-
-                                <strong>Suspect</strong><br>
-                                ${accusation.suspect}<br><br>
-
-                                <strong>Weapon</strong><br>
-                                ${accusation.weapon}<br><br>
-
-                                <strong>Location</strong><br>
-                                ${accusation.location}
-
-                                ${
-                                    accusation.motive
-                                    ? `
-                                    <br><br>
-
-                                    <strong>Motive</strong><br>
-
-                                    ${accusation.motive}
-                                    `
-                                    : ""
-                                }
-                                `,
+                                createFindings(
+                                    accusation
+                                ),
 
                             buttonText:
                                 "RETRY INVESTIGATION",
@@ -299,14 +392,10 @@ function renderAccusation(
                     }
 
                 },
-
                 1500
-
             );
 
         }
-
     );
 
 }
-
