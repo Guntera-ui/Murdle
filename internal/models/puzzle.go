@@ -36,6 +36,19 @@ type Puzzle struct {
 	Locations    []string          `json:"locations"`
 	Motives      []string          `json:"motives,omitempty"`
 
+	SuspectDetails  map[string]EntityDetails `json:"suspectDetails,omitempty"`
+	WeaponDetails   map[string]EntityDetails `json:"weaponDetails,omitempty"`
+	LocationDetails map[string]EntityDetails `json:"locationDetails,omitempty"`
+	MotiveDetails   map[string]EntityDetails `json:"motiveDetails,omitempty"`
+
+	StatementRules  StatementRules   `json:"statementRules,omitempty"`
+	LogicStatements []LogicStatement `json:"logicStatements,omitempty"`
+
+	Assignments map[string]Assignment `json:"assignments,omitempty"`
+	Culprit     string                `json:"culprit,omitempty"`
+	LogicClues  []LogicClue           `json:"logicClues,omitempty"`
+	Generation  GenerationMetadata    `json:"generation,omitempty"`
+
 	Clues    []string `json:"clues"`
 	Solution Solution `json:"solution"`
 }

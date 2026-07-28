@@ -39,8 +39,14 @@ function renderPuzzle(
     );
 
 
+    renderDossierFacts(
+        puzzle
+    );
+
+
     renderInterviews(
-        puzzle.interviews
+        puzzle.interviews,
+        puzzle.statementRules
     );
 
 
@@ -78,10 +84,6 @@ function renderPuzzle(
     );
 
 
-    /*
-        Start timing only after the complete case interface
-        has loaded and rendered.
-    */
     startCaseTimer();
 
 }

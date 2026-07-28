@@ -2,17 +2,17 @@ const sounds = {
 
     success:
         new Audio(
-            "sounds/success.wav"
+            "sounds/success.wav?v=2"
         ),
 
     error:
         new Audio(
-            "sounds/error.wav"
+            "sounds/error.wav?v=2"
         ),
-
+ 
     warning:
         new Audio(
-            "sounds/warning.wav"
+            "sounds/warning.wav?v=2"
         )
 
 };

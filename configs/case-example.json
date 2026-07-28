@@ -1,0 +1,145 @@
+{
+    "id": 8,
+    "seed": 7319,
+    "caseNumber": "008",
+    "title": "UNTITLED CASE",
+    "status": "OPEN",
+    "description": "",
+    "difficulty": "Easy",
+    "victim": {
+        "name": "Professor Nettle",
+        "occupation": "Retired Astronomer",
+        "causeOfDeath": "Blunt-force trauma"
+    },
+    "incidentReport": "",
+    "suspects": [
+        "Doctor Morrow",
+        "Lady Vesper",
+        "Inspector Thorne"
+    ],
+    "suspectIcons": {
+        "Doctor Morrow": "vampire-dracula",
+        "Lady Vesper": "witch-face",
+        "Inspector Thorne": "mustache"
+    },
+    "weapons": [
+        "Trophy",
+        "Scissors",
+        "Revolver"
+    ],
+    "locations": [
+        "Observatory",
+        "Library",
+        "Theater"
+    ],
+    "suspectDetails": {
+        "Doctor Morrow": {
+            "attributes": {
+                "height": {
+                    "kind": "number",
+                    "number": 188
+                },
+                "handedness": {
+                    "kind": "string",
+                    "string": "right"
+                },
+                "zodiac": {
+                    "kind": "string",
+                    "string": "Aquarius"
+                }
+            }
+        },
+        "Lady Vesper": {
+            "attributes": {
+                "height": {
+                    "kind": "number",
+                    "number": 169
+                },
+                "handedness": {
+                    "kind": "string",
+                    "string": "left"
+                },
+                "zodiac": {
+                    "kind": "string",
+                    "string": "Scorpio"
+                }
+            }
+        },
+        "Inspector Thorne": {
+            "attributes": {
+                "height": {
+                    "kind": "number",
+                    "number": 178
+                },
+                "handedness": {
+                    "kind": "string",
+                    "string": "ambidextrous"
+                },
+                "zodiac": {
+                    "kind": "string",
+                    "string": "Taurus"
+                }
+            }
+        }
+    },
+    "weaponDetails": {
+        "Trophy": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 9
+                }
+            }
+        },
+        "Scissors": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 2
+                }
+            }
+        },
+        "Revolver": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 5
+                }
+            }
+        }
+    },
+    "locationDetails": {
+        "Observatory": {
+            "attributes": {
+                "indoors": {
+                    "kind": "bool",
+                    "bool": true
+                }
+            }
+        },
+        "Library": {
+            "attributes": {
+                "indoors": {
+                    "kind": "bool",
+                    "bool": true
+                }
+            }
+        },
+        "Theater": {
+            "attributes": {
+                "indoors": {
+                    "kind": "bool",
+                    "bool": false
+                }
+            }
+        }
+    },
+    "statementRules": {
+        "culpritLies": true,
+        "innocentsTellTruth": true
+    },
+    "culprit": "Lady Vesper",
+    "minEvidenceClues": 2,
+    "maxEvidenceClues": 4,
+    "maxAttempts": 100
+}
