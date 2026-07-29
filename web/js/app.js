@@ -145,10 +145,6 @@ function measureBoardFit(
                     naturalWidth
             );
 
-        /*
-           Prevent the board from becoming unreadably tiny. At widths
-           below 900px, the normal stacked layout is used instead.
-        */
         const finalScale =
             Math.max(
                 0.72,
@@ -282,7 +278,9 @@ function renderPuzzle(
     renderCategories(
         categories
     );
-
+    renderDossierFacts(
+        puzzle
+    );
     const board =
         createBoard(
             puzzle
@@ -297,6 +295,18 @@ function renderPuzzle(
         puzzle,
         loadNextPuzzle
     );
+
+    if (
+        typeof startCaseTimer ===
+        "function"
+    ) {
+        startCaseTimer();
+    }
+    else {
+        console.error(
+            "Timer failed: startCaseTimer() is unavailable."
+        );
+    }
 
     updateBoardFit();
 

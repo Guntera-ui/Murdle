@@ -126,10 +126,7 @@
     flex-basis: 21px;
 }
 
-/*
-   On stacked/mobile layouts the board should remain naturally sized
-   and horizontally scrollable instead of being visually shrunk.
-*/
+
 @media (max-width: 900px) {
     .board-fit-frame {
         transform: none !important;

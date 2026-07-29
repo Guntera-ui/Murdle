@@ -227,14 +227,16 @@ function renderDossierFacts(
         section.id =
             "dossier-facts-section";
 
-        interviewsSection
-            .parentElement
-            .insertBefore(
-                section,
-                interviewsSection
-            );
-
     }
+
+    /*
+     * Always place the dossier directly
+     * after the interviews section.
+     */
+    interviewsSection.insertAdjacentElement(
+        "afterend",
+        section
+    );
 
     section.replaceChildren();
 
@@ -248,25 +250,29 @@ function renderDossierFacts(
             title: "Suspect Details",
             categoryId: "suspects",
             values: puzzle.suspects,
-            details: puzzle.suspectDetails
+            details:
+                puzzle.suspectDetails
         },
         {
             title: "Weapon Details",
             categoryId: "weapons",
             values: puzzle.weapons,
-            details: puzzle.weaponDetails
+            details:
+                puzzle.weaponDetails
         },
         {
             title: "Location Details",
             categoryId: "locations",
             values: puzzle.locations,
-            details: puzzle.locationDetails
+            details:
+                puzzle.locationDetails
         },
         {
             title: "Motive Details",
             categoryId: "motives",
             values: puzzle.motives,
-            details: puzzle.motiveDetails
+            details:
+                puzzle.motiveDetails
         }
     ];
 
@@ -402,10 +408,6 @@ function renderDossierFacts(
                         iconWrapper.className =
                             "dossier-fact-icon-wrapper";
 
-                        /*
-                         * Makes the custom tooltip
-                         * accessible with the keyboard.
-                         */
                         iconWrapper.tabIndex = 0;
 
                         iconWrapper.setAttribute(
@@ -426,12 +428,6 @@ function renderDossierFacts(
                         icon.className =
                             "dossier-fact-icon";
 
-                        /*
-                         * Custom tooltip.
-                         * Do not add icon.title because
-                         * that would restore the browser's
-                         * black native tooltip.
-                         */
                         const tooltip =
                             document.createElement(
                                 "span"
@@ -526,7 +522,6 @@ function renderDossierFacts(
     );
 
 }
-
 function formatDossierAttributes(
     attributes
 ) {

@@ -1,28 +1,48 @@
 const sounds = {
+    success: new Audio(
+        "/sounds/success.wav?v=3"
+    ),
 
-    success:
-        new Audio(
-            "sounds/success.wav?v=2"
-        ),
+    error: new Audio(
+        "/sounds/error.wav?v=3"
+    ),
 
-    error:
-        new Audio(
-            "sounds/error.wav?v=2"
-        ),
+    warning: new Audio(
+        "/sounds/warning.wav?v=3"
+    ),
 
-    warning:
-        new Audio(
-            "sounds/warning.wav?v=2"
-        ),
-
-    scribing:
-        new Audio(
-            "sounds/scribing.wav?v=2"
-        )
-
+    scribing: new Audio(
+        "/sounds/scribing.wav?v=3"
+    )
 };
 
+
+Object.entries(
+    sounds
+).forEach(
+    ([name, sound]) => {
+
+        sound.preload = "auto";
+
+        sound.addEventListener(
+            "error",
+            () => {
+
+                console.error(
+                    `Failed to load sound: ${name}`,
+                    sound.error,
+                    sound.src
+                );
+
+            }
+        );
+
+    }
+);
+
+
 sounds.scribing.volume = 0.4;
+
 
 function playSound(
     type
@@ -32,22 +52,48 @@ function playSound(
         sounds[type];
 
     if (!sound) {
+
+        console.warn(
+            `Unknown sound type: ${type}`
+        );
+
         return;
+
     }
 
+    sound.pause();
     sound.currentTime = 0;
 
-    sound
-        .play()
-        .catch(() => {});
+    const playback =
+        sound.play();
+
+    if (
+        playback instanceof Promise
+    ) {
+
+        playback.catch(
+            error => {
+
+                console.error(
+                    `Failed to play sound: ${type}`,
+                    error
+                );
+
+            }
+        );
+
+    }
 
 }
+
 
 function validateAccusation(
     accusation
 ) {
 
-    for (const key in accusation) {
+    for (
+        const key in accusation
+    ) {
 
         if (
             !accusation[key]
@@ -62,6 +108,7 @@ function validateAccusation(
     return true;
 
 }
+
 
 function checkAccusation(
     puzzle,
@@ -87,6 +134,7 @@ function checkAccusation(
 
 }
 
+
 function showMessage(
     text,
     type
@@ -96,6 +144,16 @@ function showMessage(
         document.getElementById(
             "accusation-message"
         );
+
+    if (!message) {
+
+        console.error(
+            "Missing #accusation-message element."
+        );
+
+        return;
+
+    }
 
     message.className = "";
 
