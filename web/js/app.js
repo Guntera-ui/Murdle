@@ -12,41 +12,73 @@ function ensureBoardFitFrame() {
         return null;
     }
 
+    const deductionSection =
+        workspace.querySelector(
+            ".deduction-board-section"
+        );
+
+    const referenceSection =
+        workspace.querySelector(
+            ".board-reference"
+        );
+
+    if (
+        !deductionSection ||
+        !referenceSection
+    ) {
+        return null;
+    }
+
     let frame =
         workspace.querySelector(
             ":scope > .board-fit-frame"
         );
 
-    if (frame) {
-        return {
-            workspace,
-            frame
-        };
-    }
+    if (!frame) {
 
-    frame =
-        document.createElement(
-            "div"
+        frame =
+            document.createElement(
+                "div"
+            );
+
+        frame.className =
+            "board-fit-frame";
+
+        workspace.insertBefore(
+            frame,
+            deductionSection
         );
 
-    frame.className =
-        "board-fit-frame";
-
-    while (
-        workspace.firstChild
-    ) {
-        frame.appendChild(
-            workspace.firstChild
-        );
     }
 
-    workspace.appendChild(
+    if (
+        deductionSection.parentElement !==
         frame
-    );
+    ) {
+
+        frame.appendChild(
+            deductionSection
+        );
+
+    }
+
+    if (
+        referenceSection.parentElement ===
+        frame
+    ) {
+
+        frame.insertAdjacentElement(
+            "afterend",
+            referenceSection
+        );
+
+    }
 
     return {
         workspace,
-        frame
+        frame,
+        deductionSection,
+        referenceSection
     };
 
 }
@@ -62,13 +94,13 @@ function resetBoardFit(
         "board-fit-active"
     );
 
-    workspace.style.removeProperty(
-        "--board-fit-height"
-    );
-
     frame.style.setProperty(
         "--board-fit-scale",
         "1"
+    );
+
+    frame.style.removeProperty(
+        "--board-fit-height"
     );
 
 }
@@ -76,10 +108,12 @@ function resetBoardFit(
 
 function measureBoardFit(
     workspace,
-    frame
+    frame,
+    deductionSection,
+    referenceSection
 ) {
 
-    const mobileLayout =
+    const stackedLayout =
         window.matchMedia(
             "(max-width: 900px)"
         ).matches;
@@ -89,7 +123,7 @@ function measureBoardFit(
         frame
     );
 
-    if (mobileLayout) {
+    if (stackedLayout) {
         return;
     }
 
@@ -102,52 +136,70 @@ function measureBoardFit(
             8
         );
 
-    const availableHeight =
+    const availableWorkspaceHeight =
         Math.max(
-            360,
+            520,
             window.innerHeight -
             stickyTop -
             10
         );
 
-    const availableWidth =
+    const referenceHeight =
+        referenceSection.offsetHeight;
+
+    const availableBoardHeight =
         Math.max(
-            320,
-            workspace.clientWidth
+            300,
+            availableWorkspaceHeight -
+            referenceHeight -
+            18
         );
 
-    const initiallyTooLarge =
-        frame.scrollHeight >
-            availableHeight ||
-        frame.scrollWidth >
-            availableWidth;
+    const availableBoardWidth =
+        Math.max(
+            360,
+            frame.clientWidth
+        );
 
-    if (initiallyTooLarge) {
+    const naturalHeightBeforeCompact =
+        deductionSection.scrollHeight;
+
+    const naturalWidthBeforeCompact =
+        deductionSection.scrollWidth;
+
+    if (
+        naturalHeightBeforeCompact >
+            availableBoardHeight ||
+        naturalWidthBeforeCompact >
+            availableBoardWidth
+    ) {
+
         workspace.classList.add(
             "board-compact"
         );
+
     }
 
     requestAnimationFrame(() => {
 
         const naturalHeight =
-            frame.scrollHeight;
+            deductionSection.scrollHeight;
 
         const naturalWidth =
-            frame.scrollWidth;
+            deductionSection.scrollWidth;
 
         const requiredScale =
             Math.min(
                 1,
-                availableHeight /
+                availableBoardHeight /
                     naturalHeight,
-                availableWidth /
+                availableBoardWidth /
                     naturalWidth
             );
 
         const finalScale =
             Math.max(
-                0.72,
+                0.76,
                 requiredScale
             );
 
@@ -159,21 +211,19 @@ function measureBoardFit(
         if (
             finalScale < 0.995
         ) {
+
             workspace.classList.add(
                 "board-fit-active"
             );
 
-            const verticalPadding =
-                24;
-
-            workspace.style.setProperty(
+            frame.style.setProperty(
                 "--board-fit-height",
                 `${Math.ceil(
                     naturalHeight *
-                    finalScale +
-                    verticalPadding
+                    finalScale
                 )}px`
             );
+
         }
 
     });
@@ -200,7 +250,9 @@ function updateBoardFit() {
 
                 measureBoardFit(
                     elements.workspace,
-                    elements.frame
+                    elements.frame,
+                    elements.deductionSection,
+                    elements.referenceSection
                 );
 
             }
@@ -217,12 +269,47 @@ window.addEventListener(
     }
 );
 
+
+if (
+    window.ResizeObserver
+) {
+
+    const boardResizeObserver =
+        new ResizeObserver(
+            updateBoardFit
+        );
+
+    window.addEventListener(
+        "DOMContentLoaded",
+        () => {
+
+            const workspace =
+                document.querySelector(
+                    ".board-workspace"
+                );
+
+            if (workspace) {
+
+                boardResizeObserver.observe(
+                    workspace
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
 if (
     document.fonts?.ready
 ) {
+
     document.fonts.ready.then(
         updateBoardFit
     );
+
 }
 
 
@@ -262,25 +349,30 @@ function renderPuzzle(
         puzzle.incidentReport
     );
 
-    renderInterviews(
-        puzzle.interviews
-    );
-
     const categories =
         createCategories(
             puzzle
         ).list;
 
+    renderDossierFacts(
+        puzzle,
+        categories
+    );
+
     renderClues(
         puzzle.clues
     );
 
-    renderCategories(
-        categories
+    renderInterviews(
+        puzzle.interviews,
+        puzzle.statementRules
     );
-    renderDossierFacts(
+
+    renderCategories(
+        categories,
         puzzle
     );
+
     const board =
         createBoard(
             puzzle
@@ -301,11 +393,6 @@ function renderPuzzle(
         "function"
     ) {
         startCaseTimer();
-    }
-    else {
-        console.error(
-            "Timer failed: startCaseTimer() is unavailable."
-        );
     }
 
     updateBoardFit();

@@ -1,46 +1,30 @@
-
-
 .board-title {
-    font-size: clamp(20px, 1.65vw, 28px);
+    font-size: clamp(22px, 1.7vw, 30px);
 }
 
 .master-board {
     --axis-label-font-size:
-        clamp(12px, 0.82vw, 14px);
-}
-
-.board-reference-title {
-    font-size: clamp(14px, 1vw, 18px);
-}
-
-.category-group-title {
-    font-size: clamp(11px, 0.72vw, 13px);
-}
-
-.category-list li,
-#categories li {
-    font-size: clamp(12px, 0.82vw, 14px);
+        clamp(12px, 0.82vw, 15px);
 }
 
 .board-fit-frame {
     width: 100%;
-
-    transform:
-        scale(
-            var(--board-fit-scale, 1)
-        );
-
-    transform-origin: top center;
-}
-
-.board-workspace.board-fit-active {
     height:
         var(
             --board-fit-height,
             auto
         );
-
     overflow: visible;
+}
+
+.board-fit-frame
+> .deduction-board-section {
+    width: 100%;
+    transform:
+        scale(
+            var(--board-fit-scale, 1)
+        );
+    transform-origin: top center;
 }
 
 .board-workspace.board-compact {
@@ -50,90 +34,38 @@
 .board-workspace.board-compact
 .board-title {
     margin-bottom: 7px;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .board-workspace.board-compact
 .master-board {
     --board-cell-size:
         clamp(
-            34px,
-            min(3.15vw, 4.45vh),
-            50px
+            35px,
+            min(3.2vw, 4.6vh),
+            51px
         );
 
     --side-label-width:
-        clamp(31px, 2.35vw, 37px);
+        clamp(32px, 2.4vw, 38px);
 
     --top-axis-height:
-        clamp(42px, 4.9vh, 50px);
+        clamp(44px, 5vh, 52px);
 
-    --axis-label-gap: 5px;
+    --axis-label-gap: 6px;
 
     --axis-label-font-size:
-        clamp(10px, 0.66vw, 12px);
+        clamp(11px, 0.7vw, 13px);
 }
-
-.board-workspace.board-compact
-.board-reference {
-    margin-top: 7px;
-    padding-top: 6px;
-}
-
-.board-workspace.board-compact
-.board-reference-title {
-    margin-bottom: 4px;
-    font-size: 13px;
-}
-
-.board-workspace.board-compact
-#categories {
-    gap: 8px;
-}
-
-.board-workspace.board-compact
-.category-group {
-    padding-left: 7px;
-}
-
-.board-workspace.board-compact
-.category-group-title {
-    min-height: 2em;
-    margin-bottom: 2px;
-    font-size: 10px;
-}
-
-.board-workspace.board-compact
-.category-list {
-    gap: 1px;
-}
-
-.board-workspace.board-compact
-.category-list li,
-.board-workspace.board-compact
-#categories li {
-    gap: 4px;
-    font-size: 11px;
-    line-height: 1.15;
-}
-
-.board-workspace.board-compact
-.list-icon,
-.board-workspace.board-compact
-.category-list .list-icon {
-    width: 21px;
-    height: 21px;
-    flex-basis: 21px;
-}
-
 
 @media (max-width: 900px) {
     .board-fit-frame {
-        transform: none !important;
+        height: auto !important;
     }
 
-    .board-workspace.board-fit-active {
-        height: auto;
+    .board-fit-frame
+    > .deduction-board-section {
+        transform: none !important;
     }
 
     .board-workspace.board-compact
@@ -144,7 +76,35 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .board-fit-frame {
+    .board-fit-frame
+    > .deduction-board-section {
         transition: none;
+    }
+}
+
+.board-fit-frame {
+    width: 100%;
+    height: auto !important;
+    overflow: visible;
+}
+
+.board-fit-frame > .deduction-board-section {
+    width: 100%;
+    transform: none !important;
+}
+
+.board-workspace,
+.board-workspace.board-fit-active {
+    height: auto !important;
+    min-height: 0;
+}
+
+@media (max-width: 1080px) {
+    .board-fit-frame {
+        height: auto !important;
+    }
+
+    .board-fit-frame > .deduction-board-section {
+        transform: none !important;
     }
 }

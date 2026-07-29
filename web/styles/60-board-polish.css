@@ -1057,3 +1057,224 @@
 #dossier-facts-section {
     display: none !important;
 }
+
+
+.board-reference {
+    container-name: case-reference;
+    container-type: inline-size;
+    margin-top: clamp(16px, 2vh, 24px);
+    padding: clamp(16px, 1.4vw, 22px);
+}
+
+.board-reference-title {
+    margin-bottom: 14px;
+    font-size: clamp(18px, 1.2vw, 22px);
+    font-weight: 800;
+    letter-spacing: 0.13em;
+}
+
+#categories {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 14px;
+    align-items: stretch;
+}
+
+#categories:has(
+    .category-group:nth-child(4)
+) {
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+}
+
+.category-group {
+    min-width: 0;
+    padding: clamp(13px, 1vw, 18px);
+}
+
+.category-group-title {
+    min-height: 0;
+    margin: 0 0 11px;
+    padding-bottom: 8px;
+    font-size: clamp(13px, 0.82vw, 15px);
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: 0.09em;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.category-list li.category-reference-item,
+#categories li.category-reference-item {
+    display: grid;
+    grid-template-columns:
+        clamp(38px, 2.6vw, 46px)
+        minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+    min-width: 0;
+    min-height: 54px;
+    padding: 7px 6px 7px 3px;
+}
+
+.category-reference-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    min-width: 0;
+    min-height: 40px;
+}
+
+.category-reference-name {
+    display: block;
+    min-width: 0;
+    color: var(--ink);
+    font-size: clamp(15px, 0.98vw, 18px);
+    font-weight: 800;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.category-reference-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 5px;
+    min-width: 0;
+}
+
+.category-reference-fact {
+    display: inline-block;
+    max-width: 100%;
+    padding: 3px 6px;
+    color: rgba(49, 35, 29, 0.88);
+    background: rgba(123, 33, 53, 0.055);
+    border: 1px solid rgba(123, 33, 53, 0.14);
+    border-radius: 3px;
+    font-size: clamp(12px, 0.76vw, 14px);
+    font-weight: 700;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    white-space: normal;
+}
+
+.category-reference-item
+.list-icon {
+    align-self: start;
+    width: clamp(38px, 2.6vw, 46px);
+    height: clamp(38px, 2.6vw, 46px);
+    flex-basis: auto;
+    object-fit: contain;
+}
+
+.category-reference-item
+.list-icon[src*="/suspects/"] {
+    width: clamp(42px, 2.9vw, 50px);
+    height: clamp(42px, 2.9vw, 50px);
+    transform: scale(1.03);
+    transform-origin: center;
+}
+
+.board-workspace.board-compact
+.board-reference {
+    margin-top: 14px;
+    padding: clamp(14px, 1.2vw, 19px);
+}
+
+.board-workspace.board-compact
+.board-reference-title {
+    margin-bottom: 12px;
+    font-size: clamp(18px, 1.15vw, 21px);
+}
+
+.board-workspace.board-compact
+.category-group {
+    padding: clamp(12px, 0.9vw, 16px);
+}
+
+.board-workspace.board-compact
+.category-group-title {
+    font-size: clamp(13px, 0.8vw, 15px);
+}
+
+.board-workspace.board-compact
+.category-list {
+    gap: 6px;
+}
+
+.board-workspace.board-compact
+.category-list li.category-reference-item {
+    grid-template-columns:
+        clamp(36px, 2.4vw, 43px)
+        minmax(0, 1fr);
+    min-height: 50px;
+    gap: 9px;
+    padding: 6px 5px 6px 3px;
+}
+
+.board-workspace.board-compact
+.category-reference-item
+.list-icon {
+    width: clamp(36px, 2.4vw, 43px);
+    height: clamp(36px, 2.4vw, 43px);
+}
+
+.board-workspace.board-compact
+.category-reference-name {
+    font-size: clamp(15px, 0.94vw, 17px);
+}
+
+.board-workspace.board-compact
+.category-reference-fact {
+    padding: 3px 5px;
+    font-size: clamp(12px, 0.72vw, 13px);
+}
+
+@container case-reference (
+    max-width: 760px
+) {
+    #categories,
+    #categories:has(
+        .category-group:nth-child(4)
+    ) {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+}
+
+@container case-reference (
+    max-width: 480px
+) {
+    #categories,
+    #categories:has(
+        .category-group:nth-child(4)
+    ) {
+        grid-template-columns: 1fr;
+    }
+
+    .category-reference-name {
+        font-size: 17px;
+    }
+
+    .category-reference-fact {
+        font-size: 13px;
+    }
+}
+
+#dossier-facts-section {
+    display: none !important;
+}

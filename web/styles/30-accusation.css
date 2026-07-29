@@ -1,4 +1,4 @@
-/* Kako Cypher component stylesheet: 30-accusation.css */
+
 
 .final-accusation-section {
     padding-top: 4px;
@@ -218,5 +218,52 @@
 
     50% {
         transform: scale(1.04);
+    }
+}
+
+
+.accusation-panel {
+    gap: clamp(12px, 1.2vw, 16px);
+    max-width: 620px;
+}
+
+.dropdown-button {
+    min-height: clamp(58px, 7vh, 68px);
+    padding: 13px 22px;
+    border-radius: 12px;
+}
+
+.dropdown-text {
+    font-size: clamp(16px, 1vw, 18px);
+    font-weight: 800;
+}
+
+.dropdown-arrow {
+    right: 22px;
+    font-size: 14px;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    font-size: clamp(15px, 0.95vw, 17px);
+    font-weight: 700;
+}
+
+.accusation-panel > button {
+    min-height: clamp(62px, 7.5vh, 72px);
+    margin-top: 6px;
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: clamp(16px, 1vw, 18px);
+    font-weight: 800;
+}
+
+@media (max-width: 620px) {
+    .dropdown-button {
+        min-height: 58px;
+    }
+
+    .accusation-panel > button {
+        min-height: 62px;
     }
 }
