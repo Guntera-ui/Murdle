@@ -1,507 +1,254 @@
-let workspaceFitFrame = 0;
-let workspaceFitObserver = null;
-let workspaceMutationObserver = null;
-let lastWorkspaceFit = "";
+/*
+ * Kako Cypher board workspace fitter
+ *
+ * One workspace, one scale, no internal scroll containers.
+ * CSS handles width responsively. JavaScript only applies a uniform scale
+ * when the complete sticky workspace cannot fit the usable desktop height.
+ */
 
-function getWorkspaceFitElements() {
-    const workspace =
-        document.querySelector(
-            ".board-workspace"
-        );
+const BOARD_FIT_BREAKPOINT = "(max-width: 64rem)";
+const BOARD_FIT_BOTTOM_GAP = 10;
+const BOARD_FIT_EPSILON = 0.002;
+
+let boardFitFrame = 0;
+let boardFitResizeObserver = null;
+let boardFitMutationObserver = null;
+let boardFitElements = null;
+let boardFitKey = "";
+
+function unwrapElement(element) {
+    const parent = element.parentNode;
+
+    if (!parent) {
+        return;
+    }
+
+    while (element.firstChild) {
+        parent.insertBefore(element.firstChild, element);
+    }
+
+    element.remove();
+}
+
+function removeLegacyFitStructure(workspace) {
+    workspace
+        .querySelectorAll(
+            ":scope > .workspace-fit-shell, " +
+            ":scope > .board-fit-frame"
+        )
+        .forEach(unwrapElement);
+
+    workspace.classList.remove(
+        "board-compact",
+        "board-fit-active",
+        "workspace-fit-scroll"
+    );
+}
+
+function ensureBoardFitStructure() {
+    const workspace = document.querySelector(".board-workspace");
 
     if (!workspace) {
         return null;
     }
 
-    workspace.classList.remove(
-        "workspace-fit-scroll"
-    );
+    let shell = workspace.querySelector(":scope > .board-fit-shell");
+    let content = shell?.querySelector(":scope > .board-fit-content");
 
-    const oldFrame =
-        workspace.querySelector(
-            ":scope > .board-fit-frame"
-        );
+    if (!shell || !content) {
+        removeLegacyFitStructure(workspace);
 
-    if (oldFrame) {
-        const oldBoard =
-            oldFrame.querySelector(
-                ".deduction-board-section"
-            );
+        const board = workspace.querySelector(".deduction-board-section");
+        const reference = workspace.querySelector(".board-reference");
 
-        const oldReference =
-            oldFrame.querySelector(
-                ".board-reference"
-            );
-
-        if (oldBoard) {
-            workspace.insertBefore(
-                oldBoard,
-                oldFrame
-            );
+        if (!board || !reference) {
+            return null;
         }
 
-        if (oldReference) {
-            workspace.insertBefore(
-                oldReference,
-                oldFrame
-            );
-        }
+        shell = document.createElement("div");
+        shell.className = "board-fit-shell";
 
-        oldFrame.remove();
+        content = document.createElement("div");
+        content.className = "board-fit-content";
+
+        workspace.insertBefore(shell, board);
+        shell.appendChild(content);
+        content.appendChild(board);
+        content.appendChild(reference);
     }
 
-    const board =
-        workspace.querySelector(
-            ".deduction-board-section"
-        );
+    const board = content.querySelector(".deduction-board-section");
+    const reference = content.querySelector(".board-reference");
+    const masterBoard = content.querySelector(".master-board");
 
-    const reference =
-        workspace.querySelector(
-            ".board-reference"
-        );
-
-    if (
-        !board ||
-        !reference
-    ) {
+    if (!board || !reference) {
         return null;
-    }
-
-    let boardShell =
-        board.parentElement;
-
-    if (
-        !boardShell?.classList.contains(
-            "workspace-fit-shell--board"
-        )
-    ) {
-        boardShell =
-            document.createElement(
-                "div"
-            );
-
-        boardShell.className =
-            "workspace-fit-shell " +
-            "workspace-fit-shell--board";
-
-        workspace.insertBefore(
-            boardShell,
-            board
-        );
-
-        boardShell.appendChild(
-            board
-        );
-    }
-
-    let referenceShell =
-        reference.parentElement;
-
-    if (
-        !referenceShell?.classList.contains(
-            "workspace-fit-shell--reference"
-        )
-    ) {
-        referenceShell =
-            document.createElement(
-                "div"
-            );
-
-        referenceShell.className =
-            "workspace-fit-shell " +
-            "workspace-fit-shell--reference";
-
-        workspace.insertBefore(
-            referenceShell,
-            boardShell.nextSibling
-        );
-
-        referenceShell.appendChild(
-            reference
-        );
     }
 
     return {
         workspace,
+        shell,
+        content,
         board,
         reference,
-        boardShell,
-        referenceShell
+        masterBoard
     };
 }
 
-function clampWorkspaceScale(
-    value,
-    minimum,
-    maximum
-) {
-    return Math.min(
-        maximum,
-        Math.max(
-            minimum,
-            value
-        )
+function detectCategoryCount(elements) {
+    const topLabelCount =
+        elements.masterBoard?.querySelectorAll(
+            ":scope > .board-row:first-child > .board-label.top"
+        ).length ?? 0;
+
+    const categoryCount = topLabelCount > 0
+        ? topLabelCount + 1
+        : 3;
+
+    elements.content.dataset.categoryCount = String(categoryCount);
+}
+
+function getViewportHeight() {
+    return window.visualViewport?.height ?? window.innerHeight;
+}
+
+function getStickyTop(workspace) {
+    const top = Number.parseFloat(
+        window.getComputedStyle(workspace).top
+    );
+
+    return Number.isFinite(top) ? top : 0;
+}
+
+function resetBoardFit(elements) {
+    elements.content.style.setProperty("--board-fit-scale", "1");
+    elements.shell.style.height = "auto";
+    elements.workspace.dataset.fitScale = "1";
+}
+
+function floorScale(value) {
+    if (value >= 1) {
+        return 1;
+    }
+
+    return Math.max(
+        0.01,
+        Math.floor((value - BOARD_FIT_EPSILON) * 1000) / 1000
     );
 }
 
-function applyWorkspaceScale(
-    shell,
-    section,
-    scale
-) {
-    section.style.setProperty(
-        "--workspace-fit-scale",
-        scale.toFixed(4)
-    );
-
-    shell.style.height =
-        `${Math.ceil(
-            section.scrollHeight *
-            scale
-        )}px`;
-}
-
-function resetWorkspaceFit(
-    elements
-) {
-    const {
-        workspace,
-        board,
-        reference,
-        boardShell,
-        referenceShell
-    } = elements;
-
-    workspace.classList.remove(
-        "workspace-fit-scroll"
-    );
-
-    board.style.setProperty(
-        "--workspace-fit-scale",
-        "1"
-    );
-
-    reference.style.setProperty(
-        "--workspace-fit-scale",
-        "1"
-    );
-
-    boardShell.style.height =
-        "auto";
-
-    referenceShell.style.height =
-        "auto";
-}
-
-function measureWorkspaceFit() {
-    const elements =
-        getWorkspaceFitElements();
+function measureBoardFit() {
+    const elements = ensureBoardFitStructure();
 
     if (!elements) {
         return;
     }
 
-    const {
-        workspace,
-        board,
-        reference,
-        boardShell,
-        referenceShell
-    } = elements;
+    boardFitElements = elements;
+    detectCategoryCount(elements);
+    const availableWidth = Math.max(1, elements.shell.clientWidth);
+    const naturalWidth = Math.max(1, elements.content.scrollWidth);
+    const naturalHeight = Math.max(1, elements.content.scrollHeight);
 
-    const stacked =
-        window.matchMedia(
-            "(max-width: 900px)"
-        ).matches;
+    const widthScale = availableWidth / naturalWidth;
+    const stacked = window.matchMedia(BOARD_FIT_BREAKPOINT).matches;
 
-    if (stacked) {
-        resetWorkspaceFit(
-            elements
+    let scale = Math.min(1, widthScale);
+    let availableHeight = naturalHeight;
+
+    if (!stacked) {
+        const workspaceRect = elements.workspace.getBoundingClientRect();
+        const stickyTop = getStickyTop(elements.workspace);
+        const visibleTop = Math.max(stickyTop, workspaceRect.top);
+
+        availableHeight = Math.max(
+            1,
+            getViewportHeight() - visibleTop - BOARD_FIT_BOTTOM_GAP
         );
 
-        lastWorkspaceFit = "";
+        scale = Math.min(scale, availableHeight / naturalHeight);
+    }
+
+    scale = floorScale(scale);
+
+    const fitKey = [
+        stacked ? "stacked" : "sticky",
+        elements.content.dataset.categoryCount,
+        availableWidth.toFixed(1),
+        availableHeight.toFixed(1),
+        naturalWidth.toFixed(1),
+        naturalHeight.toFixed(1),
+        scale.toFixed(3)
+    ].join("|");
+
+    if (fitKey === boardFitKey) {
         return;
     }
 
-    workspace.classList.remove(
-        "workspace-fit-scroll"
+    boardFitKey = fitKey;
+
+    elements.content.style.setProperty(
+        "--board-fit-scale",
+        scale.toFixed(3)
     );
 
-    const workspaceRect =
-        workspace.getBoundingClientRect();
+    elements.shell.style.height =
+        `${Math.ceil(naturalHeight * scale)}px`;
 
-    const top =
-        Math.max(
-            workspaceRect.top,
-            8
-        );
-
-    const availableHeight =
-        Math.max(
-            480,
-            window.innerHeight -
-            top -
-            10
-        );
-
-    const availableWidth =
-        Math.max(
-            360,
-            workspace.clientWidth
-        );
-
-    const boardWidth =
-        Math.max(
-            1,
-            board.scrollWidth,
-            board.offsetWidth
-        );
-
-    const referenceWidth =
-        Math.max(
-            1,
-            reference.scrollWidth,
-            reference.offsetWidth
-        );
-
-    const boardHeight =
-        Math.max(
-            1,
-            board.scrollHeight
-        );
-
-    const referenceHeight =
-        Math.max(
-            1,
-            reference.scrollHeight
-        );
-
-    const gap = 16;
-
-    const minimumBoardScale =
-        0.68;
-
-    const minimumReferenceScale =
-        0.82;
-
-    let boardScale =
-        clampWorkspaceScale(
-            availableWidth /
-            boardWidth,
-            minimumBoardScale,
-            1.08
-        );
-
-    let referenceScale =
-        clampWorkspaceScale(
-            availableWidth /
-            referenceWidth,
-            minimumReferenceScale,
-            1
-        );
-
-    const initialHeight =
-        boardHeight *
-            boardScale +
-        referenceHeight *
-            referenceScale +
-        gap;
-
-    if (
-        initialHeight >
-        availableHeight
-    ) {
-        const commonScale =
-            availableHeight /
-            initialHeight;
-
-        boardScale =
-            Math.max(
-                minimumBoardScale,
-                boardScale *
-                commonScale
-            );
-
-        referenceScale =
-            Math.max(
-                minimumReferenceScale,
-                referenceScale *
-                commonScale
-            );
-    }
-
-    let fittedHeight =
-        boardHeight *
-            boardScale +
-        referenceHeight *
-            referenceScale +
-        gap;
-
-    if (
-        fittedHeight >
-        availableHeight
-    ) {
-        const remaining =
-            fittedHeight -
-            availableHeight;
-
-        const boardCapacity =
-            boardHeight *
-            (
-                boardScale -
-                minimumBoardScale
-            );
-
-        const boardReduction =
-            Math.min(
-                remaining,
-                Math.max(
-                    0,
-                    boardCapacity
-                )
-            );
-
-        boardScale -=
-            boardReduction /
-            boardHeight;
-
-        fittedHeight =
-            boardHeight *
-                boardScale +
-            referenceHeight *
-                referenceScale +
-            gap;
-    }
-
-    const fitKey =
-        [
-            boardScale.toFixed(4),
-            referenceScale.toFixed(4),
-            Math.round(
-                availableHeight
-            ),
-            Math.round(
-                availableWidth
-            ),
-            Math.round(
-                boardHeight
-            ),
-            Math.round(
-                referenceHeight
-            )
-        ].join("|");
-
-    if (
-        fitKey ===
-        lastWorkspaceFit
-    ) {
-        return;
-    }
-
-    lastWorkspaceFit =
-        fitKey;
-
-    applyWorkspaceScale(
-        boardShell,
-        board,
-        boardScale
-    );
-
-    applyWorkspaceScale(
-        referenceShell,
-        reference,
-        referenceScale
-    );
+    elements.workspace.dataset.fitScale = scale.toFixed(3);
 }
 
-function requestWorkspaceFit() {
-    cancelAnimationFrame(
-        workspaceFitFrame
-    );
-
-    workspaceFitFrame =
-        requestAnimationFrame(
-            measureWorkspaceFit
-        );
+function requestBoardFit() {
+    window.cancelAnimationFrame(boardFitFrame);
+    boardFitFrame = window.requestAnimationFrame(measureBoardFit);
 }
 
-function initialiseWorkspaceFit() {
-    const elements =
-        getWorkspaceFitElements();
+function connectBoardFitObservers(elements) {
+    boardFitResizeObserver?.disconnect();
+    boardFitMutationObserver?.disconnect();
+
+    if ("ResizeObserver" in window) {
+        boardFitResizeObserver = new ResizeObserver(requestBoardFit);
+        boardFitResizeObserver.observe(elements.workspace);
+        boardFitResizeObserver.observe(elements.content);
+    }
+
+    if ("MutationObserver" in window) {
+        boardFitMutationObserver = new MutationObserver(requestBoardFit);
+        boardFitMutationObserver.observe(elements.content, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+    }
+}
+
+function initialiseBoardFit() {
+    const elements = ensureBoardFitStructure();
 
     if (!elements) {
         return;
     }
 
-    if (
-        window.ResizeObserver &&
-        !workspaceFitObserver
-    ) {
-        workspaceFitObserver =
-            new ResizeObserver(
-                requestWorkspaceFit
-            );
+    boardFitElements = elements;
+    connectBoardFitObservers(elements);
 
-        workspaceFitObserver.observe(
-            elements.workspace
-        );
-
-        workspaceFitObserver.observe(
-            elements.board
-        );
-
-        workspaceFitObserver.observe(
-            elements.reference
-        );
-    }
-
-    if (
-        window.MutationObserver &&
-        !workspaceMutationObserver
-    ) {
-        workspaceMutationObserver =
-            new MutationObserver(
-                requestWorkspaceFit
-            );
-
-        workspaceMutationObserver.observe(
-            elements.workspace,
-            {
-                childList: true,
-                subtree: true,
-                characterData: true
-            }
-        );
-    }
-
-    requestWorkspaceFit();
+    elements.workspace.addEventListener("load", requestBoardFit, true);
+    requestBoardFit();
 }
 
-window.addEventListener(
-    "resize",
-    requestWorkspaceFit,
-    {
-        passive: true
-    }
-);
+window.addEventListener("resize", requestBoardFit, { passive: true });
+window.addEventListener("orientationchange", requestBoardFit);
+window.visualViewport?.addEventListener("resize", requestBoardFit, {
+    passive: true
+});
 
-window.addEventListener(
-    "orientationchange",
-    requestWorkspaceFit
-);
-
-window.addEventListener(
-    "DOMContentLoaded",
-    initialiseWorkspaceFit
-);
-
-if (
-    document.fonts?.ready
-) {
-    document.fonts.ready.then(
-        () => {
-            initialiseWorkspaceFit();
-            requestWorkspaceFit();
-        }
-    );
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialiseBoardFit, {
+        once: true
+    });
+} else {
+    initialiseBoardFit();
 }
+
+document.fonts?.ready.then(requestBoardFit);
