@@ -1,67 +1,61 @@
 {
     "id": 1,
     "caseNumber": "001",
-    "title": "THE ENAGETI INCIDENT",
+    "title": "ფიროსმანის მკვლელობა",
     "status": "OPEN",
-    "description": "A village guardian is found dead at dawn.",
+    "description": "ქართველი დიდგვაროვანი ფიროსამნის მკვლელობა ისურვა უგუნურმა მოკვდავმა.",
     "difficulty": "Easy",
     "victim": {
-        "name": "Ginger",
-        "occupation": "Village Guardian",
-        "causeOfDeath": "Head Injury"
+        "name": "ფიროსმანი",
+        "occupation": "პროქტოლოგი",
+        "causeOfDeath": "მოწამლვა"
     },
-    "incidentReport": "Ginger was found beneath the House shortly after sunrise. The murder weapon was left at the scene. Marki, Bego, and Baxi were the only animals seen outside that morning.",
+    "incidentReport": "ფიროსმანი გვამი იპოვეს საღამოს 6 საათზე კიბის ქვეშ. გვამი სავარაუდოდ გადაიტანეს მკვლელობის ადგილიდან. დანა ეგდო მკვლელობის ადგილას, ასევე მას ახლდა ორი გაუფრცქვნელი კარტოფილი. პირიდან ქაფი გადმოსდიოდა ფიროსმანიუსას. ადგილზე იმყოფებოდნენ მხოლოდ ჟუჟუნა,სოსოიე და პავლო",
     "interviews": [
         {
-            "speaker": "Marki",
-            "statement": "I never went anywhere near the Warehouse."
+            "speaker": "ჟუჟუნა",
+            "statement": "რამ მაჰკლა ფიროსმანი სულით ყმა გულით კეთილი. დასტირის ჩემი თავი მის ნათესავებს."
         },
         {
-            "speaker": "Bego",
-            "statement": "I only ever wanted what was owed to me."
+            "speaker": "სოსოიე",
+            "statement": "ოჰ ჩემო ფიროსმან, რამ დაგღუპა ასეთი მანდილოსანი."
         },
         {
-            "speaker": "Baxi",
-            "statement": "Everyone blames the old dog first. Believe what you want—I never carried the Rock."
+            "speaker": "პავლო",
+            "statement": "საწყალი პიროსმანი თოკი დამაბარა, რომ მომეტანა ვირის მოგერიებას ვაპირებდით გადარეული. მაგრამ ახლა რა აზრი აქვს გარდაიცვალა საწყალი ფიროსმანი"
         }
     ],
     "suspects": [
-        "Marki",
-        "Bego",
-        "Baxi"
+        "ჟუჟუნა",
+        "სოსოიე",
+        "პავლო"
     ],
     "suspectIcons": {
-        "Baxi": "mustache",
-        "Bego": "vampire-dracula",
-        "Marki": "witch-face"
+        "პავლო": "kenku-head",
+        "ჟუჟუნა": "mustache",
+        "სოსოიე": "cleopatra"
     },
     "weapons": [
-        "Crowbar",
-        "Rock",
-        "Brick"
+        "Poison",
+        "Slipknot",
+        "Bowie Knife"
     ],
     "locations": [
-        "Warehouse",
-        "Garden",
-        "House"
-    ],
-    "motives": [
-        "Greed",
-        "Revenge",
-        "Jealousy"
+        "Office",
+        "Library",
+        "Bedroom"
     ],
     "clues": [
-        "Bego was seen near the House.",
-        "Marki never carried the Rock.",
-        "The Crowbar was not taken to the Warehouse.",
-        "Baxi was not in the Garden.",
-        "The killer had long resented Ginger over an unpaid debt.",
-        "Baxi bore no grudge over money — he'd never lent Ginger a coin in his life."
+        "ფიროსმანს ბევრი ვირთხა ყავდა სახლში.",
+        "დანაზე სისხლი არ არის.",
+        "ბიბლიოთეკაში არასდროს შედიოდა ფიროსმანი იმიტომ, რომ ყველაზე ჭკვიანი ეგონა თავი.",
+        "ცოლი გაშორდა და საძინებელი ოთახის დანახვა აღარ უნდოდა, ამიტომაც ოფისსი მაგის საყვარელი ადგილი გახდა.",
+        "ჟუჟუნა ახალი მოსული იყო დანაშაულის ადგილზე.",
+        "პავლოს აინტერესებდა, რომელ ვირთხის წამალს იყენებდა ფიროსმანი. მაგის გასაგებად იყო მოსული მკვლელობის დღეს"
     ],
     "solution": {
-        "suspect": "Bego",
-        "weapon": "Rock",
-        "location": "House",
-        "motive": "Greed"
+        "suspect": "სოსოიე",
+        "weapon": "Poison",
+        "location": "Office"
     }
 }

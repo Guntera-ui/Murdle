@@ -1,60 +1,295 @@
 {
     "id": 3,
     "caseNumber": "003",
-    "title": "THE PHARAOH'S SIDE-EYE",
+    "title": "THE DOOFUS CASE",
     "status": "OPEN",
-    "description": "A masquerade gala ends with the host dead and everyone's alibi a little too perfect.",
+    "description": "Doofus Gio was killed in his own room. Determine the culprit, weapon, and location.",
     "difficulty": "Easy",
     "victim": {
-        "name": "Percival",
-        "occupation": "Gala Host",
-        "causeOfDeath": "Blunt Force Trauma"
+        "name": "Doofus Gio",
+        "occupation": "Computer Scientist",
+        "causeOfDeath": "Too Much Math"
     },
-    "incidentReport": "Percival, host of the annual masquerade gala, was found dead shortly before midnight. The murder weapon was left at the scene. Cleopatra, Wolf, and Kenku were the only guests unaccounted for at the final toast.",
+    "incidentReport": "Doofus Gio was found dead in his own room. He shared the room with his pets: Kako, Gveni, Dunk and Eggy. We must note that Dunk had evidently been reclining in his luxury linens all day. Consequently, the detectives' committee has declared Dunk innocent. The remaining suspects are Kako, Gveni and Eggy. Detectives found Acer Aspire 5315, Energy Drink and Calculus Homework at the crime scene. The following locations were examined: Desk, Bed and Bird Cage.",
     "interviews": [
         {
-            "speaker": "Cleopatra",
-            "statement": "I never left the Bedroom — my admirers can vouch for every second."
+            "speaker": "Kako",
+            "statement": "Kako offered man his 11th Energy Drink today. Man scratch Kako good, so, Kako give man his favourite drink. Kako only meant good."
         },
         {
-            "speaker": "Kenku",
-            "statement": "I spent the whole night grumbling in the Office. Loudly."
+            "speaker": "Gveni",
+            "statement": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep."
         },
         {
-            "speaker": "Wolf",
-            "statement": "I wasn't anywhere near the Dining Room, I swear on my tail."
+            "speaker": "Eggy",
+            "statement": "I definitely spotted Kako near the Bird Cage. Assaulting it, to be precise. Oink."
         }
+        
     ],
     "suspects": [
-        "Cleopatra",
-        "Wolf",
-        "Kenku"
+        "Kako",
+        "Gveni",
+        "Eggy"
     ],
     "suspectIcons": {
-        "Cleopatra": "alien-stare",
-        "Kenku": "cleopatra",
-        "Wolf": "mustache"
+        "Kako": "parrot-head",
+        "Eggy": "porcupine",
+        "Gveni": "bird-twitter"
     },
-    "weapons": [
-        "Poison",
-        "Trophy",
-        "Baseball Bat"
+    "weapons": [ 
+        "Acer Aspire 5315",
+        "Energy Drink",
+        "Calculus Homework"
     ],
     "locations": [
-        "Bedroom",
-        "Office",
-        "Dining Room"
+        "Desk",
+        "Bed",
+        "Bird Cage"
     ],
+    "suspectDetails": {
+        "Kako": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 108
+                },
+                "personality": {
+                    "kind": "string",
+                    "string": "Mischievous"
+                }
+            }
+        },
+        "Gveni": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 99
+                },
+                "personality": {
+                    "kind": "string",
+                    "string": "Sassy"
+                }
+            }
+        },
+        "Eggy": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 504
+                },
+                "personality": {
+                    "kind": "string",
+                    "string": "Cheeky"
+                }
+            }
+        }
+    },
+    "weaponDetails": {
+        "Acer Aspire 5315": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 1900
+                }
+            }
+        },
+        "Energy Drink": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 250
+                }
+            }
+        },
+        "Calculus Homework": {
+            "attributes": {
+                "weight": {
+                    "kind": "number",
+                    "number": 958
+                }
+            }
+        }
+    },
+    "locationDetails": {
+        "Desk": {
+            "attributes": {
+                "indoors": {
+                    "kind": "bool",
+                    "bool": true
+                }
+            }
+        },
+        "Bed": {
+            "attributes": {
+                "indoors": {
+                    "kind": "bool",
+                    "bool": true
+                }
+            }
+        },
+        "Bird Cage": {
+            "attributes": {
+                "indoors": {
+                    "kind": "bool",
+                    "bool": true
+                }
+            }
+        }
+    },
+    "statementRules": {
+        "culpritLies": true,
+        "innocentsTellTruth": true
+    },
+    "logicStatements": [
+        {
+            "id": "statement-001",
+            "speaker": "Kako",
+            "text": "Kako offered man his 11th Energy Drink today. Man scratch Kako good, so, Kako give man his favourite drink. Kako only meant good.",
+            "claim": {
+                "id": "statement-claim-001",
+                "type": "pair",
+                "left": {
+                    "category": "suspect",
+                    "value": "Kako"
+                },
+                "right": {
+                    "category": "weapon",
+                    "value": "Energy Drink"
+                },
+                "relation": "is",
+                "text": "Kako offered man his 11th Energy Drink today. Man scratch Kako good, so, Kako give man his favourite drink. Kako only meant good.",
+                "source": {
+                    "type": "interview",
+                    "speaker": "Kako"
+                }
+            }
+        },
+        {
+            "id": "statement-002",
+            "speaker": "Gveni",
+            "text": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep.",
+            "claim": {
+                "id": "statement-claim-002",
+                "type": "pair",
+                "left": {
+                    "category": "suspect",
+                    "value": "Eggy"
+                },
+                "right": {
+                    "category": "weapon",
+                    "value": "Calculus Homework"
+                },
+                "relation": "is",
+                "text": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep.",
+                "source": {
+                    "type": "interview",
+                    "speaker": "Gveni"
+                }
+            }
+        },
+        {
+            "id": "statement-003",
+            "speaker": "Eggy",
+            "text": "I definitely spotted Kako near the Bird Cage. Assaulting it, to be precise. Oink.",
+            "claim": {
+                "id": "statement-claim-003",
+                "type": "pair",
+                "left": {
+                    "category": "suspect",
+                    "value": "Kako"
+                },
+                "right": {
+                    "category": "location",
+                    "value": "Bird Cage"
+                },
+                "relation": "is",
+                "text": "I definitely spotted Kako near the Bird Cage. Assaulting it, to be precise. Oink.",
+                "source": {
+                    "type": "interview",
+                    "speaker": "Eggy"
+                }
+            }
+        }
+    ],
+    "assignments": {
+        "Kako": {
+            "weapon": "Energy Drink",
+            "location": "Bird Cage"
+        },
+        "Eggy": {
+            "weapon": "Acer Aspire 5315",
+            "location": "Bed"
+        },
+        "Gveni": {
+            "weapon": "Calculus Homework",
+            "location": "Desk"
+        }
+    },
+    "culprit": "Gveni",
+    "logicClues": [
+        {
+            "id": "clue-001",
+            "type": "pair",
+            "left": {
+                "category": "location",
+                "value": "Desk"
+            },
+            "right": {
+                "category": "suspect",
+                "value": "Gveni"
+            },
+            "relation": "is",
+            "rightSelector": {
+                "attribute": "personality",
+                "category": "suspect",
+                "phrase": "the sassy suspect"
+            },
+            "text": "According to DNA analysis, droppings discovered on victim's Desk belong to the sassy suspect.",
+            "source": {
+                "type": "evidence"
+            }
+        },
+        {
+            "id": "clue-002",
+            "type": "pair",
+            "left": {
+                "category": "weapon",
+                "value": "Acer Aspire 5315"
+            },
+            "right": {
+                "category": "location",
+                "value": "Bed"
+            },
+            "relation": "is",
+            "leftSelector": {
+                "attribute": "weight",
+                "category": "weapon",
+                "order": "ascending",
+                "phrase": "the heaviest item",
+                "rank": 3
+            },
+            "text": "One of the suspects apparently dropped the heaviest item onto the victim's Bed - though we do not know if the victim was in bed when this happened.",
+            "source": {
+                "type": "evidence"
+            }
+        }
+    ],
+    "generation": {
+        "seed": 7319,
+        "generatorVersion": "0.3.0",
+        "verifiedUniqueSolution": true,
+        "solutionCount": 1,
+        "evidenceClueCount": 2,
+        "statementCount": 3,
+        "attempt": 1
+    },
     "clues": [
-        "The Poison vial was found sealed, its wax stamp unbroken, in the Bedroom nightstand.",
-        "The Trophy still gleamed, untouched, on the Office shelf.",
-        "The Baseball Bat, splintered, was found dropped in the Dining Room.",
-        "Cleopatra was holding court in the Bedroom, entertaining a queue of admirers all night.",
-        "Kenku was spotted squawking complaints in the Office about the noise."
+        "According to DNA analysis, droppings discovered on victim's Desk belong to the sassy suspect.",
+        "One of the suspects apparently dropped the heaviest item onto the victim's Bed - though we do not know if the victim was in bed when this happened."
     ],
     "solution": {
-        "suspect": "Wolf",
-        "weapon": "Baseball Bat",
-        "location": "Dining Room"
+        "suspect": "Gveni",
+        "weapon": "Calculus Homework",
+        "location": "Desk"
     }
 }

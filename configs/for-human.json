@@ -1,0 +1,147 @@
+{
+  "id": "010",
+  "caseNumber": "010",
+  "title": "THE DOOFUS CASE",
+  "status": "OPEN",
+  "description": "Doofus Gio was killed in his own room. Determine the culprit, weapon, and location.",
+  "difficulty": "Easy",
+  "victim": {
+    "name": "Doofus Gio",
+    "occupation": "Computer Scientist",
+    "causeOfDeath": "Too Much Math"
+  },
+  "incidentReport": "Doofus Gio was found dead in his own room. He shared the room with his pets: Kako, Gveni, Dunk and Eggy. We must note that Dunk had evidently been reclining in his luxury linens all day. Consequently, the detectives' committee has declared Dunk innocent. The remaining suspects are Kako, Gveni and Eggy. Detectives found Acer Aspire 5315, Energy Drink and Calculus Homework at the crime scene. The following locations were examined: Desk, Bed and Bird Cage.",
+  "interviews": [
+    {
+      "speaker": "Kako",
+      "statement": "Kako offered man his 11th Energy Drink today. Man scratch Kako good, so, Kako give man his favourite drink. Kako only meant good."
+    },
+    {
+      "speaker": "Gveni",
+      "statement": "That fat Eggy forced master to study Calculus to death. I wouldn't do that brcause gave us carrots. Sometimes. Eeep."
+    },
+    {
+      "speaker": "Eggy",
+      "statement": "I definitely spotted Kako near the Bird Cage. Assaulting it, to be precise. Oink."
+    }
+  ],
+  "suspects": [
+    "Kako",
+    "Gveni",
+    "Eggy"
+  ],
+  "suspectIcons": {
+    "Kako": "parrot-head",
+    "Gveni": "bird-twitter",
+    "Eggy": "porcupine"
+  },
+  "weapons": [
+    "Acer Aspire 5315",
+    "Energy Drink",
+    "Calculus Homework"
+  ],
+  "locations": [
+    "Desk",
+    "Bed",
+    "Bird Cage"
+  ],
+  "suspectDetails": {
+    "Kako": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 108
+        },
+        "personality": {
+          "kind": "string",
+          "string": "Mischievous"
+        }
+      }
+    },
+    "Gveni": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 99
+        },
+        "personality": {
+          "kind": "string",
+          "string": "Sassy"
+        }
+      }
+    },
+    "Eggy": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 504
+        },
+        "personality": {
+          "kind": "string",
+          "string": "Cheeky"
+        }
+      }
+    }
+  },
+  "weaponDetails": {
+    "Acer Aspire 5315": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 1900
+        }
+      }
+    },
+    "Energy Drink": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 250
+        }
+      }
+    },
+    "Calculus Homework": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 958
+        }
+      }
+    }
+  },
+  "locationDetails": {
+    "Desk": {
+      "attributes": {
+        "indoors": {
+          "kind": "bool",
+          "bool": true
+        }
+      }
+    },
+    "Bed": {
+      "attributes": {
+        "indoors": {
+          "kind": "bool",
+          "bool": true
+        }
+      }
+    },
+    "Bird Cage": {
+      "attributes": {
+        "indoors": {
+          "kind": "bool",
+          "bool": true
+        }
+      }
+    }
+  },
+  "clues": [
+    "According to DNA analysis, droppings discovered on victim's Desk belong to the sassy suspect.",
+    "One of the suspects apparently dropped the heaviest item onto the victim's Bed - though we do not know if the victim was in bed when this happened."
+  ],
+  "solution": {
+    "suspect": "Gveni",
+    "weapon": "Calculus Homework",
+    "location": "Desk"
+  }
+}
