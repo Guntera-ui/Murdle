@@ -1,5 +1,5 @@
 /*
- * Kako Cypher unified case-page stylesheet — v3
+ * Kako Cypher unified case-page stylesheet — v4
  *
  * Replace the ten numbered case-page stylesheets with this file.
  * The cascade is intentionally divided into explicit layers so later
@@ -1149,14 +1149,14 @@
 
     .category-group-title {
         min-height: 0;
-        margin: 0 0 7px;
-        padding-bottom: 6px;
+        margin: 0 0 6px;
+        padding-bottom: 5px;
         color: var(--burgundy);
         border-bottom: 1px dashed rgba(87, 61, 44, 0.22);
-        font-size: clamp(0.66rem, 1.9cqi, 0.82rem);
+        font-size: clamp(0.7rem, 2.05cqi, 0.9rem);
         font-weight: 800;
-        line-height: 1.2;
-        letter-spacing: 0.08em;
+        line-height: 1.08;
+        letter-spacing: 0.075em;
         text-transform: uppercase;
     }
 
@@ -1207,7 +1207,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 3px;
+        gap: 2px;
         min-width: 0;
         min-height: 28px;
     }
@@ -1216,9 +1216,9 @@
         display: block;
         min-width: 0;
         color: var(--ink);
-        font-size: clamp(0.72rem, 2.25cqi, 0.94rem);
+        font-size: clamp(0.78rem, 2.35cqi, 1.04rem);
         font-weight: 800;
-        line-height: 1.16;
+        line-height: 1.05;
         overflow-wrap: anywhere;
     }
 
@@ -1232,14 +1232,14 @@
     .category-reference-fact {
         display: inline-block;
         max-width: 100%;
-        padding: 2px 4px;
+        padding: 1px 4px;
         color: rgba(49, 35, 29, 0.86);
         background: rgba(123, 33, 53, 0.055);
         border: 1px solid rgba(123, 33, 53, 0.14);
         border-radius: 3px;
-        font-size: clamp(0.58rem, 1.7cqi, 0.72rem);
+        font-size: clamp(0.62rem, 1.85cqi, 0.84rem);
         font-weight: 700;
-        line-height: 1.16;
+        line-height: 1.02;
         overflow-wrap: anywhere;
         white-space: normal;
     }
@@ -1838,9 +1838,10 @@
         }
 
         .category-group-title {
-            margin-bottom: 4px;
-            padding-bottom: 4px;
-            font-size: clamp(0.6rem, 1.5cqi, 0.72rem);
+            margin-bottom: 3px;
+            padding-bottom: 3px;
+            font-size: clamp(0.68rem, 1.7cqi, 0.84rem);
+            line-height: 1.02;
         }
 
         .category-list {
@@ -1869,13 +1870,19 @@
             height: 27px;
         }
 
+        .category-reference-content {
+            gap: 1px;
+        }
+
         .category-reference-name {
-            font-size: clamp(0.64rem, 1.7cqi, 0.78rem);
+            font-size: clamp(0.76rem, 1.9cqi, 0.96rem);
+            line-height: 1.02;
         }
 
         .category-reference-fact {
             padding: 1px 3px;
-            font-size: clamp(0.52rem, 1.25cqi, 0.64rem);
+            font-size: clamp(0.62rem, 1.45cqi, 0.78rem);
+            line-height: 1;
         }
     }
 
