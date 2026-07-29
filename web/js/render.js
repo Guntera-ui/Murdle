@@ -1,6 +1,11 @@
+let activeReferencePuzzle = null;
+
+
 function renderList(
     items,
-    elementId
+    elementId,
+    categoryId,
+    puzzle = activeReferencePuzzle
 ) {
 
     const list =
@@ -8,7 +13,17 @@ function renderList(
             elementId
         );
 
+    if (!list) {
+        return;
+    }
+
     list.replaceChildren();
+
+    const details =
+        getReferenceDetails(
+            puzzle,
+            categoryId
+        );
 
     items.forEach(item => {
 
@@ -16,6 +31,9 @@ function renderList(
             document.createElement(
                 "li"
             );
+
+        li.className =
+            "category-reference-item";
 
         const img =
             document.createElement(
@@ -25,26 +43,90 @@ function renderList(
         img.src =
             item.icon;
 
-        img.alt =
-            item.name;
+        img.alt = "";
 
         img.className =
             "list-icon";
 
-        const span =
+        const content =
+            document.createElement(
+                "div"
+            );
+
+        content.className =
+            "category-reference-content";
+
+        const name =
             document.createElement(
                 "span"
             );
 
-        span.textContent =
+        name.className =
+            "category-reference-name";
+
+        name.textContent =
             item.name;
 
-        li.appendChild(
-            img
+        content.appendChild(
+            name
         );
 
-        li.appendChild(
-            span
+        const attributes =
+            details?.[
+                item.name
+            ]?.attributes ?? {};
+
+        const formattedFacts =
+            formatDossierAttributes(
+                attributes
+            );
+
+        if (
+            formattedFacts.length > 0
+        ) {
+
+            const facts =
+                document.createElement(
+                    "div"
+                );
+
+            facts.className =
+                "category-reference-facts";
+
+            formattedFacts.forEach(
+                factText => {
+
+                    const fact =
+                        document.createElement(
+                            "span"
+                        );
+
+                    fact.className =
+                        "category-reference-fact";
+
+                    fact.textContent =
+                        factText;
+
+                    facts.appendChild(
+                        fact
+                    );
+
+                }
+            );
+
+            content.appendChild(
+                facts
+            );
+
+            li.classList.add(
+                "category-reference-item--has-facts"
+            );
+
+        }
+
+        li.append(
+            img,
+            content
         );
 
         list.appendChild(
@@ -57,13 +139,25 @@ function renderList(
 
 
 function renderCategories(
-    categories
+    categories,
+    puzzle = activeReferencePuzzle
 ) {
+
+    if (puzzle) {
+
+        activeReferencePuzzle =
+            puzzle;
+
+    }
 
     const container =
         document.getElementById(
             "categories"
         );
+
+    if (!container) {
+        return;
+    }
 
     container.replaceChildren();
 
@@ -76,6 +170,30 @@ function renderCategories(
 
         group.className =
             "category-group";
+
+        const details =
+            getReferenceDetails(
+                activeReferencePuzzle,
+                category.id
+            );
+
+        const hasFacts =
+            category.items.some(
+                item =>
+                    Object.keys(
+                        details?.[
+                            item.name
+                        ]?.attributes ?? {}
+                    ).length > 0
+            );
+
+        if (hasFacts) {
+
+            group.classList.add(
+                "category-group--has-facts"
+            );
+
+        }
 
         const heading =
             document.createElement(
@@ -99,11 +217,8 @@ function renderCategories(
         list.className =
             "category-list";
 
-        group.appendChild(
-            heading
-        );
-
-        group.appendChild(
+        group.append(
+            heading,
             list
         );
 
@@ -113,10 +228,41 @@ function renderCategories(
 
         renderList(
             category.items,
-            category.id
+            category.id,
+            category.id,
+            activeReferencePuzzle
         );
 
     });
+
+}
+
+
+function getReferenceDetails(
+    puzzle,
+    categoryId
+) {
+
+    if (!puzzle) {
+        return null;
+    }
+
+    const detailsByCategory = {
+        suspects:
+            puzzle.suspectDetails,
+        weapons:
+            puzzle.weaponDetails,
+        locations:
+            puzzle.locationDetails,
+        motives:
+            puzzle.motiveDetails
+    };
+
+    return (
+        detailsByCategory[
+            categoryId
+        ] ?? null
+    );
 
 }
 
@@ -203,325 +349,40 @@ function renderDossierFacts(
     puzzle
 ) {
 
-    const interviewsSection =
-        document.getElementById(
-            "interviews-section"
-        );
+    activeReferencePuzzle =
+        puzzle ?? null;
 
-    if (!interviewsSection) {
-        return;
-    }
-
-    let section =
-        document.getElementById(
+    document
+        .getElementById(
             "dossier-facts-section"
-        );
+        )
+        ?.remove();
 
-    if (!section) {
-
-        section =
-            document.createElement(
-                "section"
-            );
-
-        section.id =
-            "dossier-facts-section";
-
-    }
-
-    /*
-     * Always place the dossier directly
-     * after the interviews section.
-     */
-    interviewsSection.insertAdjacentElement(
-        "afterend",
-        section
-    );
-
-    section.replaceChildren();
-
-    const categories =
-        createCategories(
-            puzzle
-        ).list;
-
-    const groups = [
-        {
-            title: "Suspect Details",
-            categoryId: "suspects",
-            values: puzzle.suspects,
-            details:
-                puzzle.suspectDetails
-        },
-        {
-            title: "Weapon Details",
-            categoryId: "weapons",
-            values: puzzle.weapons,
-            details:
-                puzzle.weaponDetails
-        },
-        {
-            title: "Location Details",
-            categoryId: "locations",
-            values: puzzle.locations,
-            details:
-                puzzle.locationDetails
-        },
-        {
-            title: "Motive Details",
-            categoryId: "motives",
-            values: puzzle.motives,
-            details:
-                puzzle.motiveDetails
-        }
-    ];
-
-    const populatedGroups =
-        groups.filter(
-            group =>
-                group.values?.some(
-                    value =>
-                        Object.keys(
-                            group.details?.[
-                                value
-                            ]?.attributes ?? {}
-                        ).length > 0
-                )
+    const referenceContainer =
+        document.getElementById(
+            "categories"
         );
 
     if (
-        populatedGroups.length === 0
+        puzzle &&
+        referenceContainer &&
+        referenceContainer
+            .children
+            .length > 0
     ) {
 
-        section.remove();
-        return;
+        renderCategories(
+            createCategories(
+                puzzle
+            ).list,
+            puzzle
+        );
 
     }
 
-    const heading =
-        document.createElement(
-            "h2"
-        );
-
-    heading.className =
-        "case-heading";
-
-    heading.textContent =
-        "DOSSIER FACTS";
-
-    section.appendChild(
-        heading
-    );
-
-    populatedGroups.forEach(
-        group => {
-
-            const category =
-                categories.find(
-                    item =>
-                        item.id ===
-                        group.categoryId
-                );
-
-            const block =
-                document.createElement(
-                    "section"
-                );
-
-            block.className =
-                "dossier-facts-group";
-
-            const groupTitle =
-                document.createElement(
-                    "h3"
-                );
-
-            groupTitle.className =
-                "dossier-facts-group-title";
-
-            groupTitle.textContent =
-                group.title;
-
-            block.appendChild(
-                groupTitle
-            );
-
-            const list =
-                document.createElement(
-                    "div"
-                );
-
-            list.className =
-                "dossier-facts-list";
-
-            group.values?.forEach(
-                entityName => {
-
-                    const attributes =
-                        group.details?.[
-                            entityName
-                        ]?.attributes ?? {};
-
-                    const formatted =
-                        formatDossierAttributes(
-                            attributes
-                        );
-
-                    if (
-                        formatted.length === 0
-                    ) {
-                        return;
-                    }
-
-                    const categoryItem =
-                        category?.items.find(
-                            item =>
-                                item.name ===
-                                entityName
-                        );
-
-                    const row =
-                        document.createElement(
-                            "article"
-                        );
-
-                    row.className =
-                        "dossier-fact-row";
-
-                    const identity =
-                        document.createElement(
-                            "div"
-                        );
-
-                    identity.className =
-                        "dossier-fact-identity";
-
-                    if (
-                        categoryItem?.icon
-                    ) {
-
-                        const iconWrapper =
-                            document.createElement(
-                                "div"
-                            );
-
-                        iconWrapper.className =
-                            "dossier-fact-icon-wrapper";
-
-                        iconWrapper.tabIndex = 0;
-
-                        iconWrapper.setAttribute(
-                            "aria-label",
-                            entityName
-                        );
-
-                        const icon =
-                            document.createElement(
-                                "img"
-                            );
-
-                        icon.src =
-                            categoryItem.icon;
-
-                        icon.alt = "";
-
-                        icon.className =
-                            "dossier-fact-icon";
-
-                        const tooltip =
-                            document.createElement(
-                                "span"
-                            );
-
-                        tooltip.className =
-                            "dossier-fact-tooltip";
-
-                        tooltip.textContent =
-                            entityName;
-
-                        tooltip.setAttribute(
-                            "role",
-                            "tooltip"
-                        );
-
-                        iconWrapper.append(
-                            icon,
-                            tooltip
-                        );
-
-                        identity.appendChild(
-                            iconWrapper
-                        );
-
-                    } else {
-
-                        const fallbackName =
-                            document.createElement(
-                                "span"
-                            );
-
-                        fallbackName.className =
-                            "dossier-fact-name";
-
-                        fallbackName.textContent =
-                            entityName;
-
-                        identity.appendChild(
-                            fallbackName
-                        );
-
-                    }
-
-                    const attributesList =
-                        document.createElement(
-                            "div"
-                        );
-
-                    attributesList.className =
-                        "dossier-fact-attributes";
-
-                    formatted.forEach(
-                        attribute => {
-
-                            const line =
-                                document.createElement(
-                                    "span"
-                                );
-
-                            line.textContent =
-                                attribute;
-
-                            attributesList.appendChild(
-                                line
-                            );
-
-                        }
-                    );
-
-                    row.append(
-                        identity,
-                        attributesList
-                    );
-
-                    list.appendChild(
-                        row
-                    );
-
-                }
-            );
-
-            block.appendChild(
-                list
-            );
-
-            section.appendChild(
-                block
-            );
-
-        }
-    );
-
 }
+
+
 function formatDossierAttributes(
     attributes
 ) {
