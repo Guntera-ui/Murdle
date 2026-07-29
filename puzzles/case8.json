@@ -31,9 +31,9 @@
         "Inspector Thorne"
     ],
     "suspectIcons": {
-        "Doctor Morrow": "vampire-dracula",
-        "Inspector Thorne": "mustache",
-        "Lady Vesper": "witch-face"
+        "Doctor Morrow": "dali",
+        "Inspector Thorne": "barbale",
+        "Lady Vesper": "magical-wolf"
     },
     "weapons": [
         "Trophy",

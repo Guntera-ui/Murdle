@@ -1,0 +1,153 @@
+
+
+.board-title {
+    font-size: clamp(20px, 1.65vw, 28px);
+}
+
+.master-board {
+    --axis-label-font-size:
+        clamp(12px, 0.82vw, 14px);
+}
+
+.board-reference-title {
+    font-size: clamp(14px, 1vw, 18px);
+}
+
+.category-group-title {
+    font-size: clamp(11px, 0.72vw, 13px);
+}
+
+.category-list li,
+#categories li {
+    font-size: clamp(12px, 0.82vw, 14px);
+}
+
+.board-fit-frame {
+    width: 100%;
+
+    transform:
+        scale(
+            var(--board-fit-scale, 1)
+        );
+
+    transform-origin: top center;
+}
+
+.board-workspace.board-fit-active {
+    height:
+        var(
+            --board-fit-height,
+            auto
+        );
+
+    overflow: visible;
+}
+
+.board-workspace.board-compact {
+    padding-top: 0;
+}
+
+.board-workspace.board-compact
+.board-title {
+    margin-bottom: 7px;
+    font-size: 20px;
+}
+
+.board-workspace.board-compact
+.master-board {
+    --board-cell-size:
+        clamp(
+            34px,
+            min(3.15vw, 4.45vh),
+            50px
+        );
+
+    --side-label-width:
+        clamp(31px, 2.35vw, 37px);
+
+    --top-axis-height:
+        clamp(42px, 4.9vh, 50px);
+
+    --axis-label-gap: 5px;
+
+    --axis-label-font-size:
+        clamp(10px, 0.66vw, 12px);
+}
+
+.board-workspace.board-compact
+.board-reference {
+    margin-top: 7px;
+    padding-top: 6px;
+}
+
+.board-workspace.board-compact
+.board-reference-title {
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+
+.board-workspace.board-compact
+#categories {
+    gap: 8px;
+}
+
+.board-workspace.board-compact
+.category-group {
+    padding-left: 7px;
+}
+
+.board-workspace.board-compact
+.category-group-title {
+    min-height: 2em;
+    margin-bottom: 2px;
+    font-size: 10px;
+}
+
+.board-workspace.board-compact
+.category-list {
+    gap: 1px;
+}
+
+.board-workspace.board-compact
+.category-list li,
+.board-workspace.board-compact
+#categories li {
+    gap: 4px;
+    font-size: 11px;
+    line-height: 1.15;
+}
+
+.board-workspace.board-compact
+.list-icon,
+.board-workspace.board-compact
+.category-list .list-icon {
+    width: 21px;
+    height: 21px;
+    flex-basis: 21px;
+}
+
+/*
+   On stacked/mobile layouts the board should remain naturally sized
+   and horizontally scrollable instead of being visually shrunk.
+*/
+@media (max-width: 900px) {
+    .board-fit-frame {
+        transform: none !important;
+    }
+
+    .board-workspace.board-fit-active {
+        height: auto;
+    }
+
+    .board-workspace.board-compact
+    .master-board {
+        --board-cell-size:
+            clamp(42px, 12vw, 58px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .board-fit-frame {
+        transition: none;
+    }
+}

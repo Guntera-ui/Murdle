@@ -13,6 +13,9 @@ var SuspectIcons = []string{
 	"parrot-head",
 	"bird-twitter",
 	"porcupine",
+	"dali",
+	"barbale",
+	"magical-wolf",
 }
 var WeaponIcons = map[string]string{
 	"Baseball Bat": "baseball-bat",

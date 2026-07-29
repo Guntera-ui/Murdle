@@ -1,0 +1,75 @@
+:root {
+    --page: #fbfbf9;
+    --paper: #f6f2e8;
+    --paper-light: #fbf8f0;
+    --ink: #111;
+    --muted-ink: rgba(17, 17, 17, 0.28);
+    --burgundy: #7b2135;
+    --burgundy-dark: #63192a;
+    --success: #1b6e3c;
+    --error: #8b1d1d;
+    --warning: #a66f00;
+    --page-gap: clamp(24px, 3vw, 46px);
+    --sticky-offset: 18px;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--page);
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: min(100%, 1680px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: clamp(18px, 2.3vw, 34px);
+
+    color: var(--ink);
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(123, 33, 53, 0.025),
+            transparent 36rem
+        ),
+        var(--page);
+
+    font-family: "Special Elite", monospace;
+    font-size: 20px;
+    line-height: 1.65;
+}
+
+h1,
+h2,
+h3,
+p {
+    overflow-wrap: anywhere;
+}
+
+h1,
+h2 {
+    color: var(--burgundy);
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0 0 30px;
+    font-size: 3rem;
+}
+
+h2 {
+    letter-spacing: 3px;
+}
+
+button,
+select,
+input {
+    font: inherit;
+}

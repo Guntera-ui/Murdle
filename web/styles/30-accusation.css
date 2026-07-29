@@ -1,0 +1,222 @@
+/* Kako Cypher component stylesheet: 30-accusation.css */
+
+.final-accusation-section {
+    padding-top: 4px;
+}
+
+#accusation {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.accusation-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-button {
+    width: 100%;
+    min-height: 76px;
+    padding: 18px 28px;
+
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #222;
+    background: rgba(255, 255, 255, 0.18);
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.dropdown-button:hover {
+    background: rgba(123, 33, 53, 0.06);
+}
+
+.dropdown-button.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-text {
+    width: 100%;
+
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: bold;
+    letter-spacing: 0.035em;
+}
+
+.dropdown-arrow {
+    position: absolute;
+    right: 26px;
+
+    margin-left: 0;
+
+    font-size: 0.95rem;
+    transition: transform 0.2s ease;
+}
+
+.dropdown-menu {
+    position: absolute;
+    z-index: 100;
+    top: calc(100% + 6px);
+    right: 0;
+    left: 0;
+
+    display: none;
+    overflow: hidden;
+
+    background: var(--paper-light);
+    border: 3px solid var(--ink);
+    border-radius: 12px;
+}
+
+.dropdown-menu.open {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-item {
+    padding: 14px 18px;
+
+    color: #222;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid #d8d2c7;
+
+    text-align: left;
+    cursor: pointer;
+
+    transition: background 0.15s ease;
+}
+
+.dropdown-item:first-child {
+    border-top: 0;
+}
+
+.dropdown-item:hover {
+    background: #e8dfcf;
+}
+
+.accusation-panel > button {
+    width: 100%;
+    min-height: 80px;
+    margin-top: 10px;
+    padding: 18px 24px;
+
+    color: white;
+    background: var(--burgundy);
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.17);
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.accusation-panel > button:hover {
+    background: var(--burgundy-dark);
+    transform: translateY(-1px);
+}
+
+.accusation-panel > button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.17);
+}
+
+#accusation-message {
+    min-height: 1.5rem;
+    margin-top: 1rem;
+
+    text-align: center;
+    font-weight: bold;
+}
+
+.success {
+    color: var(--success);
+    animation: successPop 0.35s ease;
+}
+
+.error {
+    color: var(--error);
+    animation: errorShake 0.3s ease;
+}
+
+.warning {
+    color: var(--warning);
+    animation: warningPulse 0.35s ease;
+}
+
+@keyframes successPop {
+    0% {
+        transform: scale(0.9);
+    }
+
+    60% {
+        transform: scale(1.08);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes errorShake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25%,
+    75% {
+        transform: translateX(-4px);
+    }
+
+    50% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes warningPulse {
+    0%,
+    100% {
+        transform: scale(0.96);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+}

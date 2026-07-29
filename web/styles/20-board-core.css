@@ -1,0 +1,448 @@
+/* Kako Cypher component stylesheet: 20-board-core.css */
+
+.deduction-board-section {
+    position: static;
+    padding: 0;
+    background: transparent;
+}
+
+.board-title {
+    margin: 0 0 14px;
+    text-align: center;
+}
+
+#master-grid {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    overflow: visible;
+}
+
+.master-board {
+
+    --board-cell-size:
+        clamp(42px, min(4.15vw, 5.8vh), 62px);
+
+    --side-label-width:
+        clamp(38px, 3vw, 44px);
+
+    --top-axis-height:
+        clamp(54px, 6.5vh, 64px);
+
+    --axis-label-gap: 11px;
+
+    --axis-label-font-size:
+        clamp(0.74rem, 0.82vw, 0.86rem);
+
+    display: grid;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.master-board:has(
+    > .board-row:first-child
+    > .board-label.top:nth-child(4)
+) {
+    --board-cell-size:
+        clamp(38px, min(3.6vw, 5.25vh), 54px);
+
+    --side-label-width:
+        clamp(36px, 2.8vw, 42px);
+
+    --top-axis-height:
+        clamp(52px, 6.2vh, 62px);
+}
+
+.board-row,
+.matrix-row {
+    display: flex;
+    gap: 0;
+}
+
+.board-row {
+    align-items: flex-start;
+    min-height: 0;
+}
+
+.matrix {
+    display: flex;
+    flex-direction: column;
+}
+
+.board-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    color: var(--burgundy);
+    font-size: var(--axis-label-font-size);
+    font-weight: bold;
+    line-height: 1.22;
+    letter-spacing: 0.085em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.board-label.top {
+    width: calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+
+    min-width: calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+
+    max-width: calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+
+    height: var(--top-axis-height);
+
+    flex: 0 0 calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+
+    padding:
+        0
+        8px
+        var(--axis-label-gap);
+
+    align-items: flex-end;
+
+    overflow: hidden;
+}
+
+.board-label.left {
+    width: var(--side-label-width);
+    min-width: var(--side-label-width);
+    max-width: var(--side-label-width);
+
+    flex: 0 0 var(--side-label-width);
+
+    padding: 4px 0;
+
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+
+    white-space: normal;
+    overflow: hidden;
+}
+
+.master-board
+> .board-row:first-child
+> .board-label.left {
+    width: calc(
+        var(--side-label-width) +
+        var(--board-cell-size)
+    );
+
+    min-width: calc(
+        var(--side-label-width) +
+        var(--board-cell-size)
+    );
+
+    max-width: calc(
+        var(--side-label-width) +
+        var(--board-cell-size)
+    );
+
+    height: var(--top-axis-height);
+
+    flex: 0 0 calc(
+        var(--side-label-width) +
+        var(--board-cell-size)
+    );
+
+    padding: 0;
+}
+
+.master-board
+> .board-row:not(:first-child)
+> .board-label.left {
+    height: calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+
+    min-height: calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+
+    max-height: calc(
+        var(--board-cell-size) *
+        var(--category-size, 3)
+    );
+}
+
+.header-spacer,
+.header-cell,
+.row-label,
+.grid-cell {
+    width: var(--board-cell-size);
+    min-width: var(--board-cell-size);
+    height: var(--board-cell-size);
+
+    flex: 0 0 var(--board-cell-size);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    box-sizing: border-box;
+    overflow: hidden;
+
+    font-weight: bold;
+    text-align: center;
+}
+
+.header-spacer {
+    visibility: hidden;
+    border: 0;
+}
+
+.header-cell,
+.row-label {
+    border: 0;
+    background: transparent;
+}
+
+.grid-cell {
+    background:
+        repeating-linear-gradient(
+            2deg,
+            transparent 0,
+            transparent 9px,
+            rgba(28, 45, 48, 0.025) 10px,
+            transparent 11px
+        ),
+        repeating-linear-gradient(
+            88deg,
+            transparent 0,
+            transparent 15px,
+            rgba(28, 45, 48, 0.018) 16px,
+            transparent 17px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.38),
+            rgba(218, 224, 223, 0.12)
+        ),
+        #f4f5f2;
+}
+
+.cell-yes {
+    color: #173629;
+
+    background:
+        repeating-linear-gradient(
+            3deg,
+            transparent 0,
+            transparent 10px,
+            rgba(31, 103, 73, 0.05) 11px,
+            transparent 12px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.24),
+            transparent 55%
+        ),
+        #cfe7d8;
+}
+
+.cell-no {
+    color: #571f29;
+
+    background:
+        repeating-linear-gradient(
+            -3deg,
+            transparent 0,
+            transparent 10px,
+            rgba(131, 40, 58, 0.045) 11px,
+            transparent 12px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.22),
+            transparent 55%
+        ),
+        #ebcbd1;
+}
+
+.cell-player {
+    outline: 0;
+
+    box-shadow:
+        inset 0 0 0 2px
+        rgba(123, 33, 53, 0.9),
+
+        inset 0 0 0 5px
+        rgba(123, 33, 53, 0.07);
+}
+
+.cell-player::before {
+    border-color:
+        rgba(123, 33, 53, 0.42);
+
+    opacity: 0.95;
+}
+
+.cell-solver {
+    outline: 0;
+    cursor: not-allowed;
+
+    background-image:
+        repeating-linear-gradient(
+            135deg,
+            rgba(15, 102, 110, 0.11) 0,
+            rgba(15, 102, 110, 0.11) 2px,
+            transparent 2px,
+            transparent 8px
+        );
+
+    box-shadow:
+        inset 0 0 0 2px
+        rgba(10, 96, 105, 0.85),
+
+        inset 0 0 12px
+        rgba(10, 96, 105, 0.1);
+}
+
+.cell-solver::before {
+    border-color:
+        rgba(10, 96, 105, 0.4);
+}
+
+.cell-solver:hover {
+    filter: saturate(1.08);
+
+    box-shadow:
+        inset 0 0 0 2px
+        rgba(7, 113, 123, 0.95),
+
+        inset 0 0 14px
+        rgba(7, 113, 123, 0.14);
+
+    transform: none;
+}
+.matrix-icon {
+    display: block;
+
+    width: 78%;
+    height: 78%;
+    margin: auto;
+
+    object-fit: contain;
+}
+
+.board-reference {
+    margin-top: 16px;
+    padding: 12px 0 0;
+
+    background: transparent;
+    border: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.board-reference-title {
+    margin: 0 0 12px;
+
+    font-size: 1.1rem;
+    letter-spacing: 2.2px;
+}
+
+#categories {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 14px;
+    align-items: start;
+}
+
+#categories:has(.category-group:nth-child(4)) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.category-group {
+    min-width: 0;
+    padding-left: 10px;
+
+    border: 0;
+    border-left: 1px solid rgba(0, 0, 0, 0.17);
+    border-radius: 0;
+    background: transparent;
+}
+
+.category-group-title {
+    min-height: 2.4em;
+    margin: 0 0 8px;
+
+    color: var(--burgundy);
+    font-size: 0.78rem;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.category-list li,
+#categories li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    min-width: 0;
+    margin: 0;
+
+    font-size: 0.92rem;
+    line-height: 1.25;
+}
+
+.list-icon,
+.category-list .list-icon {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+
+    margin: 0;
+
+    background: transparent;
+    object-fit: contain;
+}
+
+#categories:has(.category-group:nth-child(4))
+.category-group-title {
+    font-size: 0.8rem;
+}
+
+#categories:has(.category-group:nth-child(4))
+.category-list li {
+    font-size: 0.84rem;
+}
+
+#categories:has(.category-group:nth-child(4))
+.list-icon {
+    width: 27px;
+    height: 27px;
+    flex-basis: 27px;
+}

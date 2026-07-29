@@ -1,0 +1,225 @@
+/* Kako Cypher component stylesheet: 60-board-polish.css */
+
+.grid-cell {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    color: #17120f;
+
+    background:
+        repeating-linear-gradient(
+            2deg,
+            transparent 0,
+            transparent 9px,
+            rgba(76, 59, 38, 0.025) 10px,
+            transparent 11px
+        ),
+        repeating-linear-gradient(
+            88deg,
+            transparent 0,
+            transparent 15px,
+            rgba(76, 59, 38, 0.018) 16px,
+            transparent 17px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.34),
+            rgba(235, 226, 207, 0.12)
+        ),
+        #fdfaf1;
+
+    border: 1.5px solid var(--ink);
+
+    box-shadow:
+        inset 0 0 7px rgba(67, 48, 27, 0.045);
+
+    cursor: pointer;
+    user-select: none;
+
+    transition:
+        background-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.12s ease;
+}
+
+.grid-cell::before {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+    inset: 4px;
+
+    border:
+        1px solid
+        rgba(48, 36, 23, 0.14);
+
+    border-radius: 1px;
+
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.grid-cell::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            168deg,
+            transparent 18%,
+            rgba(72, 54, 34, 0.045) 19%,
+            transparent 20%
+        ),
+        linear-gradient(
+            14deg,
+            transparent 71%,
+            rgba(72, 54, 34, 0.035) 72%,
+            transparent 73%
+        );
+
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+.matrix-row:nth-child(odd)
+.grid-cell:nth-child(odd)::before {
+    inset: 4px 3px 5px 4px;
+    transform: rotate(-0.45deg);
+}
+
+.matrix-row:nth-child(odd)
+.grid-cell:nth-child(even)::before {
+    inset: 3px 5px 4px 3px;
+    transform: rotate(0.35deg);
+}
+
+.matrix-row:nth-child(even)
+.grid-cell:nth-child(odd)::before {
+    inset: 5px 4px 3px 4px;
+    transform: rotate(0.25deg);
+}
+
+.matrix-row:nth-child(even)
+.grid-cell:nth-child(even)::before {
+    inset: 3px 4px 5px 5px;
+    transform: rotate(-0.3deg);
+}
+
+.grid-cell:hover {
+    z-index: 2;
+
+    background:
+        repeating-linear-gradient(
+            2deg,
+            transparent 0,
+            transparent 9px,
+            rgba(76, 59, 38, 0.035) 10px,
+            transparent 11px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(123, 33, 53, 0.04),
+            transparent
+        ),
+        #fdfaf1;
+
+    box-shadow:
+        inset 0 0 8px rgba(67, 48, 27, 0.06),
+        inset 0 0 0 2px rgba(123, 33, 53, 0.16);
+
+    transform: translateY(-1px);
+}
+
+.grid-cell:active {
+    transform: scale(0.98);
+}
+
+.cell-yes {
+    color: #20331f;
+
+    background:
+        repeating-linear-gradient(
+            3deg,
+            transparent 0,
+            transparent 10px,
+            rgba(54, 82, 46, 0.035) 11px,
+            transparent 12px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.26),
+            transparent 55%
+        ),
+        #dfe9d8;
+}
+
+.cell-no {
+    color: #481d1d;
+
+    background:
+        repeating-linear-gradient(
+            -3deg,
+            transparent 0,
+            transparent 10px,
+            rgba(103, 48, 43, 0.035) 11px,
+            transparent 12px
+        ),
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.24),
+            transparent 55%
+        ),
+        #edd8d3;
+}
+
+.cell-player {
+    outline: 0;
+
+    box-shadow:
+        inset 0 0 0 2px
+        rgba(123, 33, 53, 0.82),
+
+        inset 0 0 0 5px
+        rgba(123, 33, 53, 0.055);
+}
+
+.cell-player::before {
+    border-color:
+        rgba(123, 33, 53, 0.38);
+
+    opacity: 0.95;
+}
+
+.cell-solver {
+    outline: 0;
+    cursor: not-allowed;
+
+    background-image:
+        repeating-linear-gradient(
+            135deg,
+            rgba(145, 99, 25, 0.065) 0,
+            rgba(145, 99, 25, 0.065) 2px,
+            transparent 2px,
+            transparent 8px
+        );
+
+    box-shadow:
+        inset 0 0 0 2px
+        rgba(145, 99, 25, 0.64),
+
+        inset 0 0 10px
+        rgba(145, 99, 25, 0.055);
+}
+
+.cell-solver::before {
+    border-color:
+        rgba(145, 99, 25, 0.25);
+}
+
+.cell-solver::after {
+    border-radius: 0;
+    opacity: 0.35;
+}
