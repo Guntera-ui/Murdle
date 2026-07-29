@@ -17,11 +17,14 @@ const Icons = {
         "Trophy": "trophy",
         "Acer Aspire 5315": "laptop",
         "Energy Drink": "soda-can",
-        "Calculus Homework": "spell-book"
+        "Calculus Homework": "spell-book",
+        "Poisoned Coffee":"coffee-cup",
+        "Communism":"death-note",
+        "Paata's Fishing Rod":"fishing-pole",
     },
 
     locations: {
-        "Bed": "bed",
+        "Gio's Room": "bed",
         "Library": "bookshelf",
         "Warehouse": "cargo-crate",
         "Clock Tower": "clock-tower",
@@ -34,6 +37,8 @@ const Icons = {
         "Theater": "theater-curtains",
         "Dining Room": "wine-glass",
         "Bird Cage": "bird-cage",
+        "Balcony": "wooden-fence",
+        "Living Room": "sofa",
     },
 
     motives: {
