@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&amp;family=Special+Elite&amp;display=swap" rel="stylesheet"/>
-<link href="/create-case.css?v=13" rel="stylesheet"/>
+<link href="/create-case.css?v=20" rel="stylesheet"/>
 <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/>
 </head>
 <body>
@@ -35,22 +35,29 @@
 </div>
 </div>
 <nav aria-label="Editor sections" class="rail-card workshop-nav">
-<a href="#case-information"> Case file</a>
-<a href="#incident"> Incident</a>
-<a href="#categories"> Evidence board</a>
-<a href="#interviews"> Interviews</a>
-<a href="#clues"> Clues</a>
-<a href="#solution"> Solution</a>
-<a href="#workshop"> Test &amp; export</a>
+<div class="rail-card__top">
+<p class="rail-kicker">Case file</p>
+<strong class="rail-card__title">Editor map</strong>
+</div>
+<div class="workshop-nav__list">
+<a data-section-link="case-information" href="#case-information"><span>Case information</span></a>
+<a data-section-link="incident" href="#incident"><span>Incident</span></a>
+<a data-section-link="categories" href="#categories"><span>Evidence board</span></a>
+<a data-section-link="interviews" href="#interviews"><span>Interviews</span></a>
+<a data-section-link="clues" href="#clues"><span>Clues</span></a>
+<a data-section-link="solution" href="#solution"><span>Solution</span></a>
+<a data-section-link="workshop" href="#workshop"><span>Test &amp; export</span></a>
+</div>
 </nav>
-<div class="rail-card rail-snapshot">
-<p class="rail-kicker">Current board</p>
-<dl>
-<div><dt>Suspects</dt><dd id="rail-suspect-count">3</dd></div>
-<div><dt>Weapons</dt><dd id="rail-weapon-count">3</dd></div>
-<div><dt>Locations</dt><dd id="rail-location-count">3</dd></div>
-<div><dt>Motives</dt><dd id="rail-motive-count">0</dd></div>
-</dl>
+<div class="rail-card rail-card--draft">
+<div class="rail-card__top">
+<p class="rail-kicker">Draft</p>
+<strong class="rail-card__title" id="draft-state">Not saved yet</strong>
+</div>
+<div id="draft-restore-actions" class="draft-restore-actions" hidden>
+<button id="restore-draft" type="button">Restore</button>
+<button id="discard-draft" type="button">Discard</button>
+</div>
 </div>
 </aside>
 <form class="editor-form" id="case-editor-form" novalidate="">
@@ -302,6 +309,10 @@
 <button class="remove-button" data-remove-clue="" type="button">Remove</button>
 </article>
 </template>
-<script src="/js/create-case.js?v=13" type="module"></script>
+<script src="/js/create-case.js?v=20" type="module"></script>
+<div id="undo-toast" class="undo-toast" hidden role="status" aria-live="polite">
+<span id="undo-message"></span>
+<button id="undo-action" type="button">Undo</button>
+</div>
 </body>
 </html>

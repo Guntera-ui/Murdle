@@ -5,7 +5,7 @@ import {
 
 import {
     initAuthoredValidation
-} from "./authored-validation.js?v=13";
+} from "./authored-validation.js?v=20";
 
 const form = document.getElementById("case-editor-form");
 const categoryNames = ["suspects", "weapons", "locations", "motives"];
@@ -278,18 +278,38 @@ function enhanceSelects(root = document) {
 }
 
 let customSelectRefreshFrame = 0;
+const pendingCustomSelectRoots = new Set();
 
 function refreshCustomSelects(root = document) {
+    pendingCustomSelectRoots.add(root);
+
     if (customSelectRefreshFrame) {
         return;
     }
 
     customSelectRefreshFrame = window.requestAnimationFrame(() => {
         customSelectRefreshFrame = 0;
-        enhanceSelects(root);
-        root.querySelectorAll?.("select").forEach(select => {
-            customSelectControllers.get(select)?.rebuild?.();
-        });
+
+        for (const pendingRoot of pendingCustomSelectRoots) {
+            enhanceSelects(pendingRoot);
+
+            if (pendingRoot instanceof HTMLSelectElement) {
+                customSelectControllers
+                    .get(pendingRoot)
+                    ?.rebuild?.();
+                continue;
+            }
+
+            pendingRoot
+                .querySelectorAll?.("select")
+                .forEach(select => {
+                    customSelectControllers
+                        .get(select)
+                        ?.rebuild?.();
+                });
+        }
+
+        pendingCustomSelectRoots.clear();
     });
 }
 
@@ -331,6 +351,15 @@ function initCustomSelects() {
         }
     });
 
+    document.addEventListener(
+        "case-editor:select-options-changed",
+        event => {
+            if (event.target instanceof HTMLSelectElement) {
+                refreshCustomSelects(event.target);
+            }
+        }
+    );
+
     form.addEventListener("invalid", event => {
         if (!event.target.matches("select.native-select")) {
             return;
@@ -365,6 +394,69 @@ function removeWithAnimation(node, callback) {
         node.remove();
         callback?.();
     }, 165);
+}
+
+
+let pendingUndo = null;
+let undoExpiryTimer = 0;
+
+function finalizePendingUndo() {
+    if (!pendingUndo) {
+        return;
+    }
+    pendingUndo = null;
+    window.clearTimeout(undoExpiryTimer);
+    const toast = element("undo-toast");
+    if (toast) {
+        toast.hidden = true;
+    }
+}
+
+function removeUndoable(node, label, afterChange) {
+    if (!node?.parentNode) {
+        return;
+    }
+
+    finalizePendingUndo();
+
+    const parent = node.parentNode;
+    const nextSibling = node.nextSibling;
+
+    removeWithAnimation(node, () => {
+        afterChange?.();
+        pendingUndo = { node, parent, nextSibling, afterChange };
+
+        const toast = element("undo-toast");
+        const message = element("undo-message");
+        if (toast && message) {
+            message.textContent = `${label} removed.`;
+            toast.hidden = false;
+        }
+
+        undoExpiryTimer = window.setTimeout(finalizePendingUndo, 10000);
+    });
+}
+
+function undoLastRemoval() {
+    if (!pendingUndo) {
+        return;
+    }
+
+    const { node, parent, nextSibling, afterChange } = pendingUndo;
+    pendingUndo = null;
+    window.clearTimeout(undoExpiryTimer);
+
+    if (nextSibling?.parentNode === parent) {
+        parent.insertBefore(node, nextSibling);
+    } else {
+        parent.appendChild(node);
+    }
+
+    node.classList.remove("is-removing");
+    animateIn(node);
+    afterChange?.();
+    element("undo-toast").hidden = true;
+    setStatus("Deletion undone.", "success");
 }
 
 function inferAttributeKind(attribute) {
@@ -1003,20 +1095,8 @@ function updateProgress() {
                 : "Start the file";
 }
 
-function updateCounts() {
-    const map = {
-        suspects: "rail-suspect-count",
-        weapons: "rail-weapon-count",
-        locations: "rail-location-count",
-        motives: "rail-motive-count"
-    };
-    for (const [category, id] of Object.entries(map)) {
-        element(id).textContent = String(listContainer(category).querySelectorAll(".entity-card").length);
-    }
-}
 
 function updateEditorOverview() {
-    updateCounts();
     updateProgress();
     document.querySelectorAll(".entity-card").forEach(updateAttributeCount);
 }
@@ -1031,7 +1111,7 @@ function removeEntity(button) {
         return;
     }
 
-    removeWithAnimation(card, () => {
+    removeUndoable(card, category.slice(0, -1), () => {
         refreshEntityIndexes();
         refreshDependentSelects();
         updateEditorOverview();
@@ -1040,7 +1120,10 @@ function removeEntity(button) {
 }
 
 function bindCoreEvents() {
-    form.addEventListener("submit", event => event.preventDefault());
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+    }, true);
 
     document.addEventListener("click", event => {
         const addEntity = event.target.closest("[data-add-entity]");
@@ -1071,8 +1154,9 @@ function bindCoreEvents() {
         if (removeAttribute) {
             const row = removeAttribute.closest(".attribute-row");
             const card = row.closest(".entity-card");
-            removeWithAnimation(row, () => {
+            removeUndoable(row, "Attribute", () => {
                 updateAttributeCount(card);
+                updateEditorOverview();
                 announceRowsChanged("attribute-removed");
             });
             return;
@@ -1080,7 +1164,7 @@ function bindCoreEvents() {
 
         const removeInterview = event.target.closest("[data-remove-interview]");
         if (removeInterview) {
-            removeWithAnimation(removeInterview.closest(".interview-row"), () => {
+            removeUndoable(removeInterview.closest(".interview-row"), "Interview", () => {
                 updateEditorOverview();
                 announceRowsChanged("interview-removed");
             });
@@ -1089,7 +1173,7 @@ function bindCoreEvents() {
 
         const removeClue = event.target.closest("[data-remove-clue]");
         if (removeClue) {
-            removeWithAnimation(removeClue.closest(".clue-row"), () => {
+            removeUndoable(removeClue.closest(".clue-row"), "Clue", () => {
                 refreshClueIndexes();
                 updateEditorOverview();
                 announceRowsChanged("clue-removed");
@@ -1200,6 +1284,616 @@ function populateDefaults() {
     appendClue();
 }
 
+
+const DRAFT_KEY = "kako-cypher:create-case:draft:v19";
+const DRAFT_VERSION = 1;
+
+function draftStorage() {
+    try {
+        const storage = window.localStorage;
+        const probe = `${DRAFT_KEY}:probe`;
+        storage.setItem(probe, "1");
+        storage.removeItem(probe);
+        return storage;
+    } catch {
+        return null;
+    }
+}
+let draftSaveTimer = 0;
+let draftDirty = false;
+let restoringDraft = false;
+
+const simpleFieldIDs = [
+    "case-id", "case-number", "case-status", "case-difficulty", "case-title",
+    "case-genre", "case-description", "victim-name", "victim-occupation",
+    "victim-cause", "incident-report", "solution-suspect", "solution-weapon",
+    "solution-location", "solution-motive", "preserve-extra-fields"
+];
+
+function serializeEntityRows(category) {
+    return Array.from(listContainer(category).querySelectorAll(".entity-card")).map(card => ({
+        name: card.querySelector(".entity-name")?.value ?? "",
+        icon: card.querySelector(".entity-icon")?.value ?? "",
+        attributes: Array.from(card.querySelectorAll(".attribute-row")).map(row => ({
+            key: row.querySelector(".attribute-key")?.value ?? "",
+            kind: row.querySelector(".attribute-kind")?.value ?? "string",
+            value: row.querySelector(".attribute-value")?.value ?? ""
+        }))
+    }));
+}
+
+function serializeFactPanels(selector) {
+    return Array.from(document.querySelectorAll(selector)).map(row => {
+        const panel = row.querySelector(".fact-panel");
+        if (!panel) {
+            return null;
+        }
+        return {
+            enabled: Boolean(panel.querySelector(".fact-enabled")?.checked),
+            kind: panel.querySelector(".fact-kind")?.value ?? "",
+            relation: panel.querySelector(".fact-relation")?.value ?? "is",
+            leftMode: panel.querySelector(".reference-picker--left .reference-mode")?.value ?? "name",
+            leftValue: panel.querySelector(".reference-picker--left .reference-value")?.value ?? "",
+            rightMode: panel.querySelector(".reference-picker--right .reference-mode")?.value ?? "name",
+            rightValue: panel.querySelector(".reference-picker--right .reference-value")?.value ?? ""
+        };
+    });
+}
+
+function makeDraftSnapshot() {
+    const fields = {};
+    for (const id of simpleFieldIDs) {
+        const input = element(id);
+        if (!input) continue;
+        fields[id] = input.type === "checkbox" ? input.checked : input.value;
+    }
+
+    return {
+        version: DRAFT_VERSION,
+        savedAt: Date.now(),
+        fields,
+        entities: Object.fromEntries(categoryNames.map(category => [category, serializeEntityRows(category)])),
+        interviews: Array.from(element("interviews-list").querySelectorAll(".interview-row")).map(row => ({
+            speaker: row.querySelector(".interview-speaker")?.value ?? "",
+            statement: row.querySelector(".interview-statement")?.value ?? ""
+        })),
+        clues: Array.from(element("clues-list").querySelectorAll(".clue-row")).map(row =>
+            row.querySelector(".clue-text")?.value ?? ""
+        ),
+        logic: {
+            interviews: serializeFactPanels("#interviews-list .interview-row"),
+            clues: serializeFactPanels("#clues-list .clue-row")
+        }
+    };
+}
+
+function applyAttributeDraft(card, attribute) {
+    const row = createAttributeRow();
+    row.querySelector(".attribute-key").value = attribute.key ?? "";
+    row.querySelector(".attribute-kind").value = attribute.kind ?? "string";
+    renderAttributeValue(row, attribute.kind ?? "string", attribute.value ?? "");
+    card.querySelector(".attribute-list").appendChild(row);
+}
+
+function applyFactDraft(panel, draft) {
+    if (!panel || !draft) return;
+    const enabled = Boolean(draft.enabled);
+    const checkbox = panel.querySelector(".fact-enabled");
+    checkbox.checked = enabled;
+    checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+
+    const kind = panel.querySelector(".fact-kind");
+    if (draft.kind && Array.from(kind.options).some(option => option.value === draft.kind)) {
+        kind.value = draft.kind;
+        kind.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    const setPicker = (side, modeValue, selectorValue) => {
+        const picker = panel.querySelector(`.reference-picker--${side}`);
+        const mode = picker?.querySelector(".reference-mode");
+        const value = picker?.querySelector(".reference-value");
+        if (!mode || !value) return;
+        if (Array.from(mode.options).some(option => option.value === modeValue && !option.disabled)) {
+            mode.value = modeValue;
+            mode.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        if (Array.from(value.options).some(option => option.value === selectorValue)) {
+            value.value = selectorValue;
+            value.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+    };
+
+    setPicker("left", draft.leftMode, draft.leftValue);
+    setPicker("right", draft.rightMode, draft.rightValue);
+
+    const relation = panel.querySelector(".fact-relation");
+    if (relation && Array.from(relation.options).some(option => option.value === draft.relation)) {
+        relation.value = draft.relation;
+        relation.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+}
+
+function restoreDraftSnapshot(snapshot) {
+    if (!snapshot || snapshot.version !== DRAFT_VERSION) {
+        throw new Error("This saved draft uses an unsupported format.");
+    }
+
+    restoringDraft = true;
+    resetDynamicLists();
+
+    for (const category of categoryNames) {
+        const rows = snapshot.entities?.[category] ?? [];
+        for (const entity of rows) {
+            const card = createEntityRow(category, { name: entity.name, icon: entity.icon });
+            for (const attribute of entity.attributes ?? []) {
+                applyAttributeDraft(card, attribute);
+            }
+            listContainer(category).appendChild(card);
+        }
+    }
+
+    for (const interview of snapshot.interviews ?? []) {
+        appendInterview(interview);
+    }
+    for (const clue of snapshot.clues ?? []) {
+        appendClue(clue);
+    }
+
+    for (const [id, value] of Object.entries(snapshot.fields ?? {})) {
+        const input = element(id);
+        if (!input) continue;
+        if (input.type === "checkbox") input.checked = Boolean(value);
+        else input.value = value ?? "";
+    }
+
+    refreshEntityIndexes();
+    refreshClueIndexes();
+    refreshDependentSelects();
+
+    for (const [id, value] of Object.entries(snapshot.fields ?? {})) {
+        if (["solution-suspect", "solution-weapon", "solution-location", "solution-motive"].includes(id) && element(id)) {
+            element(id).value = value ?? "";
+        }
+    }
+
+    refreshCustomSelects();
+    announceRowsChanged("draft-restored");
+
+    window.setTimeout(() => {
+        const interviewPanels = document.querySelectorAll("#interviews-list .fact-panel");
+        const cluePanels = document.querySelectorAll("#clues-list .fact-panel");
+        (snapshot.logic?.interviews ?? []).forEach((draft, index) => applyFactDraft(interviewPanels[index], draft));
+        (snapshot.logic?.clues ?? []).forEach((draft, index) => applyFactDraft(cluePanels[index], draft));
+        restoringDraft = false;
+        draftDirty = false;
+        updateEditorOverview();
+        updateDraftState(snapshot.savedAt, "Draft restored");
+        setStatus("Draft restored.", "success");
+    }, 0);
+}
+
+function updateDraftState(savedAt = 0, text = "") {
+    const state = element("draft-state");
+    if (!state) return;
+    if (text) {
+        state.textContent = text;
+        return;
+    }
+    if (!savedAt) {
+        state.textContent = "Not saved yet";
+        return;
+    }
+    const seconds = Math.max(0, Math.round((Date.now() - savedAt) / 1000));
+    state.textContent = seconds < 5 ? "Saved just now" : `Saved ${seconds}s ago`;
+}
+
+function saveDraftNow() {
+    if (!draftDirty || restoringDraft) {
+        return;
+    }
+
+    const storage = draftStorage();
+
+    if (!storage) {
+        draftDirty = false;
+        updateDraftState(0, "Autosave unavailable");
+        return;
+    }
+
+    try {
+        const snapshot = makeDraftSnapshot();
+        storage.setItem(
+            DRAFT_KEY,
+            JSON.stringify(snapshot)
+        );
+        draftDirty = false;
+        updateDraftState(snapshot.savedAt);
+    } catch (error) {
+        console.warn("Draft autosave failed.", error);
+        draftDirty = false;
+        updateDraftState(0, "Autosave unavailable");
+    }
+}
+
+function scheduleDraftSave() {
+    if (restoringDraft) return;
+    draftDirty = true;
+    window.clearTimeout(draftSaveTimer);
+    draftSaveTimer = window.setTimeout(saveDraftNow, 700);
+    updateDraftState(0, "Saving…");
+}
+
+function readSavedDraft() {
+    const storage = draftStorage();
+
+    if (!storage) {
+        return null;
+    }
+
+    try {
+        const raw = storage.getItem(DRAFT_KEY);
+        return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+        console.warn("Saved draft could not be read.", error);
+
+        try {
+            storage.removeItem(DRAFT_KEY);
+        } catch {
+            // Storage may have become unavailable after the initial probe.
+        }
+
+        return null;
+    }
+}
+
+function formIssue(section, message, target = "", count = 1) {
+    return {
+        section,
+        message,
+        target,
+        count: Math.max(1, Number(count) || 1)
+    };
+}
+
+function duplicateNameCount(category) {
+    const names = Array.from(
+        listContainer(category)
+            .querySelectorAll(".entity-name")
+    )
+        .map(input =>
+            input.value
+                .trim()
+                .toLocaleLowerCase()
+        )
+        .filter(Boolean);
+
+    const counts = new Map();
+
+    for (const name of names) {
+        counts.set(
+            name,
+            (counts.get(name) ?? 0) + 1
+        );
+    }
+
+    let duplicates = 0;
+
+    for (const count of counts.values()) {
+        if (count > 1) {
+            duplicates += count - 1;
+        }
+    }
+
+    return duplicates;
+}
+
+function firstIssueTarget(field, fallback) {
+    if (field?.id) {
+        return `#${field.id}`;
+    }
+
+    const card = field?.closest(
+        ".entity-card, .repeater-card"
+    );
+
+    if (card?.id) {
+        return `#${card.id}`;
+    }
+
+    return fallback;
+}
+
+function invalidRequiredFields(root) {
+    return Array.from(
+        root?.querySelectorAll("[required]") ?? []
+    ).filter(field => {
+        if (field.closest("[hidden]")) {
+            return false;
+        }
+
+        return (
+            !String(field.value).trim() ||
+            !field.checkValidity()
+        );
+    });
+}
+
+function duplicateAttributeKeyCount() {
+    let duplicateCount = 0;
+
+    document.querySelectorAll(".entity-card")
+        .forEach(card => {
+            const keys = Array.from(
+                card.querySelectorAll(
+                    ".attribute-key"
+                )
+            )
+                .map(input =>
+                    input.value
+                        .trim()
+                        .toLocaleLowerCase()
+                )
+                .filter(Boolean);
+
+            const seen = new Set();
+
+            for (const key of keys) {
+                if (seen.has(key)) {
+                    duplicateCount += 1;
+                } else {
+                    seen.add(key);
+                }
+            }
+        });
+
+    return duplicateCount;
+}
+
+function collectFormIssues(options = {}) {
+    const requireSolverFacts = options.requireSolverFacts !== false;
+    const issues = [];
+    const sectionDefinitions = [
+        ["case-information", "Case information"],
+        ["incident", "Incident"],
+        ["interviews", "Interviews"],
+        ["clues", "Clues"],
+        ["solution", "Solution"]
+    ];
+
+    for (const [sectionID, label] of sectionDefinitions) {
+        const invalid = invalidRequiredFields(
+            element(sectionID)
+        );
+
+        if (invalid.length > 0) {
+            issues.push(
+                formIssue(
+                    label,
+                    `${invalid.length} required field${invalid.length === 1 ? " is" : "s are"} incomplete`,
+                    firstIssueTarget(
+                        invalid[0],
+                        `#${sectionID}`
+                    ),
+                    invalid.length
+                )
+            );
+        }
+    }
+
+    const evidenceBoard = element("categories");
+    const invalidEvidence =
+        invalidRequiredFields(evidenceBoard);
+
+    if (invalidEvidence.length > 0) {
+        issues.push(
+            formIssue(
+                "Evidence board",
+                `${invalidEvidence.length} required evidence field${invalidEvidence.length === 1 ? " is" : "s are"} incomplete`,
+                firstIssueTarget(
+                    invalidEvidence[0],
+                    "#categories"
+                ),
+                invalidEvidence.length
+            )
+        );
+    }
+
+    const counts = Object.fromEntries(
+        categoryNames.map(category => [
+            category,
+            listContainer(category)
+                .querySelectorAll(
+                    ".entity-card"
+                ).length
+        ])
+    );
+
+    if (
+        counts.suspects < 3 ||
+        counts.suspects > 5
+    ) {
+        issues.push(
+            formIssue(
+                "Evidence board",
+                "Use between 3 and 5 suspects",
+                "#suspects-list"
+            )
+        );
+    }
+
+    if (
+        counts.weapons !== counts.suspects ||
+        counts.locations !== counts.suspects
+    ) {
+        issues.push(
+            formIssue(
+                "Evidence board",
+                `Match the board counts: ${counts.suspects} suspects, ${counts.weapons} weapons, ${counts.locations} locations`,
+                "#categories"
+            )
+        );
+    }
+
+    if (
+        counts.motives > 0 &&
+        counts.motives !== counts.suspects
+    ) {
+        issues.push(
+            formIssue(
+                "Evidence board",
+                `Use either no motives or ${counts.suspects} motives`,
+                "#motives-list"
+            )
+        );
+    }
+
+    for (const category of categoryNames) {
+        const duplicates =
+            duplicateNameCount(category);
+
+        if (duplicates > 0) {
+            issues.push(
+                formIssue(
+                    "Evidence board",
+                    `Remove duplicate ${category} names`,
+                    `#${category}-list`,
+                    duplicates
+                )
+            );
+        }
+    }
+
+    const duplicateAttributes =
+        duplicateAttributeKeyCount();
+
+    if (duplicateAttributes > 0) {
+        issues.push(
+            formIssue(
+                "Evidence board",
+                `Remove ${duplicateAttributes} duplicate attribute key${duplicateAttributes === 1 ? "" : "s"}`,
+                "#categories",
+                duplicateAttributes
+            )
+        );
+    }
+
+    const clueRows =
+        element("clues-list")
+            .querySelectorAll(".clue-row");
+
+    if (clueRows.length === 0) {
+        issues.push(
+            formIssue(
+                "Clues",
+                "Add at least one clue",
+                "#clues"
+            )
+        );
+    }
+
+    if (requireSolverFacts) {
+        const enabledSolverFacts =
+            document.querySelectorAll(
+                ".fact-enabled:checked"
+            ).length;
+
+        if (enabledSolverFacts === 0) {
+            issues.push(
+                formIssue(
+                    "Test & export",
+                    "Enable at least one clue or statement for the solver",
+                    "#interviews"
+                )
+            );
+        }
+
+        const incompleteInterviewFacts =
+            Array.from(
+                document.querySelectorAll(
+                    "#interviews-list .fact-enabled:checked"
+                )
+            ).filter(input =>
+                Array.from(
+                    input
+                        .closest(".fact-panel")
+                        .querySelectorAll(
+                            ".reference-value"
+                        )
+                ).some(select => !select.value)
+            );
+
+        if (incompleteInterviewFacts.length > 0) {
+            issues.push(
+                formIssue(
+                    "Interviews",
+                    `${incompleteInterviewFacts.length} enabled solver statement${incompleteInterviewFacts.length === 1 ? " is" : "s are"} unfinished`,
+                    "#interviews",
+                    incompleteInterviewFacts.length
+                )
+            );
+        }
+
+        const incompleteClueFacts =
+            Array.from(
+                document.querySelectorAll(
+                    "#clues-list .fact-enabled:checked"
+                )
+            ).filter(input =>
+                Array.from(
+                    input
+                        .closest(".fact-panel")
+                        .querySelectorAll(
+                            ".reference-value"
+                        )
+                ).some(select => !select.value)
+            );
+
+        if (incompleteClueFacts.length > 0) {
+            issues.push(
+                formIssue(
+                    "Clues",
+                    `${incompleteClueFacts.length} enabled solver clue${incompleteClueFacts.length === 1 ? " is" : "s are"} unfinished`,
+                    "#clues",
+                    incompleteClueFacts.length
+                )
+            );
+        }
+    }
+
+    return issues;
+}
+
+function initializeQualityOfLife() {
+    element("undo-action")?.addEventListener("click", undoLastRemoval);
+
+    const saved = readSavedDraft();
+    const actions = element("draft-restore-actions");
+    if (saved) {
+        actions.hidden = false;
+        updateDraftState(saved.savedAt, "Saved draft found");
+        element("restore-draft").addEventListener("click", () => {
+            restoreDraftSnapshot(saved);
+            actions.hidden = true;
+        }, { once: true });
+        element("discard-draft").addEventListener("click", () => {
+            try {
+                draftStorage()?.removeItem(DRAFT_KEY);
+            } catch {
+                // The draft is already effectively unavailable.
+            }
+
+            actions.hidden = true;
+            updateDraftState();
+        }, { once: true });
+    }
+
+    form.addEventListener("input", scheduleDraftSave);
+    form.addEventListener("change", scheduleDraftSave);
+    document.addEventListener("case-editor:rows-changed", scheduleDraftSave);
+    window.addEventListener("beforeunload", saveDraftNow);
+    updateEditorOverview();
+}
+
 async function init() {
     try {
         genreRegistry = await loadGenreRegistry();
@@ -1230,9 +1924,11 @@ async function init() {
         copyText,
         caseFilename,
         getEntityDraft,
-        updateEditorOverview
+        updateEditorOverview,
+        collectFormIssues
     });
 
+    initializeQualityOfLife();
     updateEditorOverview();
     refreshCustomSelects();
     setStatus("");

@@ -154,11 +154,6 @@ code { padding: 2px 6px; background: var(--burgundy-soft); border: 1px solid rgb
 .workshop-nav a { display: flex; align-items: center; gap: 10px; padding: 10px 9px; color: var(--ink-soft); border-radius: 7px; font-size: .75rem; text-decoration: none; transition: color 150ms ease, background 150ms ease, transform 150ms ease; }
 .workshop-nav a span { color: var(--burgundy); font-family: "Cinzel", serif; font-size: .66rem; }
 .workshop-nav a:hover, .workshop-nav a.is-active { color: var(--burgundy); background: var(--burgundy-soft); transform: translateX(2px); }
-.rail-snapshot dl { display: grid; gap: 9px; margin: 12px 0 0; }
-.rail-snapshot dl div { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 8px; border-bottom: 1px dashed rgba(117,97,77,.22); }
-.rail-snapshot dl div:last-child { padding-bottom: 0; border-bottom: 0; }
-.rail-snapshot dt { color: var(--ink-soft); font-size: .72rem; }
-.rail-snapshot dd { margin: 0; color: var(--burgundy); font-family: "Cinzel", serif; font-size: .78rem; font-weight: 700; }
 
 .editor-form { display: grid; gap: 24px; min-width: 0; }
 .editor-section {
@@ -380,7 +375,7 @@ code { padding: 2px 6px; background: var(--burgundy-soft); border: 1px solid rgb
     *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-/* v11: cleaner sections, custom dropdowns and clearer validation states */
+/* Custom dropdowns and clearer validation states. */
 .editor-section {
     overflow: visible;
 }
@@ -628,7 +623,7 @@ select.native-select {
 }
 
 
-/* v12: keep open dropdowns above following sections. */
+/* Keep open dropdowns above following sections. */
 .editor-section.has-open-select {
     z-index: 1000;
 }
@@ -646,7 +641,7 @@ select.native-select {
     z-index: 1003;
 }
 
-/* v13 performance pass: keep motion cheap and avoid repaint-heavy blur on long forms. */
+/* Keep long-form motion inexpensive and avoid repaint-heavy blur. */
 .editor-back-link,
 .rail-card,
 .json-dialog::backdrop,
@@ -675,5 +670,282 @@ select.native-select {
     .editor-button:hover,
     .import-button:hover {
         transform: none;
+    }
+}
+
+
+/* Production editor layer. */
+.rail-card__top {
+    display: grid;
+    gap: 5px;
+}
+
+.rail-card__title {
+    display: block;
+    color: var(--ink);
+    font-family: "Cinzel", serif;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+}
+
+.workshop-rail {
+    gap: 14px;
+}
+
+.rail-card {
+    padding: 17px 16px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.73),
+            rgba(247, 241, 228, 0.96)
+        );
+}
+
+.workshop-nav {
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+}
+
+.workshop-nav__list {
+    display: grid;
+    gap: 8px;
+}
+
+.workshop-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 46px;
+    padding: 11px 12px;
+    color: var(--ink);
+    background: rgba(119, 38, 58, 0.035);
+    border: 1px solid rgba(117, 97, 77, 0.14);
+    border-radius: 10px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition:
+        color 150ms ease,
+        background-color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease;
+}
+
+.workshop-nav a span {
+    color: inherit;
+    font-family: "Special Elite", monospace;
+    font-size: inherit;
+}
+
+.workshop-nav a:hover,
+.workshop-nav a.is-active {
+    color: var(--burgundy);
+    background: rgba(119, 38, 58, 0.085);
+    border-color: rgba(119, 38, 58, 0.24);
+    transform: translateX(2px);
+}
+
+.rail-card--draft {
+    padding-block: 15px;
+}
+
+.rail-card--draft .rail-card__title {
+    font-size: 0.9rem;
+}
+
+.draft-restore-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.draft-restore-actions button {
+    flex: 1;
+    padding: 8px 10px;
+    color: var(--burgundy);
+    background: rgba(119, 38, 58, 0.035);
+    border: 1px solid rgba(119, 38, 58, 0.25);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.draft-restore-actions button:hover {
+    color: white;
+    background: var(--burgundy);
+}
+
+#validate-case:disabled {
+    cursor: wait;
+    opacity: 0.64;
+}
+
+#validate-case[aria-busy="true"] span::after {
+    content: " …";
+}
+
+.validation-result[data-status="form_incomplete"] {
+    border-left-color: var(--warning);
+}
+
+.validation-candidate--issue {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 14px;
+    width: 100%;
+    padding: 13px 14px;
+    color: var(--ink);
+    background: rgba(141, 44, 55, 0.045);
+    border: 1px solid rgba(141, 44, 55, 0.16);
+    border-radius: 9px;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background-color 150ms ease,
+        border-color 150ms ease,
+        transform 150ms ease;
+}
+
+.validation-candidate--issue strong {
+    grid-column: 1;
+    color: var(--burgundy);
+    font-family: "Cinzel", serif;
+    font-size: 0.77rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.validation-candidate--issue span {
+    grid-column: 1;
+    color: var(--ink-soft);
+    line-height: 1.45;
+}
+
+.validation-candidate__count {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 31px;
+    min-height: 31px;
+    padding: 5px 8px;
+    color: var(--burgundy);
+    background: rgba(119, 38, 58, 0.09);
+    border: 1px solid rgba(119, 38, 58, 0.14);
+    border-radius: 999px;
+    font-size: 0.72rem;
+}
+
+.validation-candidate--issue:hover,
+.validation-candidate--issue:focus-visible {
+    background: rgba(141, 44, 55, 0.075);
+    border-color: rgba(141, 44, 55, 0.34);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.validation-attention {
+    animation: validationAttention 1.2s ease both;
+}
+
+.undo-toast {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    max-width: min(420px, calc(100vw - 28px));
+    padding: 13px 15px;
+    color: #fffaf1;
+    background: #241d19;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 9px;
+    box-shadow: 0 18px 42px rgba(22, 15, 18, 0.28);
+    animation: undoToastIn 180ms ease-out both;
+}
+
+.undo-toast button {
+    padding: 5px 0;
+    color: #e7bd78;
+    background: transparent;
+    border: 0;
+    font: inherit;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+@keyframes validationAttention {
+    0%, 100% {
+        box-shadow: none;
+    }
+    25%, 70% {
+        box-shadow: 0 0 0 5px rgba(150, 103, 29, 0.18);
+    }
+}
+
+@keyframes undoToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (max-width: 880px) {
+    .workshop-rail {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rail-card--draft {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 720px) {
+    .workshop-rail {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .rail-card--draft {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 460px) {
+    .validation-candidate--issue {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .validation-candidate__count {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: start;
+    }
+
+    .undo-toast {
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+        max-width: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .validation-attention,
+    .undo-toast {
+        animation: none;
     }
 }
