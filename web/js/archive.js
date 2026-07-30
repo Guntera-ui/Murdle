@@ -3,7 +3,7 @@ import {
     getGenre,
     isValidGenre,
     loadGenreRegistry
-} from "./genres.js?v=5";
+} from "./genres.js";
 
 
 async function loadCases() {
@@ -20,51 +20,22 @@ async function loadCases() {
 }
 
 
-function getSelectedGenre(registry) {
-    const parameters =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const requestedGenre =
-        parameters.get("genre");
-
-    if (
-        isValidGenre(
-            registry,
-            requestedGenre
-        )
-    ) {
-        return requestedGenre;
-    }
-
-    return registry.defaultGenre;
+function requestedGenre() {
+    return new URLSearchParams(
+        window.location.search
+    ).get("genre");
 }
 
 
-function normalizeGenreURL(genreId) {
-    const url =
-        new URL(
-            window.location.href
-        );
+function getSelectedGenre(registry) {
+    const genreId = requestedGenre();
 
-    if (
-        url.searchParams.get("genre") ===
+    return isValidGenre(
+        registry,
         genreId
-    ) {
-        return;
-    }
-
-    url.searchParams.set(
-        "genre",
-        genreId
-    );
-
-    window.history.replaceState(
-        {},
-        "",
-        url
-    );
+    )
+        ? genreId
+        : null;
 }
 
 
@@ -72,11 +43,10 @@ function applyArchiveGenre(
     registry,
     genreId
 ) {
-    const genre =
-        getGenre(
-            registry,
-            genreId
-        );
+    const genre = getGenre(
+        registry,
+        genreId
+    );
 
     document.documentElement.dataset.genre =
         genreId;
@@ -106,6 +76,29 @@ function applyArchiveGenre(
 }
 
 
+function revealArchive() {
+    const root =
+        document.documentElement;
+
+    document.getElementById(
+        "case-list"
+    )?.setAttribute(
+        "aria-busy",
+        "false"
+    );
+
+    requestAnimationFrame(() => {
+        root.classList.remove(
+            "archive-booting"
+        );
+
+        root.classList.add(
+            "archive-ready"
+        );
+    });
+}
+
+
 function escapeHTML(value) {
     return String(value ?? "")
         .replaceAll("&", "&amp;")
@@ -121,25 +114,22 @@ function createCaseCard(
     caseInfo,
     genreId
 ) {
-    const genre =
-        getGenre(
-            registry,
-            genreId
-        );
+    const genre = getGenre(
+        registry,
+        genreId
+    );
 
-    const difficulty =
-        String(
-            caseInfo.difficulty ??
-            "Unknown"
-        );
+    const difficulty = String(
+        caseInfo.difficulty ??
+        "Unknown"
+    );
 
     const card =
         document.createElement(
             "article"
         );
 
-    card.className =
-        "case-card";
+    card.className = "case-card";
 
     card.dataset.difficulty =
         difficulty.toLowerCase();
@@ -176,30 +166,22 @@ function createCaseCard(
 
             <div class="detail-row">
                 <span>Suspects</span>
-                <span>${escapeHTML(
-                    caseInfo.suspects
-                )}</span>
+                <span>${escapeHTML(caseInfo.suspects)}</span>
             </div>
 
             <div class="detail-row">
                 <span>Weapons</span>
-                <span>${escapeHTML(
-                    caseInfo.weapons
-                )}</span>
+                <span>${escapeHTML(caseInfo.weapons)}</span>
             </div>
 
             <div class="detail-row">
                 <span>Locations</span>
-                <span>${escapeHTML(
-                    caseInfo.locations
-                )}</span>
+                <span>${escapeHTML(caseInfo.locations)}</span>
             </div>
 
             <div class="detail-row">
                 <span>Clues</span>
-                <span>${escapeHTML(
-                    caseInfo.clues
-                )}</span>
+                <span>${escapeHTML(caseInfo.clues)}</span>
             </div>
         </section>
 
@@ -214,18 +196,13 @@ function createCaseCard(
             </h4>
 
             <p class="case-description">
-                ${escapeHTML(
-                    caseInfo.description
-                )}
+                ${escapeHTML(caseInfo.description)}
             </p>
         </section>
 
         <div class="case-footer">
             <button
-                class="
-                    blob-btn
-                    investigate-button
-                "
+                class="blob-btn investigate-button"
                 type="button"
             >
                 Begin Investigation
@@ -245,25 +222,21 @@ function createCaseCard(
         </div>
     `;
 
-    card
-        .querySelector(
-            ".investigate-button"
-        )
-        .addEventListener(
-            "click",
-            () => {
-                const parameters =
-                    new URLSearchParams({
-                        id: String(
-                            caseInfo.id
-                        ),
-                        genre: genreId
-                    });
+    card.querySelector(
+        ".investigate-button"
+    ).addEventListener(
+        "click",
+        () => {
+            const parameters =
+                new URLSearchParams({
+                    id: String(caseInfo.id),
+                    genre: genreId
+                });
 
-                window.location.href =
-                    `/case.html?${parameters}`;
-            }
-        );
+            window.location.href =
+                `/case.html?${parameters}`;
+        }
+    );
 
     return card;
 }
@@ -282,14 +255,13 @@ function renderEmptyArchive(caseList) {
         <h2>No cases filed yet</h2>
 
         <p>
-            This archive does not currently
-            contain any investigations.
+            This archive does not
+            currently contain any
+            investigations.
         </p>
     `;
 
-    caseList.appendChild(
-        message
-    );
+    caseList.appendChild(message);
 }
 
 
@@ -310,23 +282,15 @@ function renderCases(
                 ) === genreId
         );
 
-    if (
-        matchingCases.length === 0
-    ) {
-        renderEmptyArchive(
-            caseList
-        );
-
+    if (matchingCases.length === 0) {
+        renderEmptyArchive(caseList);
         return;
     }
 
     const fragment =
         document.createDocumentFragment();
 
-    for (
-        const caseInfo of
-        matchingCases
-    ) {
+    for (const caseInfo of matchingCases) {
         fragment.appendChild(
             createCaseCard(
                 registry,
@@ -336,9 +300,7 @@ function renderCases(
         );
     }
 
-    caseList.appendChild(
-        fragment
-    );
+    caseList.appendChild(fragment);
 }
 
 
@@ -354,22 +316,19 @@ async function init() {
         );
     }
 
-    const [
-        registry,
-        cases
-    ] = await Promise.all([
-        loadGenreRegistry(),
-        loadCases()
-    ]);
+    const [registry, cases] =
+        await Promise.all([
+            loadGenreRegistry(),
+            loadCases()
+        ]);
 
     const genreId =
-        getSelectedGenre(
-            registry
-        );
+        getSelectedGenre(registry);
 
-    normalizeGenreURL(
-        genreId
-    );
+    if (!genreId) {
+        window.location.replace("/");
+        return;
+    }
 
     applyArchiveGenre(
         registry,
@@ -382,6 +341,8 @@ async function init() {
         cases,
         genreId
     );
+
+    revealArchive();
 }
 
 
@@ -397,4 +358,6 @@ init().catch(error => {
         caseList.textContent =
             "The case archive could not be loaded.";
     }
+
+    revealArchive();
 });

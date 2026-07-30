@@ -5,7 +5,7 @@ import {
 
 import {
     initAuthoredValidation
-} from "./authored-validation.js?v=12";
+} from "./authored-validation.js?v=13";
 
 const form = document.getElementById("case-editor-form");
 const categoryNames = ["suspects", "weapons", "locations", "motives"];
@@ -158,7 +158,20 @@ function enhanceSelect(select) {
         queueMicrotask(refreshCustomSelects);
     }
 
-    function rebuild() {
+    function optionSignature() {
+        return Array.from(select.options)
+            .map(option => `${option.value}\u0000${option.textContent}\u0000${option.disabled}`)
+            .join("\u0001");
+    }
+
+    function rebuild(force = false) {
+        const signature = optionSignature();
+        if (!force && controller.optionSignature === signature) {
+            sync();
+            return;
+        }
+
+        controller.optionSignature = signature;
         menu.replaceChildren();
         controller.optionButtons = [];
 
@@ -249,13 +262,6 @@ function enhanceSelect(select) {
         sync();
     });
 
-    new MutationObserver(rebuild).observe(select, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        characterData: true
-    });
-
     controller.sync = sync;
     controller.rebuild = rebuild;
     customSelectControllers.set(select, controller);
@@ -271,25 +277,47 @@ function enhanceSelects(root = document) {
     root.querySelectorAll?.("select").forEach(enhanceSelect);
 }
 
-function refreshCustomSelects() {
-    document.querySelectorAll("select").forEach(select => {
-        enhanceSelect(select);
-        customSelectControllers.get(select)?.rebuild?.();
+let customSelectRefreshFrame = 0;
+
+function refreshCustomSelects(root = document) {
+    if (customSelectRefreshFrame) {
+        return;
+    }
+
+    customSelectRefreshFrame = window.requestAnimationFrame(() => {
+        customSelectRefreshFrame = 0;
+        enhanceSelects(root);
+        root.querySelectorAll?.("select").forEach(select => {
+            customSelectControllers.get(select)?.rebuild?.();
+        });
     });
 }
 
 function initCustomSelects() {
     enhanceSelects();
 
+    let addedSelectFrame = 0;
+    const addedRoots = new Set();
+
     new MutationObserver(records => {
         for (const record of records) {
             for (const node of record.addedNodes) {
                 if (node instanceof Element) {
-                    enhanceSelects(node);
+                    addedRoots.add(node);
                 }
             }
         }
-    }).observe(document.body, { childList: true, subtree: true });
+
+        if (!addedSelectFrame && addedRoots.size) {
+            addedSelectFrame = window.requestAnimationFrame(() => {
+                addedSelectFrame = 0;
+                for (const root of addedRoots) {
+                    enhanceSelects(root);
+                }
+                addedRoots.clear();
+            });
+        }
+    }).observe(form, { childList: true, subtree: true });
 
     document.addEventListener("click", event => {
         if (openCustomSelect && !openCustomSelect.wrapper.contains(event.target)) {

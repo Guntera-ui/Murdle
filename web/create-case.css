@@ -645,3 +645,35 @@ select.native-select {
 .custom-select__menu {
     z-index: 1003;
 }
+
+/* v13 performance pass: keep motion cheap and avoid repaint-heavy blur on long forms. */
+.editor-back-link,
+.rail-card,
+.json-dialog::backdrop,
+.custom-select__menu {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+.entity-card,
+.repeater-card,
+.fact-panel {
+    contain: layout style;
+}
+
+.is-entering,
+.is-removing,
+.custom-select__menu,
+.json-dialog[open] {
+    will-change: transform, opacity;
+}
+
+@media (hover: none) {
+    .entity-card:hover,
+    .repeater-card:hover,
+    .small-action:hover,
+    .editor-button:hover,
+    .import-button:hover {
+        transform: none;
+    }
+}

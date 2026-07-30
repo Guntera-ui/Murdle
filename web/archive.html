@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="archive-booting">
 <head>
     <meta charset="UTF-8">
 
@@ -9,6 +9,55 @@
     >
 
     <title>Kako Cypher</title>
+
+    <script>
+        (() => {
+            const genre = new URLSearchParams(
+                window.location.search
+            ).get("genre");
+
+            if (genre) {
+                document.documentElement.dataset.genre = genre;
+            }
+        })();
+    </script>
+
+    <style>
+        .archive-booting .hero-title,
+        .archive-booting .hero-subtitle,
+        .archive-booting .hero-tagline,
+        .archive-booting #case-list {
+            visibility: hidden;
+        }
+
+        .archive-ready .hero-title,
+        .archive-ready .hero-subtitle,
+        .archive-ready .hero-tagline,
+        .archive-ready #case-list {
+            visibility: visible;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .archive-ready .hero-title,
+            .archive-ready .hero-subtitle,
+            .archive-ready .hero-tagline,
+            .archive-ready #case-list {
+                animation: archive-content-in 180ms ease-out both;
+            }
+
+            @keyframes archive-content-in {
+                from {
+                    opacity: 0;
+                    transform: translateY(4px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+    </style>
 
     <link
         rel="preconnect"
@@ -28,12 +77,12 @@
 
     <link
         rel="stylesheet"
-        href="/archive.css?v=20"
+        href="/archive.css?v=21"
     >
 
     <link
         rel="stylesheet"
-        href="/case-genres.css?v=20"
+        href="/case-genres.css?v=21"
     >
 
     <link
@@ -50,30 +99,28 @@
     >
         Change Archive
     </a>
-<header class="hero">
-    <img
-        class="hero-logo"
-        src="/assets/logo.svg"
-        alt="Kako Cypher detective logo"
-    >
 
-    <h1 class="hero-title">
-        Detective Case Archive
-    </h1>
+    <header class="hero">
+        <img
+            class="hero-logo"
+            src="/assets/logo.svg"
+            alt="Game Logo"
+        >
 
-    <p class="hero-subtitle">
-        Official records of unresolved murders
-    </p>
+        <h1 class="hero-title" aria-live="polite"></h1>
 
-    <p class="hero-tagline">
-        Collect evidence. Eliminate suspects. Solve the Goose.
-    </p>
-</header>
+        <p class="hero-subtitle"></p>
+
+        <p class="hero-tagline">
+            Collect evidence. Eliminate suspects.
+            Solve the Goose.
+        </p>
+    </header>
 
     <div class="hero-divider"></div>
 
     <main>
-        <div id="case-list"></div>
+        <div id="case-list" aria-busy="true"></div>
     </main>
 
     <svg
@@ -114,7 +161,7 @@
 
     <script
         type="module"
-        src="/js/archive.js?v=20"
+        src="/js/archive.js?v=21"
     ></script>
 </body>
 </html>
