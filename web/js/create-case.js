@@ -5,7 +5,7 @@ import {
 
 import {
     initAuthoredValidation
-} from "./authored-validation.js?v=11";
+} from "./authored-validation.js?v=12";
 
 const form = document.getElementById("case-editor-form");
 const categoryNames = ["suspects", "weapons", "locations", "motives"];
@@ -68,6 +68,7 @@ function closeCustomSelect(controller = openCustomSelect, returnFocus = false) {
 
     controller.wrapper.classList.remove("is-open", "opens-upward");
     controller.host?.classList.remove("has-open-select");
+    controller.section?.classList.remove("has-open-select");
     controller.trigger.setAttribute("aria-expanded", "false");
     controller.menu.hidden = true;
 
@@ -125,7 +126,8 @@ function enhanceSelect(select) {
         menu,
         value: trigger.querySelector(".custom-select__value"),
         optionButtons: [],
-        host: wrapper.closest(".repeater-card, .entity-card, .editor-section")
+        host: wrapper.closest(".repeater-card, .entity-card"),
+        section: wrapper.closest(".editor-section")
     };
 
     function sync() {
@@ -197,6 +199,7 @@ function enhanceSelect(select) {
         wrapper.classList.add("is-open");
         wrapper.classList.toggle("opens-upward", openUpward);
         controller.host?.classList.add("has-open-select");
+        controller.section?.classList.add("has-open-select");
         trigger.setAttribute("aria-expanded", "true");
         openCustomSelect = controller;
     }
