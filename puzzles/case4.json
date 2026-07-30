@@ -1,61 +1,148 @@
 {
-    "id": 4,
-    "caseNumber": "004",
-    "title": "ფიროსმანის მკვლელობა",
-    "status": "OPEN",
-    "description": "ქართველი დიდგვაროვანი ფიროსამნის მკვლელობა ისურვა უგუნურმა მოკვდავმა.",
-    "difficulty": "Easy",
-    "victim": {
-        "name": "ფიროსმანი",
-        "occupation": "პროქტოლოგი",
-        "causeOfDeath": "მოწამლვა"
+  "id": 4,
+  "caseNumber": "004",
+  "title": "DEMISE OF THE FISHING ENTHUSIAST",
+  "status": "OPEN",
+  "description": "Paata was killed when visitng Gio's house. Determine the culprit, weapon, and location.",
+  "difficulty": "Easy",
+  "victim": {
+    "name": "Paata",
+    "occupation": "Computer Scientist",
+    "causeOfDeath": "Blunt Hit"
+  },
+  "incidentReport": "Four friends - Gio, Paata, Gvanca and Ania - gathered at Gio's place to play Monopoly. Unfortunately, Paata was murdered right before he won. Detectives believe that either Poisoned Coffee, Communism or Paata's Fishing Rod was used to murder Paata. The following locations were examined: Living Room, Balcony and Gio's Room.",
+  "interviews": [
+    {
+      "speaker": "Gio",
+      "statement": "Bro, they're saying that I hit Paata in head with his Fishing Rod. It's bullshit. Ma man Kako can attest to that."
     },
-    "incidentReport": "ფიროსმანი გვამი იპოვეს საღამოს 6 საათზე კიბის ქვეშ. გვამი სავარაუდოდ გადაიტანეს მკვლელობის ადგილიდან. დანა ეგდო მკვლელობის ადგილას, ასევე მას ახლდა ორი გაუფრცქვნელი კარტოფილი. პირიდან ქაფი გადმოსდიოდა ფიროსმანიუსას. ადგილზე იმყოფებოდნენ მხოლოდ ჟუჟუნა,სოსოიე და პავლო",
-    "interviews": [
-        {
-            "speaker": "ჟუჟუნა",
-            "statement": "რამ მაჰკლა ფიროსმანი სულით ყმა გულით კეთილი. დასტირის ჩემი თავი მის ნათესავებს."
-        },
-        {
-            "speaker": "სოსოიე",
-            "statement": "ოჰ ჩემო ფიროსმან, რამ დაგღუპა ასეთი მანდილოსანი."
-        },
-        {
-            "speaker": "პავლო",
-            "statement": "საწყალი პიროსმანი თოკი დამაბარა, რომ მომეტანა ვირის მოგერიებას ვაპირებდით გადარეული. მაგრამ ახლა რა აზრი აქვს გარდაიცვალა საწყალი ფიროსმანი"
-        }
-    ],
-    "suspects": [
-        "ჟუჟუნა",
-        "სოსოიე",
-        "პავლო"
-    ],
-    "suspectIcons": {
-        "პავლო": "kenku-head",
-        "ჟუჟუნა": "mustache",
-        "სოსოიე": "cleopatra"
+    {
+      "speaker": "Gvanca",
+      "statement": "I saw Ania poisoning the coffee when Paata started winning the game. Why am I exposing my own sister? Because everyone is all the same to me, and she definitely isn't special."
     },
-    "weapons": [
-        "Poison",
-        "Slipknot",
-        "Bowie Knife"
-    ],
-    "locations": [
-        "Office",
-        "Library",
-        "Bedroom"
-    ],
-    "clues": [
-        "ფიროსმანს ბევრი ვირთხა ყავდა სახლში.",
-        "დანაზე სისხლი არ არის.",
-        "ბიბლიოთეკაში არასდროს შედიოდა ფიროსმანი იმიტომ, რომ ყველაზე ჭკვიანი ეგონა თავი.",
-        "ცოლი გაშორდა და საძინებელი ოთახის დანახვა აღარ უნდოდა, ამიტომაც ოფისსი მაგის საყვარელი ადგილი გახდა.",
-        "ჟუჟუნა ახალი მოსული იყო დანაშაულის ადგილზე.",
-        "პავლოს აინტერესებდა, რომელ ვირთხის წამალს იყენებდა ფიროსმანი. მაგის გასაგებად იყო მოსული მკვლელობის დღეს"
-    ],
-    "solution": {
-        "suspect": "სოსოიე",
-        "weapon": "Poison",
-        "location": "Office"
+    {
+      "speaker": "Ania",
+      "statement": "Well, Gio certainly was not in his room, since Kako and Gveni were screaming at the top of their lungs, calling for him."
     }
+  ],
+  "suspects": [
+    "Gio",
+    "Gvanca",
+    "Ania"
+  ],
+  "suspectIcons": {
+    "Gio": "Gio",
+    "Gvanca": "Gvanca",
+    "Ania": "Ania"
+  },
+  "weapons": [
+    "Poisoned Coffee",
+    "Communism",
+    "Paata's Fishing Rod"
+  ],
+  "locations": [
+    "Living Room",
+    "Balcony",
+    "Gio's Room"
+  ],
+  "suspectDetails": {
+    "Gio": {
+      "attributes": {
+        "height": {
+          "kind": "number",
+          "number": 183
+        },
+        "personality": {
+          "kind": "string",
+          "string": "PLayful"
+        }
+      }
+    },
+    "Gvanca": {
+      "attributes": {
+        "height": {
+          "kind": "number",
+          "number": 164
+        },
+        "personality": {
+          "kind": "string",
+          "string": "Overthinker"
+        }
+      }
+    },
+    "Ania": {
+      "attributes": {
+        "height": {
+          "kind": "number",
+          "number": 166
+        },
+        "personality": {
+          "kind": "string",
+          "string": "Brutally Honest"
+        }
+      }
+    }
+  },
+  "weaponDetails": {
+    "Poisoned Coffee": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 237
+        }
+      }
+    },
+    "Communism": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 0
+        }
+      }
+    },
+    "Paata's Fishing Rod": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 245
+        }
+      }
+    }
+  },
+  "locationDetails": {
+    "Living Room": {
+      "attributes": {
+        "indoors": {
+          "kind": "bool",
+          "bool": true
+        }
+      }
+    },
+    "Balcony": {
+      "attributes": {
+        "indoors": {
+          "kind": "bool",
+          "bool": false
+        }
+      }
+    },
+    "Gio's Room": {
+      "attributes": {
+        "indoors": {
+          "kind": "bool",
+          "bool": true
+        }
+      }
+    }
+  },
+  "clues": [
+    "The suspect holding the heaviest weapon was seen carelessly waving it around outdoors.",
+    "The overthinker was heard having a nihilistic monologue in the Living Room."
+  ],
+  "solution": {
+    "suspect": "Gio",
+    "weapon": "Paata's Fishing Rod",
+    "location": "Balcony"
+  }
 }
+>>>>>>> 5df9f0c989183d3e4f84e58c788d166edad3880d
