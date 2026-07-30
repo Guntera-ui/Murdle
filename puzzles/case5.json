@@ -1,0 +1,114 @@
+{
+  "id": 5,
+  "caseNumber": "5",
+  "title": "Testing Case Builder",
+  "status": "OPEN",
+  "description": "THIS Is beautifull case about goose shmoose",
+  "difficulty": "Medium",
+  "victim": {
+    "name": "DONKY",
+    "occupation": "DONKERSKI",
+    "causeOfDeath": "BUZUNEBDA"
+  },
+  "incidentReport": "blablabal didudud",
+  "interviews": [
+    {
+      "speaker": "DEEP",
+      "statement": "KACI IKO Nodricha"
+    },
+    {
+      "speaker": "NINjiko",
+      "statement": "VAI DEDALI MAKLES"
+    },
+    {
+      "speaker": "DALUCA",
+      "statement": "sadasdsadas"
+    }
+  ],
+  "suspects": [
+    "DEEP",
+    "NINjiko",
+    "DALUCA"
+  ],
+  "suspectIcons": {
+    "DEEP": "cat",
+    "NINjiko": "witch-face",
+    "DALUCA": "dali"
+  },
+  "weapons": [
+    "Baseball Bat",
+    "Crossbow",
+    "Rock"
+  ],
+  "locations": [
+    "Balcony",
+    "Bed",
+    "Library"
+  ],
+  "suspectDetails": {
+    "DEEP": {
+      "attributes": {
+        "height": {
+          "kind": "number",
+          "number": 198
+        }
+      }
+    },
+    "NINjiko": {
+      "attributes": {}
+    },
+    "DALUCA": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 89
+        },
+        "height": {
+          "kind": "number",
+          "number": 120
+        }
+      }
+    }
+  },
+  "weaponDetails": {
+    "Baseball Bat": {
+      "attributes": {}
+    },
+    "Crossbow": {
+      "attributes": {}
+    },
+    "Rock": {
+      "attributes": {
+        "weight": {
+          "kind": "number",
+          "number": 133
+        }
+      }
+    }
+  },
+  "locationDetails": {
+    "Balcony": {
+      "attributes": {}
+    },
+    "Bed": {
+      "attributes": {}
+    },
+    "Library": {
+      "attributes": {
+        "Location": {
+          "kind": "string",
+          "string": "Outdoors"
+        }
+      }
+    }
+  },
+  "clues": [
+    "sadldmasmlk",
+    "ksalmkdsmklasmlkdasm"
+  ],
+  "solution": {
+    "suspect": "DEEP",
+    "weapon": "Crossbow",
+    "location": "Library"
+  }
+}

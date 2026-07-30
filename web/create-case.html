@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="light" name="color-scheme"/>
+<title>Create a Mystery — Kako Cypher</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&amp;family=Special+Elite&amp;display=swap" rel="stylesheet"/>
+<link href="/create-case.css?v=11" rel="stylesheet"/>
+<link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"/>
+</head>
+<body>
+<a class="editor-back-link" href="/">Back to Archives</a>
+<main class="case-editor">
+<header class="editor-hero">
+<div aria-hidden="true" class="editor-hero__stamp">KC</div>
+<p class="editor-eyebrow">Kako Cypher · Authoring Desk</p>
+<h1>Create a Mystery</h1>
+
+
+</header>
+<div class="editor-layout">
+<aside aria-label="Mystery progress" class="workshop-rail">
+<div class="rail-card rail-card--progress">
+<p class="rail-kicker">Case readiness</p>
+<div class="progress-heading">
+<strong id="editor-progress-value">0%</strong>
+<span id="editor-progress-label">Start the file</span>
+</div>
+<div aria-hidden="true" class="progress-track">
+<span id="editor-progress-bar"></span>
+</div>
+</div>
+<nav aria-label="Editor sections" class="rail-card workshop-nav">
+<a href="#case-information"> Case file</a>
+<a href="#incident"> Incident</a>
+<a href="#categories"> Evidence board</a>
+<a href="#interviews"> Interviews</a>
+<a href="#clues"> Clues</a>
+<a href="#solution"> Solution</a>
+<a href="#workshop"> Test &amp; export</a>
+</nav>
+<div class="rail-card rail-snapshot">
+<p class="rail-kicker">Current board</p>
+<dl>
+<div><dt>Suspects</dt><dd id="rail-suspect-count">3</dd></div>
+<div><dt>Weapons</dt><dd id="rail-weapon-count">3</dd></div>
+<div><dt>Locations</dt><dd id="rail-location-count">3</dd></div>
+<div><dt>Motives</dt><dd id="rail-motive-count">0</dd></div>
+</dl>
+</div>
+</aside>
+<form class="editor-form" id="case-editor-form" novalidate="">
+<section class="editor-section" id="case-information">
+<div class="section-heading">
+<div>
+
+<h2>Case Information</h2>
+</div>
+
+</div>
+<div class="field-grid field-grid--four">
+<label class="field">
+<span>Case ID</span>
+<input id="case-id" inputmode="numeric" min="1" name="case-id" placeholder="10" required="" step="1" type="number"/>
+</label>
+<label class="field">
+<span>Case number</span>
+<input id="case-number" inputmode="numeric" name="case-number" pattern="[0-9]+" placeholder="010" required="" type="text"/>
+</label>
+<label class="field">
+<span>Status</span>
+<select id="case-status" name="case-status" required="">
+<option value="OPEN">Open</option>
+<option value="CLOSED">Closed</option>
+</select>
+</label>
+<label class="field">
+<span>Difficulty</span>
+<select id="case-difficulty" name="case-difficulty" required="">
+<option value="Easy">Easy</option>
+<option value="Medium">Medium</option>
+<option value="Hard">Hard</option>
+</select>
+</label>
+</div>
+<div class="field-grid field-grid--two">
+<label class="field">
+<span>Title</span>
+<input id="case-title" name="case-title" placeholder="THE MIDNIGHT STUDY CASE" required="" type="text"/>
+</label>
+<label class="field">
+<span>Archive genre</span>
+<select id="case-genre" name="case-genre" required=""></select>
+</label>
+</div>
+<label class="field">
+<span>Archive summary</span>
+<textarea id="case-description" name="case-description" placeholder="A concise summary shown on the archive card." required="" rows="3"></textarea>
+</label>
+
+</section>
+<section class="editor-section" id="incident">
+<div class="section-heading">
+<div>
+
+<h2>Incident</h2>
+</div>
+
+</div>
+<div class="field-grid field-grid--three">
+<label class="field"><span>Victim name</span><input id="victim-name" name="victim-name" required="" type="text"/></label>
+<label class="field"><span>Occupation</span><input id="victim-occupation" name="victim-occupation" required="" type="text"/></label>
+<label class="field"><span>Cause of death</span><input id="victim-cause" name="victim-cause" required="" type="text"/></label>
+</div>
+<label class="field"><span>Incident report</span><textarea id="incident-report" name="incident-report" placeholder="Describe what investigators found..." required="" rows="7"></textarea></label>
+</section>
+<section class="editor-section" id="categories">
+<div class="section-heading">
+<div>
+
+<h2>Evidence Board</h2>
+</div>
+
+</div>
+<div class="category-editor-grid">
+<section class="category-editor" data-category="suspects">
+<header>
+<div><h3>Suspects</h3></div>
+<button class="small-action" data-add-entity="suspects" type="button">Add suspect</button>
+</header>
+<div class="entity-list" id="suspects-list"></div>
+</section>
+<section class="category-editor" data-category="weapons">
+<header>
+<div><h3>Weapons</h3></div>
+<button class="small-action" data-add-entity="weapons" type="button">Add weapon</button>
+</header>
+<div class="entity-list" id="weapons-list"></div>
+</section>
+<section class="category-editor" data-category="locations">
+<header>
+<div><h3>Locations</h3></div>
+<button class="small-action" data-add-entity="locations" type="button">Add location</button>
+</header>
+<div class="entity-list" id="locations-list"></div>
+</section>
+<section class="category-editor" data-category="motives">
+<header>
+<div><h3>Motives</h3></div>
+<button class="small-action" data-add-entity="motives" type="button">Add motive</button>
+</header>
+<div class="entity-list entity-list--empty" id="motives-list"></div>
+</section>
+</div>
+</section>
+<section class="editor-section" id="interviews">
+<div class="section-heading">
+<div>
+
+<h2>Witness Interviews</h2>
+
+</div>
+<button class="small-action" id="add-interview" type="button">Add interview</button>
+</div>
+<div class="repeater-list" id="interviews-list"></div>
+</section>
+<section class="editor-section" id="clues">
+<div class="section-heading">
+<div>
+
+<h2>Clues</h2>
+
+</div>
+<button class="small-action" id="add-clue" type="button">Add clue</button>
+</div>
+<div class="repeater-list" id="clues-list"></div>
+</section>
+<section class="editor-section editor-section--solution" id="solution">
+<div class="section-heading">
+<div>
+
+<h2>Solution</h2>
+</div>
+
+</div>
+<div class="field-grid field-grid--four">
+<label class="field"><span>Culprit</span><select id="solution-suspect" required=""></select></label>
+<label class="field"><span>Weapon</span><select id="solution-weapon" required=""></select></label>
+<label class="field"><span>Location</span><select id="solution-location" required=""></select></label>
+<label class="field" hidden="" id="solution-motive-field"><span>Motive</span><select id="solution-motive"></select></label>
+</div>
+</section>
+<section class="editor-section imported-fields-panel" hidden="" id="imported-fields-panel">
+<div>
+
+<h2>Preserve Machine Fields</h2>
+
+</div>
+<label class="toggle-field">
+<input id="preserve-extra-fields" type="checkbox"/>
+<span>Preserve imported generator fields</span>
+</label>
+</section>
+<section class="editor-section editor-output-section" id="workshop">
+<div class="section-heading">
+<div>
+
+<h2>Mystery Workshop</h2>
+</div>
+
+</div>
+<div class="workshop-status-grid">
+<div class="workshop-status-card"><span>Solver clues</span><strong id="deduction-clue-count">0</strong></div>
+<div class="workshop-status-card"><span>Solver statements</span><strong id="deduction-interview-count">0</strong></div>
+<div class="workshop-status-card"><span>Mystery test</span><strong id="validation-state-label">Add solver facts</strong></div>
+</div>
+<div class="editor-actions editor-actions--primary">
+<button class="editor-button editor-button--primary" id="validate-case" type="button"><span>Test Mystery</span></button>
+<button class="editor-button" id="show-json" type="button">View Generated JSON</button>
+<button class="editor-button" id="download-json" type="button">Download Case File</button>
+<button class="editor-button" id="download-logic" type="button">Download Solver File</button>
+</div>
+<details class="advanced-tools">
+<summary>More actions</summary>
+<div class="editor-actions editor-actions--secondary">
+<button class="editor-button" id="copy-json" type="button">Copy Case JSON</button>
+<button class="editor-button" id="download-registry" type="button">Download Updated genres.json</button>
+<label class="editor-button import-button">Import Existing Case<input accept=".json,application/json" id="import-json" type="file"/></label>
+</div>
+</details>
+<p aria-live="polite" class="editor-status" id="editor-status" role="status"></p>
+<section class="validation-result" hidden="" id="validation-result">
+<div class="validation-result__header">
+<strong id="validation-result-title"></strong>
+<span id="validation-result-count"></span>
+</div>
+<p id="validation-result-message"></p>
+<div class="validation-candidates" id="validation-candidates"></div>
+</section>
+</section>
+</form>
+</div>
+</main>
+<dialog class="json-dialog" id="json-dialog">
+<div class="json-dialog__header">
+<h2>JSON Equivalent</h2>
+<button aria-label="Close JSON preview" class="json-dialog__close" id="close-json-dialog" type="button">×</button>
+</div>
+<div aria-label="Generated JSON file" class="json-tabs" role="tablist">
+<button aria-selected="true" class="json-tab is-active" data-json-tab="case" role="tab" type="button">Case file</button>
+<button aria-selected="false" class="json-tab" data-json-tab="logic" role="tab" type="button">Solver file</button>
+</div>
+<pre id="json-output" tabindex="0"></pre>
+<div class="json-dialog__actions">
+<button class="editor-button" id="copy-visible-json" type="button">Copy Displayed JSON</button>
+<button class="editor-button editor-button--primary" id="download-visible-json" type="button">Download Displayed File</button>
+</div>
+</dialog>
+<template id="entity-template">
+<article class="entity-card">
+<div class="entity-card-header">
+<strong class="entity-index"></strong>
+<button class="remove-button" data-remove-entity="" type="button">Remove</button>
+</div>
+<div class="field-grid entity-primary-fields">
+<label class="field"><span>Name</span><input class="entity-name" required="" type="text"/></label>
+<label class="field entity-icon-field"><span>Suspect icon ID</span><input class="entity-icon" placeholder="parrot-head" type="text"/></label>
+</div>
+<details class="attribute-editor">
+<summary>Optional details <span class="attribute-count">0</span></summary>
+<div class="attribute-editor-heading">
+<span>Attributes</span>
+<button class="text-action" data-add-attribute="" type="button">Add attribute</button>
+</div>
+<div class="attribute-list"></div>
+</details>
+</article>
+</template>
+<template id="attribute-template">
+<div class="attribute-row">
+<label class="field"><span>Key</span><input class="attribute-key" placeholder="weight" required="" type="text"/></label>
+<label class="field"><span>Type</span><select class="attribute-kind"><option value="string">Text</option><option value="number">Number</option><option value="bool">Boolean</option></select></label>
+<label class="field"><span>Value</span><span class="attribute-value-holder"></span></label>
+<button class="remove-button remove-button--compact" data-remove-attribute="" type="button">Remove</button>
+</div>
+</template>
+<template id="interview-template">
+<article class="repeater-card interview-row">
+<label class="field interview-speaker-field"><span>Speaker</span><select class="interview-speaker" required=""></select></label>
+<label class="field repeater-grow"><span>Statement</span><textarea class="interview-statement" placeholder="What did this suspect say?" required="" rows="3"></textarea></label>
+<button class="remove-button" data-remove-interview="" type="button">Remove</button>
+</article>
+</template>
+<template id="clue-template">
+<article class="repeater-card clue-row">
+<span class="clue-number"></span>
+<label class="field repeater-grow"><span>Clue text</span><textarea class="clue-text" placeholder="What does the player learn?" required="" rows="3"></textarea></label>
+<button class="remove-button" data-remove-clue="" type="button">Remove</button>
+</article>
+</template>
+<script src="/js/create-case.js?v=11" type="module"></script>
+</body>
+</html>

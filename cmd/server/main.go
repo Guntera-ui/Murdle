@@ -2,13 +2,16 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"murdle/internal/handlers"
 )
 
 func main() {
-	fs := http.FileServer(http.Dir("./web"))
+	fs := http.FileServer(
+		http.Dir("./web"),
+	)
 
 	http.Handle("/", fs)
 
@@ -16,12 +19,25 @@ func main() {
 		"/api/puzzle/",
 		handlers.GetPuzzle,
 	)
+
 	http.HandleFunc(
 		"/api/cases",
 		handlers.GetCases,
 	)
 
-	fmt.Println("Server running on :8080")
+	http.HandleFunc(
+		"/api/authored-mystery/validate",
+		handlers.ValidateAuthoredMystery,
+	)
 
-	http.ListenAndServe(":8080", nil)
+	fmt.Println(
+		"Server running on :8080",
+	)
+
+	if err := http.ListenAndServe(
+		":8080",
+		nil,
+	); err != nil {
+		log.Fatal(err)
+	}
 }

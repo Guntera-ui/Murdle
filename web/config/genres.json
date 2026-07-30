@@ -1,0 +1,29 @@
+{
+  "defaultGenre": "classic",
+  "genres": {
+    "classic": {
+      "label": "Classic Detective",
+      "archiveNumber": "Archive I",
+      "title": "Detective Case Archive",
+      "subtitle": "Official records of unresolved murders",
+      "description": "Evidence folders, interviews and conventional criminal investigations.",
+      "cardStyle": "archive-folder",
+      "order": 1,
+      "enabled": true
+    },
+    "mythology": {
+      "label": "Mythology",
+      "archiveNumber": "Archive II",
+      "title": "Mythological Case Archive",
+      "subtitle": "Crimes involving legends, gods and folklore",
+      "description": "Divine suspects, ancient legends and crimes hidden inside folklore.",
+      "cardStyle": "georgian-celestial",
+      "order": 2,
+      "enabled": true
+    }
+  },
+  "caseGenres": {
+    "3": "mythology",
+    "5": "mythology"
+  }
+}

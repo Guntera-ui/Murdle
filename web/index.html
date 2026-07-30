@@ -2,91 +2,83 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Grenze:wght@500;600;700&family=Metamorphous&display=swap"
+        rel="stylesheet"
+    >
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
     <title>Kako Cypher</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Special+Elite&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="archive.css?v=15">
-    <link rel="stylesheet" href="style.css?v=15">
-
-    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link
+        rel="stylesheet"
+        href="/home.css?v=4"
+    >
 </head>
 
 <body>
+    <main class="archive-gateway">
+        <header class="gateway-header">
+            <p class="gateway-eyebrow">
+                Kako Cypher
+            </p>
 
-<header class="hero">
+            <h1>
+                Choose an Archive
+            </h1>
 
-    <img
-        class="hero-logo"
-        src="assets/logo.svg"
-        alt="Game Logo">
+            <p class="gateway-description">
+                Enter a collection of murder mysteries
+                shaped by a distinct world and atmosphere.
+            </p>
 
-    <h1 class="hero-title">
-        Kako Cypher
-    </h1>
+            <a
+    class="mystery-builder-button"
+    href="/create-case.html"
+>
+    <span class="mystery-builder-kicker">
+        Case Workshop
+    </span>
 
-    <p class="hero-subtitle">
-        Detective Case Archive - Kommissar Gunter
-    </p>
+    <strong>
+        Create Your Own Mystery
+    </strong>
 
-    <p class="hero-tagline">
-        Collect evidence. Eliminate suspects.
-        Solve the Goose.
-    </p>
+    <span class="mystery-builder-action">
+        Open the case editor
+    </span>
+</a>
+        </header>
 
-</header>
+        <section
+            id="archive-choices"
+            class="archive-choices"
+            aria-label="Mystery archives"
+            aria-live="polite"
+        >
+            <p class="archive-loading-message">
+                Loading archives...
+            </p>
+        </section>
+    </main>
 
-<div class="hero-divider"></div>
-
-<main>
-
-    <div id="case-list"></div>
-
-</main>
-
-<svg
-    xmlns="http://www.w3.org/2000/svg"
-    version="1.1"
-    width="0"
-    height="0"
-    style="position:absolute"
-    aria-hidden="true">
-
-    <defs>
-
-        <filter id="goo">
-
-            <feGaussianBlur
-                in="SourceGraphic"
-                stdDeviation="10"
-                result="blur" />
-
-            <feColorMatrix
-                in="blur"
-                mode="matrix"
-                values="
-                    1 0 0 0 0
-                    0 1 0 0 0
-                    0 0 1 0 0
-                    0 0 0 21 -7"
-                result="goo" />
-
-            <feBlend
-                in="SourceGraphic"
-                in2="goo"
-                result="mix" />
-
-        </filter>
-
-    </defs>
-
-</svg>
-
-<script src="js/archive.js?v=15"></script>
-
+    <script
+        type="module"
+        src="/js/home.js?v=4"
+    ></script>
 </body>
-
 </html>
